@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  debit_id: 1
+  credit_id: 1
+  date: 2021-08-02
+  amount: 1
+  description: MyString
+
+two:
+  user_id: 1
+  debit_id: 1
+  credit_id: 1
+  date: 2021-08-02
+  amount: 1
+  description: MyString
