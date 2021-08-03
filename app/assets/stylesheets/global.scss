@@ -5,10 +5,16 @@
   box-sizing: border-box;
 }
 
+main{
+  padding-top: 50px; //header分全体を下げる
+}
+
 // 色定義
 $gray: rgba(211, 211, 211, 1);
+$blue: rgba(135, 206, 250, 1);
 
 // その他
+// リンク
 %link{
   color: black;
   text-decoration: none;
