@@ -1,0 +1,142 @@
+@import "global";
+
+.top{
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  // title
+  &__title{
+    height: 500px;
+    text-align: center;
+  }
+
+  &__title-text{
+    height: 300px;
+    line-height: 500px;
+  }
+
+  &__title-sub-text{
+    line-height: 200px;
+  }
+
+  // about
+  &__about-boxes{
+    height: 850px;
+    overflow:hidden;
+    background: $blue;
+  }
+
+  &__about-box{
+    height: 200px;
+    width: 500px;
+    margin: 50px auto 0 100px;
+    border: 1px solid;
+    border-radius: 50px;
+    padding: 30px;
+
+    &:nth-child(2){
+      margin: 50px 100px 0 auto;
+    }
+  }
+
+  &__about-box-title{
+    margin-bottom: 20px;
+  }
+
+  // worry
+  &__worry{
+    height: 600px;
+    text-align: center;
+  }
+
+  &__worry-title{
+    margin-top: 50px;
+  }
+
+  &__worry-boxes{
+    display: flex;
+  }
+
+  &__worry-box{
+    height: 400px;
+    width: 400px;
+    margin: 50px;
+    border: 1px solid;
+    border-radius: 50px;
+    padding: 100px 30px;
+  }
+
+  &__worry-box-text{
+    margin-bottom: 50px;
+    text-align: start;
+  }
+
+  &__worry-box-icon{
+    width: 100px;
+    height: 100px;
+  }
+
+  &__worry-box-human{
+    display: inline;
+  }
+
+  // solution
+  &__solution{
+    height: 700px;
+    background: $blue;
+    overflow:hidden;
+
+    &::before{
+      content: '';
+      position: relative;
+      top: 95px;
+      left: 350px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 100px 150px 0 150px;
+      border-color: #ffffff transparent transparent transparent;
+      z-index: 100;
+    }
+  }
+
+  &__solution-title{
+    position: relative;
+    margin: 20px 0 50px 0;
+    text-align: center;
+    z-index: 1000;
+  }
+
+  &__solution-box{
+    height: 150px;
+    width: 800px;
+    margin: 30px auto;
+    border: 1px solid;
+    border-radius: 50px;
+    padding: 30px;
+  }
+
+  &__solution-box-title{
+    margin-bottom: 20px;
+  }
+
+  // login
+  &__login{
+    height: 300px;
+    padding: 100px;
+  }
+
+  &__login-btn{
+    @extend %link;
+
+    display: block;
+    height: 50px;
+    width: 400px;
+    border: 1px solid;
+    border-radius: 20px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 50px;
+  }
+}
