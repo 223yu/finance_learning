@@ -1,0 +1,16 @@
+// リセットCSS
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// 色定義
+$gray: rgba(211, 211, 211, 1);
+
+// その他
+%link{
+  color: black;
+  text-decoration: none;
+}
+
