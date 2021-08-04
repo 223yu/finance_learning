@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   root 'homes#top'
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
   resource :users, only: [:show, :edit, :update] do
     post 'start', on: :collection
   end

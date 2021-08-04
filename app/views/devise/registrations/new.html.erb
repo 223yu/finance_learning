@@ -1,0 +1,43 @@
+<div class='devise'>
+  <h4 class='devise__title'>新規ユーザ登録</h4>
+
+  <%= form_with model: @user, url: user_registration_path, id:'new_user', class:'devise__form-group' do |f| %>
+    <%= render 'devise/shared/error_messages', resource: resource %>
+
+    <div class='devise__form-row'>
+      <%= f.label :name, '名前', class:'devise__form-row-label' %>
+      <%= f.text_field :name, autofocus: true, class:'devise__form-row-field' %>
+    </div>
+
+    <div class='devise__form-row'>
+      <%= f.label :email, 'メールアドレス', class:'devise__form-row-label' %>
+      <%= f.email_field :email, autocomplete: "email", class:'devise__form-row-field' %>
+    </div>
+
+    <div class='devise__form-row'>
+      <%= f.label :password, 'パスワード', class:'devise__form-row-label' %>
+      <%= f.password_field :password, autocomplete: 'new-password', class:'devise__form-row-field' %>
+    </div>
+
+    <div class='devise__form-row'>
+      <%= f.label :password_confirmation, 'パスワード（確認）', class:'devise__form-row-label' %><br />
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', class:'devise__form-row-field' %>
+    </div>
+
+    <div class='devise__form-row'>
+      <%= f.hidden_field :year, :value => 0 %>
+      <%= f.submit '新規登録', class:'devise__form-row-btn' %>
+    </div>
+  <% end %>
+
+  <div class='devise__other'>
+    <%= link_to user_google_oauth2_omniauth_authorize_path, method: :post, class:'devise__link-btn' do %>
+      <i class="fab fa-google"></i>
+      <p class='devise__link-text'>アカウントで新規登録</p>
+    <% end %>
+  </div>
+
+  <div class='devise__other'>
+    登録済みの方は<%= link_to "こちら", new_session_path(resource_name), class:'devise__link' %>からログイン
+  </div>
+</div>
