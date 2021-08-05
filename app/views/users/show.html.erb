@@ -1,1 +1,55 @@
-<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<div class='mypage'>
+
+  <div class='mypage__cumurative-journal'>
+    <p class='mypage__cumurative-journal-item'>累計仕訳数</p>
+    <p class='mypage__cumurative-journal-item'>
+      <%= current_user.journals.length %>仕訳
+    </p>
+    <p class='mypage__cumurative-journal-item'>
+      引き続き頑張りましょう！
+    </p>
+  </div>
+
+  <div class='mypage__year-choice'>
+    <h4 class='mypage__year-choice-title'>年度選択</h4>
+    <% if current_user.has_year? %>
+      <table class='mypage__table'>
+        <tbody class='mypage__tbody'>
+          <% current_user.has_years.each do |year| %>
+            <tr class='mypage__tr'>
+              <td class='mypage__td'><%= year %>年度</td>
+              <td class='mypage__td'><%= year %>年1月1日　〜　<%= year %>年12月31日</td>
+              <td class='mypage__td'><%= link_to '年度選択', select_years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
+              <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class='mypage__graph-boxes'>
+        <div class='mypage__graph-area'>
+          <h4 class='mypage__graph-title'>利益のグラフ</h4>
+          <div class='mypage__graph-box'></div>
+        </div>
+        <div class='mypage__graph-area'>
+          <h4 class='mypage__graph-title'>現預金残高のグラフ</h4>
+          <div class='mypage__graph-box'></div>
+        </div>
+      </div>
+    <% else %>
+      <% now = Time.current %>
+      <%= form_with url: start_users_path, method: :post, class:'mypage__year-choice-form-group' do |f| %>
+        <%= f.label :year, '初期データを作成しましょう！', class:'mypage__year-choice-form-label' %>
+        <%= f.select :year, [["去年 #{now.prev_year.year}年", "#{now.prev_year.year}"],
+                  ["今年 #{now.year}年", "#{now.year}"],
+                  ["翌年 #{now.next_year.year}年", "#{now.next_year.year}"]
+                  ], {include_blank: '選択してください'}, class:'mypage__year-choice-form-select' %>
+        <%= f.submit '作成', class:'mypage__year-choice-form-btn' %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class='mypage__buttons'>
+    <%= link_to 'ユーザ情報編集', edit_user_registration_path, class:'mypage__btn' %>
+    <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:'mypage__btn' %>
+  </div>
+</div>

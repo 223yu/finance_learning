@@ -14,9 +14,33 @@ $gray: rgba(211, 211, 211, 1);
 $blue: rgba(135, 206, 250, 1);
 
 // その他
+// コンテナ
+%max-width{
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto ;
+}
+
 // リンク
 %link{
   color: black;
   text-decoration: none;
 }
 
+// テーブル
+%table{
+  height: 30px;
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 30px;
+  border: 1px solid;
+}
+
+%tr{
+  width: 100%;
+}
+
+%td{
+  padding: 5px;
+  border: 1px solid;
+}

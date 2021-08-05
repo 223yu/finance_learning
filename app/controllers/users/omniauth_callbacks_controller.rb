@@ -22,4 +22,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to root_path
   end
 
+  # ログイン後遷移先変更
+  def after_sign_in_path_for(resoure)
+    users_path
+  end
+
 end

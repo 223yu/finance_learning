@@ -18,6 +18,16 @@
         </li>
         <% if user_signed_in? %>
           <li class='navbar__item'>
+            <p class='navbar__user-name'><%= current_user.name %></p>
+            <p>
+              <% if current_user.year == 0 %>
+                <p class='navbar__user-year'>データ未作成</p>
+              <% else %>
+               <p class='navbar__user-year'><%= current_user.year %>年度</p>
+              <% end %>
+            </p>
+          </li>
+          <li class='navbar__item'>
             <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
@@ -68,6 +78,11 @@
       </ul>
     </header>
     <main>
+      <div class='alert'>
+        <% flash.each do |message_type, message| %>
+          <div class='alert__<%= message_type %>'><%= message %></div>
+        <% end %>
+      </div>
       <%= yield %>
     </main>
     <footer>
