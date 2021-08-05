@@ -59,4 +59,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_inactive_sign_up_path_for(resource)
     users_path
   end
+
+  # The path used after update.
+  def after_update_path_for(resource)
+    users_path
+  end
+
+  protected
+    # update without password
+    def update_resource(resource, params)
+      if resource.update_without_password(params)
+        flash[:success] = 'ユーザ情報を更新しました'
+      end
+    end
+
 end

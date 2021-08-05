@@ -1,9 +1,7 @@
 @import "global";
 
 .devise{
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  @extend %max-width;
 
   &__title{
     height: 100px;
@@ -12,7 +10,6 @@
   }
 
   &__form-group{
-    height: 250px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
