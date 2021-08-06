@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_004413) do
+ActiveRecord::Schema.define(version: 2021_08_05_122157) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 2021_08_04_004413) do
   create_table "learnings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "content_id", null: false
-    t.boolean "end_learning", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

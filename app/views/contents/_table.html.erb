@@ -1,0 +1,17 @@
+<h4 class='content__table-label'>学習が終了したら✔️</h4>
+<table class='content__table'>
+  <% contents.each do |content| %>
+    <tr class='content__table-tr'>
+      <td class='content__table-title'>
+        <%= link_to "#{content.title}", { anchor: "content__post-box#{content.id}" }, class:'content__table-title-link' %>
+      </td>
+      <td class='content__table-td'>
+        <% if current_user.learned?(content) %>
+          <%= link_to '✔️', content_path(id: content.id), method: :delete, class:'content__table-link', remote: true %>
+        <% else %>
+          <%= link_to '', contents_path(id: content.id), method: :post, class:'content__table-link', remote: true %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

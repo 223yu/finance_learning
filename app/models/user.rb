@@ -134,4 +134,9 @@ class User < ApplicationRecord
     end
   end
 
+  # 学習済みであればtrueを返す
+  def learned?(content)
+    Learning.find_by(user_id: self.id, content_id: content.id).present?
+  end
+
 end
