@@ -4,9 +4,7 @@
   @extend %max-width;
 
   &__title{
-    height: 100px;
-    text-align: center;
-    line-height: 100px;
+    @extend %title;
   }
 
   &__form-group{
