@@ -78,11 +78,13 @@
       </ul>
     </header>
     <main>
-      <div class='alert'>
+      <!-- flash message -->
+      <div class='flash'>
         <% flash.each do |message_type, message| %>
           <div class='alert__<%= message_type %>'><%= message %></div>
         <% end %>
       </div>
+
       <%= yield %>
     </main>
     <footer>

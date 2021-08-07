@@ -1,0 +1,15 @@
+<%= form_with model: @account, url: account_path, class:'account__edit-form-group', remote: true do |f| %>
+  <div class='account__edit-td--code'><%= f.text_field :code, class:'account__edit-form--code' %></div>
+  <div class='account__edit-td--name'><%= f.text_field :name, class:'account__edit-form--name' %></div>
+  <div class='account__edit-td--balance'><%= f.text_field :opening_balance_1, class:'account__edit-form--balance' %></div>
+  <div class='account__edit-td--total'>
+    <%= f.select :total_account, [['現預金'], ['他流動資産'], ['固定資産'],
+              ['カード'], ['他流動負債'],['固定負債'], ['収入'], ['原価'],
+              ['販管費'], ['営業外収入'],['営業外費用']], {include_blank: '合計科目'}, class:'account__edit-form--total' %>
+  </div>
+  <div class='account__edit-td--btn'>
+    <%= f.button type: 'submit', class:'account__edit-btn' do %>
+      <i class="fas fa-save"></i>
+    <% end %>
+  </div>
+<% end %>

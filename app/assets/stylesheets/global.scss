@@ -27,17 +27,28 @@ $blue: rgba(135, 206, 250, 1);
   text-decoration: none;
 }
 
+//タイトル
+%title{
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+}
+
 // テーブル
 %table{
   height: 30px;
   border-collapse: collapse;
   text-align: left;
   line-height: 30px;
-  border: 1px solid;
 }
 
 %tr{
   width: 100%;
+}
+
+%th{
+  padding: 5px;
+  border: 1px solid;
 }
 
 %td{

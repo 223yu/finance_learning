@@ -1,0 +1,19 @@
+<div class='account__index-table'>
+  <div class='account__index-thead'>
+    <div class='account__index-tr'>
+      <div class='account__index-th--code'>コード</div>
+      <div class='account__index-th--name'>科目名</div>
+      <div class='account__index-th--balance'>期首残高</div>
+      <div class='account__index-th--total'>合計科目</div>
+    </div>
+  </div>
+  <div class='account__index-tbody'>
+    <% accounts.each do |account| %>
+      <% if total_account.include?(account.total_account) %>
+        <div class='account__index-tr<%= account.id %>'>
+          <%= render 'show', account: account %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<% if @account.errors.any? %>
+  $('.errors').html('<%= j(render 'layouts/errors', obj: @account) %>');
+  $('.account__index-tr<%= @account.id %>').html('<%= j(render 'accounts/edit', account: @account) %>');
+<% else %>
+  $('.errors').html('<%= j(render 'layouts/errors', obj: @account) %>');
+  $('.account__index-tr<%= @account.id %>').html('<%= j(render 'accounts/show', account: @account) %>');
+<% end %>

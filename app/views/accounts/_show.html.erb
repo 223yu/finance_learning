@@ -1,0 +1,14 @@
+<div class='account__index-td--code'><%= account.code %></div>
+<div class='account__index-td--name'><%= account.name %></div>
+<div class='account__index-td--balance'><%= account.opening_balance_1.to_s(:delimited) %></div>
+<div class='account__index-td--total'><%= account.total_account %></div>
+<div class='account__index-td--btn'>
+  <%= link_to edit_account_path(account), class:'account__index-link', remote: true do %>
+    <i class="fas fa-edit"></i>
+  <% end %>
+</div>
+<div class='account__index-td--btn'>
+  <%= link_to account_path(account), method: :delete, class:'account__index-link', remote: true do %>
+    <i class="fas fa-trash-alt"></i>
+  <% end %>
+</div>
