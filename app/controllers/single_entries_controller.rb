@@ -21,6 +21,12 @@ class SingleEntriesController < ApplicationController
     @journal.debit_id = debit_id
     @journal.credit_id = credit_id
     if @journal.save
+      # 科目残高更新
+      debit_account = Account.find(debit_id)
+      debit_account.update_balance(@journal.amount, month, 'debit')
+      credit_account = Account.find(credit_id)
+      credit_account.update_balance(@journal.amount, month, 'credit')
+      # 初期化
       @journal_new = Journal.new
     end
   end

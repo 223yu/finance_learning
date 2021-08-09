@@ -1,36 +1,36 @@
 <%= form_with model: journal, url: single_entries_path, class:'entry__form-group', remote: true do |f| %>
   <div class='entry__index-tr'>
     <div class='entry__new-td--date'>
-      <%= f.text_field :month, autofocus: true, class:'entry__form--date' %>
+      <%= f.text_field :month, autofocus: true, tabindex: 1, class:'entry__form--date' %>
     </div>
     <div class='entry__new-td--date'>
-      <%= f.text_field :day, class:'entry__form--date' %>
+      <%= f.text_field :day, tabindex: 2, class:'entry__form--date' %>
     </div>
     <div class='entry__new-td--code'>
-      <%= f.text_field :debit_code, class:'entry__form--code' %>
+      <%= f.text_field :debit_code, tabindex: 3, class:'entry__form--code' %>
     </div>
     <div class='entry__new-td--name'>
       <%= f.text_field :debit_name, disabled: true, class:'entry__form--name' %>
     </div>
     <div class='entry__new-td--code'>
-      <%= f.text_field :credit_code, class:'entry__form--code' %>
+      <%= f.text_field :credit_code, tabindex: 4, class:'entry__form--code' %>
     </div>
     <div class='entry__new-td--name'>
       <%= f.text_field :credit_name, disabled: true, class:'entry__form--name' %>
     </div>
     <div class='entry__new-td--amount'>
-      <%= f.text_field :amount, class:'entry__form--amount' %>
+      <%= f.text_field :amount, tabindex: 5, class:'entry__form--amount' %>
     </div>
     <div class='entry__new-td--description'>
-      <%= f.text_field :description, class:'entry__form--description' %>
+      <%= f.text_field :description, tabindex: 6, class:'entry__form--description' %>
     </div>
     <div class='entry__new-td--btn'>
-      <%= f.submit '' %>
+      <%= f.submit '', tabindex: 7 %>
     </div>
   </div>
 <% end %>
 
 <!-- 科目候補表示 -->
 <div class='entry__subbox'>
-  
+
 </div>
