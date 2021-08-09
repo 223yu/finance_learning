@@ -33,6 +33,22 @@ class AccountsController < ApplicationController
     @account.destroy
   end
 
+  def search
+    @account = Account.find_by(user_id: current_user.id, year: current_user.year, code: "#{params[:code]}")
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end
+
+  def search_sub
+    @accounts = Account.where(user_id: current_user.id, year: current_user.year ).where("code LIKE ?", "%#{params[:code]}%")
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end
+
   private
 
     def account_params

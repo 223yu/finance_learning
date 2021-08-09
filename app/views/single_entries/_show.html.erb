@@ -1,0 +1,12 @@
+<% journals.each do |journal| %>
+  <div class='entry__index-tr'>
+    <div class='entry__index-td--date'><%= journal.date.month %></div>
+    <div class='entry__index-td--date'><%= journal.date.day %></div>
+    <div class='entry__index-td--code'><%= journal.debit.code %></div>
+    <div class='entry__index-td--name'><%= journal.debit.name %></div>
+    <div class='entry__index-td--code'><%= journal.credit.code %></div>
+    <div class='entry__index-td--name'><%= journal.credit.name %></div>
+    <div class='entry__index-td--amount'><%= journal.amount.to_s(:delimited) %></div>
+    <div class='entry__index-td--description'><%= journal.description %></div>
+  </div>
+<% end %>

@@ -2,6 +2,12 @@
 
 .single-entry{
   @extend %max-width;
-  
-  
+
+  &__index{
+    margin-top: 30px;
+  }
+
+  &__index{
+    margin-top: 20px;
+  }
 }

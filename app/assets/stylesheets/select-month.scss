@@ -3,15 +3,18 @@
 %select-label{
   display: block;
   height: 50px;
-  width: 30px;
-  border: 1px solid;
+  width: 50px;
   text-align: center;
   line-height: 50px;
 }
 
 .select-month{
+  &__title{
+    margin: 20px auto 5px 170px;
+  }
+
   &__form-group{
-    margin: 20px auto;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,6 +22,12 @@
 
   &__box{
     display: table-cell;
+    border: 1px solid;
+    border-right: none;
+
+    &:last-child{
+      border-right: 1px solid;
+    }
   }
 
   &__checkbox{
@@ -50,5 +59,13 @@
 
   &__box-btn{
     margin-left: 30px;
+  }
+
+  &__btn{
+    display: block;
+    height: 30px;
+    width: 50px;
+    text-align: center;
+    line-height: 30px;
   }
 }

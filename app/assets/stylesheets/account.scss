@@ -84,12 +84,10 @@
 
   &__index-table{
     @extend %table;
-
-    display: table;
   }
 
   &__index-thead{
-    display: table-header-group;
+    @extend %thead;
   }
 
   &__index-th{
@@ -97,7 +95,6 @@
     &--code{
       @extend %th;
 
-      display: table-cell;
       width: 80px;
       background: $gray;
     }
@@ -105,7 +102,6 @@
     &--name{
       @extend %th;
 
-      display: table-cell;
       width: 100px;
       background: $gray;
     }
@@ -113,7 +109,6 @@
     &--balance{
       @extend %th;
 
-      display: table-cell;
       width: 100px;
       background: $gray;
     }
@@ -121,7 +116,6 @@
     &--total{
       @extend %th;
 
-      display: table-cell;
       width: 100px;
       background: $gray;
     }
@@ -133,21 +127,18 @@
     &--code{
       @extend %td;
 
-      display: table-cell;
       width: 80px;
     }
 
     &--name{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
     }
 
     &--balance{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
       text-align: right;
     }
@@ -155,7 +146,6 @@
     &--total{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
     }
 
@@ -176,7 +166,6 @@
     &--code{
       @extend %td;
 
-      display: table-cell;
       width: 80px;
       background: $blue;
     }
@@ -184,7 +173,6 @@
     &--name{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
       background: $blue;
     }
@@ -192,7 +180,6 @@
     &--balance{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
       background: $blue;
     }
@@ -200,7 +187,6 @@
     &--total{
       @extend %td;
 
-      display: table-cell;
       width: 100px;
       background: $blue;
     }

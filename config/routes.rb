@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     post 'start', on: :collection
   end
   resources :contents, only: [:index, :create, :destroy]
-  resources :accounts, only: [:index, :create, :edit, :update, :destroy]
+  resources :accounts, only: [:index, :create, :edit, :update, :destroy] do
+    get 'search', on: :collection
+    get 'search_sub', on: :collection
+  end
   resources :single_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
   end

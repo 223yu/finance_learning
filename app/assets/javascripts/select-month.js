@@ -4,6 +4,7 @@
 //= require jquery
 //= require jquery_ujs
 
+// 月選択の見た目を整える
 $(document).on('turbolinks:load', function() {
   let select_count = 0;
   let select_first_month = 0;
