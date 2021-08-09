@@ -6,25 +6,44 @@
 
 // 勘定科目を入力すると科目名を補完する
 $(document).on('turbolinks:load', function() {
-  // 借方科目
-  $(document).on('keyup', '#journal_debit_code', function(){
-    $('#journal_debit_name').val(''); //一度削除
+  // 借方コード、貸方コード
+  let target = ['journal_debit', 'journal_credit'];
+  target.forEach(function(target){
+    let target_code = '#' + target + '_code';
+    let target_name = '#' + target + '_name';
+    $(document).on('input', target_code, function(){
+    $(target_name).val(''); //一度削除
     $('.entry__subbox').html(''); //候補を空に
-    const code = $(this).val();
-    search(code, '#journal_debit_name');
+    let code = $(this).val();
+    // 全角の場合半角に変換
+    code = double_to_half(code);
+    $(this).val(code);
+    // 実行
+    search(code, target_name);
     search_sub(code);
+    });
   });
 
-  // 貸方科目
-  $(document).on('keyup', '#journal_credit_code', function(){
-    $('#journal_credit_name').val(''); //一度削除
-    $('.entry__subbox').html(''); //候補を空に
-    const code = $(this).val();
-    search(code, '#journal_credit_name');
-    search_sub(code);
+  // その他の項目は全角を半角に変換するのみ
+  target = ['#journal_month', '#journal_day', '#journal_amount'];
+  target.forEach(function(target){
+    $(document).on('input', target, function(){
+    let str = $(this).val();
+    str = double_to_half(str);
+    $(this).val(str);
+    });
   });
 
-  // ①コードから科目を入力する
+  // function集
+  // ①全角で入力されたコードを半角に変換する
+  function double_to_half(str){
+    str = str.replace( /[Ａ-Ｚａ-ｚ０-９－！”＃＄％＆’（）＝＜＞，．？＿［］｛｝＠＾～￥]/g, function(s) {
+            return String.fromCharCode(s.charCodeAt(0) - 65248);
+          });
+    return str;
+  }
+
+  // ②コードから科目を入力する
   function search(keyword, target){
     $.ajax({
       type: 'GET',
@@ -37,7 +56,7 @@ $(document).on('turbolinks:load', function() {
     });
   }
 
-  //②コードから科目候補を表示する
+  //③コードから科目候補を表示する
   function built_html(data){
     let html = `
       <div class='entry__subbox-item'>${data.code} ${data.name}</div>
@@ -56,6 +75,31 @@ $(document).on('turbolinks:load', function() {
       data.forEach(function(data){
         built_html(data);
       });
+    });
+  }
+});
+
+// Enterキーでタブ移動出来るようにする
+$(document).on('turbolinks:load', function() {
+
+  $(document).on('keydown', '#journal_month', function(){
+    enter_change_tab();
+  });
+
+  // function集
+  function enter_change_tab(){
+    const elements = 'input[type=text]';
+    $(elements).keypress(function(e){
+      const c = e.which ? e.which : e.keyCode;
+      if(c == 13){
+        let index = $(this).attr('tabindex');
+        index = String(Number(index) + 1);
+        $('[tabindex=' + index + ']').focus();
+        // 摘要以外でのEnter送信無効
+        if (index != '7'){
+          e.preventDefault();
+        }
+      }
     });
   }
 });
