@@ -1,4 +1,30 @@
 <div class='single-entry'>
   <!-- 入力月選択フォーム -->
   <%= render 'layouts/select-month', path: single_entries_path %>
+
+  <!-- 仕訳表示 -->
+  <div class='single-entry__index'>
+    <div class='entry__index-table'>
+      <div class='entry__index-thead'>
+        <div class='entry__index-tr'>
+          <div class='entry__index-th--date'>月</div>
+          <div class='entry__index-th--date'>日</div>
+          <div class='entry__index-th--code'>借方コード</div>
+          <div class='entry__index-th--name'>借方科目名</div>
+          <div class='entry__index-th--code'>貸方コード</div>
+          <div class='entry__index-th--name'>貸方科目名</div>
+          <div class='entry__index-th--amount'>金額</div>
+          <div class='entry__index-th--description'>摘要</div>
+        </div>
+      </div>
+      <div class='entry__index-tbody'>
+        <!-- #indexにて非同期生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 仕訳入力 -->
+  <div class='single-entry__new'>
+    <!-- #indexにて非同期生成 -->
+  </div>
 </div>

@@ -36,10 +36,19 @@ $blue: rgba(135, 206, 250, 1);
 
 // テーブル
 %table{
+  display: table;
   height: 30px;
   border-collapse: collapse;
   text-align: left;
   line-height: 30px;
+}
+
+%thead{
+  display: table-header-group;
+}
+
+%tbody{
+  display: table-row-group;
 }
 
 %tr{
@@ -47,11 +56,13 @@ $blue: rgba(135, 206, 250, 1);
 }
 
 %th{
+  display: table-cell;
   padding: 5px;
   border: 1px solid;
 }
 
 %td{
+  display: table-cell;
   padding: 5px;
   border: 1px solid;
 }

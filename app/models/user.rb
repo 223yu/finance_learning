@@ -47,6 +47,21 @@ class User < ApplicationRecord
     return year
   end
 
+  # ユーザの持つ年度、入力月から月初日を返す
+  def start_date(start_month)
+    Time.new(self.year, start_month, 1).beginning_of_month
+  end
+
+  # ユーザの持つ年度、入力月から月末日を返す
+  def end_date(end_month)
+    Time.new(self.year, end_month, 1).end_of_month
+  end
+
+  # ユーザの持つ年度、開始月、終了月から期間を返す
+  def start_date_to_end_date(start_month, end_month)
+    self.start_date(start_month)..self.end_date(end_month)
+  end
+
   # 勘定科目の初期データ作成
   def accounts_setting(year)
     # 年度データを更新

@@ -1,15 +1,16 @@
 <div class='select-month'>
-  <%= form_with url:  path, method: :get, class:'select-month__form-group', local: true do |f| %>
+  <p class='select-month__title'>表示する月を選んでください</p>
+  <%= form_with url:  path, method: :get, class:'select-month__form-group', remote: true do |f| %>
     <div class='select-month__boxes'>
       <% 12.times do |n| %>
         <div class='select-month__box'>
           <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
-          <%= f.label "mon#{n + 1}", n + 1, class:'select-month__label', id:"month#{n + 1}" %>
+          <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label', id:"month#{n + 1}" %>
         </div>
       <% end %>
     </div>
     <div class='select-month__box-btn'>
-      <%= f.submit '月選択', class:'select-month__btn' %>
+      <%= f.submit '表示', class:'select-month__btn' %>
     </div>
   <% end %>
 </div>

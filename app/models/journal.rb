@@ -1,4 +1,5 @@
 class Journal < ApplicationRecord
+  attr_accessor :month, :day, :debit_code, :credit_code
 
   with_options presence: true do
     validates :user_id
