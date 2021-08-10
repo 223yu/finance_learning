@@ -1,4 +1,8 @@
 $('.entry__index-tbody').html('<%= j(render 'index', journals: @journals) %>');
 $('.single-entry__new').html('<%= j(render 'new', journal: @journal) %>');
+$('.single-entry__search-mode').html('<%= j(render 'layouts/search-mode',path: search_single_entries_path) %>');
+<!-- search-modeに開始月と終了月をセット -->
+$('.search-mode__form-start').val('<%= @get_start_month %>');
+$('.search-mode__form-end').val('<%= @get_end_month %>');
 <!-- table最下部までスクロール -->
 $('.entry__index-tbody').animate({scrollTop: $('.entry__index-tbody')[0].scrollHeight}, 'fast');

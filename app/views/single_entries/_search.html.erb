@@ -1,4 +1,4 @@
-<%= form_with model: journal, url: single_entries_path, class:'entry__form-group', remote: true do |f| %>
+<%= form_with url: single_entries_path, method: :get, class:'entry__form-group', remote: true do |f| %>
   <div class='entry__index-tr'>
     <div class='entry__new-td--date'>
       <%= f.text_field :month, autofocus: true, tabindex: 11, class:'entry__form--date' %>
@@ -25,6 +25,8 @@
       <%= f.text_field :description, tabindex: 16, class:'entry__form--description' %>
     </div>
     <div class='entry__new-td--btn'>
+      <%= f.hidden_field :start_month, class:'entry__form--start-month' %>
+      <%= f.hidden_field :end_month, class:'entry__form--end-month' %>
       <%= f.submit '', tabindex: 17 %>
     </div>
   </div>

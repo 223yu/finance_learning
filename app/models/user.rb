@@ -149,6 +149,11 @@ class User < ApplicationRecord
     end
   end
 
+  # 勘定科目コードから勘定科目idを返す
+  def code_id(code)
+    Account.find_by(user_id: self.id, year: self.year, code: code).id
+  end
+
   # 学習済みであればtrueを返す
   def learned?(content)
     Learning.find_by(user_id: self.id, content_id: content.id).present?

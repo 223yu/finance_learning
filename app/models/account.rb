@@ -66,7 +66,6 @@ class Account < ApplicationRecord
     foreign_key: 'credit_id', dependent: :destroy
 
   # 追加メソッド
-
   # 勘定科目の残高を更新
   def update_balance(amount, month, debit_or_credit)
     # monthの借方or貸方残高を更新

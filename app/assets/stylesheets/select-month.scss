@@ -10,13 +10,12 @@
 
 .select-month{
   &__title{
-    margin: 20px auto 5px 170px;
+    margin: 20px 0 10px 0;
   }
 
   &__form-group{
-    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
   }
 

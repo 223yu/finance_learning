@@ -1,6 +1,13 @@
 <div class='single-entry'>
   <!-- 入力月選択フォーム -->
-  <%= render 'layouts/select-month', path: single_entries_path %>
+  <div class='single-entry__select-month'>
+    <%= render 'layouts/select-month', path: single_entries_path %>
+  </div>
+
+  <!-- 検索モードボタン -->
+  <div class='single-entry__search-mode'>
+    <!-- #indexにて非同期生成 -->
+  </div>
 
   <!-- 仕訳表示 -->
   <div class='single-entry__index'>
