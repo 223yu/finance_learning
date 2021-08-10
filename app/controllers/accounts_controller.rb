@@ -28,9 +28,9 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account = Account.find(params[:id])
-    @id = @account.id
-    @account.destroy
+    account = Account.find(params[:id])
+    @id = account.id
+    account.destroy
   end
 
   def search

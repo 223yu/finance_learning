@@ -94,6 +94,18 @@
       width: 200px;
       border-top: none;
     }
+
+    &--btn{
+      display: table-cell;
+      border: none;
+    }
+
+  }
+
+  &__index-link{
+    @extend %link;
+
+    margin: 0 5px;
   }
 
   // new
@@ -173,6 +185,14 @@
 
       width: 188px;
     }
+  }
+
+  //edit
+  &__edit-btn{
+    border: none;
+    background: none;
+    margin-left: 5px;
+    font-size: 16px;
   }
 
   // subbox

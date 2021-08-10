@@ -80,9 +80,7 @@
     <main>
       <!-- flash message -->
       <div class='flash'>
-        <% flash.each do |message_type, message| %>
-          <div class='alert__<%= message_type %>'><%= message %></div>
-        <% end %>
+        <%= render 'layouts/flash' %>
       </div>
 
       <%= yield %>
