@@ -20,8 +20,8 @@ class Journal < ApplicationRecord
     month = self.month.to_i
     day = self.day.to_i
     self.date = Date.new(user.year, month, day)
-    debit_id = Account.find_by(user_id: user.id, year: user.year, code: self.debit_code).id
-    credit_id = Account.find_by(user_id: user.id, year: user.year, code: self.credit_code).id
+    debit_id = user.code_id(self.debit_code)
+    credit_id = user.code_id(self.credit_code)
     self.user_id = user.id
     self.debit_id = debit_id
     self.credit_id = credit_id

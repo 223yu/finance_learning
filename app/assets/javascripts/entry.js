@@ -7,7 +7,8 @@
 // 勘定科目を入力すると科目名を補完する
 $(document).on('turbolinks:load', function() {
   // 借方コード、貸方コード
-  let target = ['journal_debit', 'journal_credit'];
+  let target = ['journal_debit', 'journal_credit',
+                'debit', 'credit']; //10行目→nomal、11行目→search mode
   target.forEach(function(target){
     let target_code = '#' + target + '_code';
     let target_name = '#' + target + '_name';
@@ -25,7 +26,8 @@ $(document).on('turbolinks:load', function() {
   });
 
   // その他の項目は全角を半角に変換するのみ
-  target = ['#journal_month', '#journal_day', '#journal_amount'];
+  target = ['#journal_month', '#journal_day', '#journal_amount',
+            '#month', '#day', '#amount']; //29行目→nomal、30行目→search mode
   target.forEach(function(target){
     $(document).on('input', target, function(){
     let str = $(this).val();
@@ -82,8 +84,11 @@ $(document).on('turbolinks:load', function() {
 // Enterキーでタブ移動出来るようにする
 $(document).on('turbolinks:load', function() {
 
-  $(document).on('keydown', '#journal_month', function(){
-    enter_change_tab();
+  const target = ['#journal_month', '#month'];
+  target.forEach(function(target){
+    $(document).on('keydown', target, function(){
+      enter_change_tab();
+    });
   });
 
   // function集
