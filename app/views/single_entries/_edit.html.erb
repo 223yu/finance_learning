@@ -1,0 +1,31 @@
+<%= form_with model: journal, url: single_entry_path(journal), class:'entry__edit-form-group', remote: true do |f| %>
+  <div class='entry__new-td--date'>
+    <%= f.text_field :month, autofocus: true, tabindex: 1, class:'entry__form--date' %>
+  </div>
+  <div class='entry__new-td--date'>
+    <%= f.text_field :day, tabindex: 2, class:'entry__form--date' %>
+  </div>
+  <div class='entry__new-td--code'>
+    <%= f.text_field :debit_code, tabindex: 3, class:'entry__form--code' %>
+  </div>
+  <div class='entry__new-td--name'>
+    <%= f.text_field :debit_name, disabled: true, class:'entry__form--name' %>
+  </div>
+  <div class='entry__new-td--code'>
+    <%= f.text_field :credit_code, tabindex: 4, class:'entry__form--code' %>
+  </div>
+  <div class='entry__new-td--name'>
+    <%= f.text_field :credit_name, disabled: true, class:'entry__form--name' %>
+  </div>
+  <div class='entry__new-td--amount'>
+    <%= f.text_field :amount, tabindex: 5, class:'entry__form--amount' %>
+  </div>
+  <div class='entry__new-td--description'>
+    <%= f.text_field :description, tabindex: 6, class:'entry__form--description' %>
+  </div>
+  <div class='entry__index-td--btn'>
+    <%= f.button type: 'submit', tabindex: 7, class:'entry__edit-btn' do %>
+      <i class="fas fa-save"></i>
+    <% end %>
+  </div>
+<% end %>

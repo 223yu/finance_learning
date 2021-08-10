@@ -12,32 +12,25 @@ class SingleEntriesController < ApplicationController
 
   def create
     @journal = Journal.new(journal_params)
-    month = @journal.month.to_i
-    day = @journal.day.to_i
-    debit_id = Account.find_by(user_id: current_user.id, year: current_user.year, code: @journal.debit_code).id
-    credit_id = Account.find_by(user_id: current_user.id, year: current_user.year, code: @journal.credit_code).id
-    @journal.user_id = current_user.id
-    @journal.date = Date.new(current_user.year, month, day)
-    @journal.debit_id = debit_id
-    @journal.credit_id = credit_id
-    if @journal.save
-      # 科目残高更新
-      debit_account = Account.find(debit_id)
-      debit_account.update_balance(@journal.amount, month, 'debit')
-      credit_account = Account.find(credit_id)
-      credit_account.update_balance(@journal.amount, month, 'credit')
-      # 初期化
-      @journal_new = Journal.new
-    end
+    @journal.arrange_and_save(current_user)
+    @journal_new = Journal.new
   end
 
   def edit
+    @journal = Journal.find(params[:id])
+    @journal.arrange_for_display
   end
 
   def update
+    @journal = Journal.find(params[:id])
+    @journal.update(journal_params)
+    @journal.arrange_and_save(current_user)
   end
 
   def destroy
+    journal = Journal.find(params[:id])
+    @id = journal.id
+    journal.delete_after_updating_balance
   end
 
   private
