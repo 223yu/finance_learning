@@ -1,9 +1,3 @@
-//= require rails-ujs
-//= require activestorage
-//= require turbolinks
-//= require jquery
-//= require jquery_ujs
-
 // 勘定科目を入力すると科目名を補完する
 $(document).on('turbolinks:load', function() {
   // 借方コード、貸方コード
