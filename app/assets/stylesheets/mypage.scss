@@ -1,0 +1,89 @@
+@import "global";
+
+.mypage{
+  // cumurative-journal
+  &__cumurative-journal{
+    @extend %max-width;
+
+    height: 50px;
+    margin-top: 30px;
+  }
+
+  &__cumurative-journal-item{
+    height: 50px;
+    width: 200px;
+    display: inline-block;
+  }
+
+  // year-choice
+  &__year-choice{
+    @extend %max-width;
+
+    height: 400px;
+    margin-top: 30px;
+  }
+
+  &__table{
+    @extend %table;
+  }
+
+  &__tr{
+    @extend %tr;
+  }
+
+  &__td{
+    @extend %td;
+  }
+
+  &__td-btn{
+    @extend %link;
+
+    height: 30px;
+    width: 100px;
+    display: block;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+
+  &__graph-boxes{
+    @extend %max-width;
+
+    display: flex;
+  }
+
+  &__graph-area{
+    width: 400px;
+    margin: 30px 50px 30px 0;
+  }
+
+  &__graph-box{
+    height: 200px;
+    width: 400px;
+    border: 1px solid;
+    border-radius: 30px;
+  }
+
+  // buttons
+  &__buttons {
+    @extend %max-width;
+
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__btn{
+    @extend %link;
+
+    display: block;
+    height: 50px;
+    width: 150px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    margin-right: 30px;
+  }
+
+}

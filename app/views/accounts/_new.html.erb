@@ -1,0 +1,41 @@
+<%= form_with model: account, url: accounts_path, class:'account__add-form-group', local: true do |f| %>
+  <table class='account__add-table'>
+    <thead class='account__add-thead'>
+      <tr class='account__add-tr'>
+        <th class='account__add-th'>
+          <%= f.label :code, 'コード', class:'account__add-label' %>
+        </th>
+        <th class='account__add-th'>
+          <%= f.label :name, '科目名', class:'account__add-label' %>
+        </th>
+        <th class='account__add-th'>
+          <%= f.label :opening_balance_1, '期首残高', class:'account__add-label' %>
+        </th>
+        <th class='account__add-th'>
+          <%= f.label :total_account, '合計科目', class:'account__add-label' %>
+        </th>
+      </tr>
+    </thead>
+    <tbody class='account__add-tbody'>
+      <tr class='account__add-tr'>
+        <td class='account__add-td'>
+          <%= f.text_field :code, class:'account__add-text-field' %>
+        </td>
+        <td class='account__add-td'>
+          <%= f.text_field :name, class:'account__add-text-field' %>
+        </td>
+        <td class='account__add-td'>
+          <%= f.text_field :opening_balance_1, class:'account__add-text-field' %>
+        </td>
+        <td class='account__add-td'>
+          <%= f.select :total_account, [['現預金'], ['他流動資産'], ['固定資産'],
+              ['カード'], ['他流動負債'],['固定負債'], ['収入'], ['原価'],
+              ['販管費'], ['営業外収入'],['営業外費用']], {include_blank: '選択してください'}, class:'account__add-select' %>
+        </td>
+        <td class='account__add-td--btn'>
+          <%= f.submit '追加', class:'account__add-btn' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,32 @@
+<div class='account'>
+  <div class='errors'>
+    <%= render 'layouts/errors', obj: @account %>
+  </div>
+  <h4 class='account__title'>勘定科目設定</h4>
+
+
+  <div class='account__add-area'>
+    <p class='account__add-title'>勘定科目追加</p>
+    <div class='account__add-new'>
+      <%= render 'new', account: @account %>
+    </div>
+  </div>
+
+  <div class='account__index-boxes'>
+    <h4 class='account__index-boxes-title'>勘定科目一覧</h4>
+    <!-- 貸借対照表 -->
+    <div class='account__index-box'>
+      <p class='account__index-title'>貸借対照表</p>
+      <div class='account__index--balance'>
+        <%= render 'index', accounts: @accounts, total_account: Account::BALANCE_SHEETS_ACCOUNTS %>
+      </div>
+    </div>
+    <!-- 損益計算書 -->
+    <div class='account__index-box'>
+      <p class='account__index-title'>損益計算書</p>
+      <div class='account__index--statement'>
+        <%= render 'index', accounts: @accounts, total_account: Account::PROFIT_AND_LOSS_STATEMENT %>
+      </div>
+    </div>
+  </div>
+</div>

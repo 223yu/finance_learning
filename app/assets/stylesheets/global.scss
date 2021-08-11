@@ -1,0 +1,68 @@
+// リセットCSS
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main{
+  padding-top: 50px; //header分全体を下げる
+}
+
+// 色定義
+$gray: rgba(211, 211, 211, 1);
+$blue: rgba(135, 206, 250, 1);
+
+// その他
+// コンテナ
+%max-width{
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto ;
+}
+
+// リンク
+%link{
+  color: black;
+  text-decoration: none;
+}
+
+//タイトル
+%title{
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+}
+
+// テーブル
+%table{
+  display: table;
+  height: 30px;
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 30px;
+}
+
+%thead{
+  display: table-header-group;
+}
+
+%tbody{
+  display: table-row-group;
+}
+
+%tr{
+  width: 100%;
+}
+
+%th{
+  display: table-cell;
+  padding: 5px;
+  border: 1px solid;
+}
+
+%td{
+  display: table-cell;
+  padding: 5px;
+  border: 1px solid;
+}

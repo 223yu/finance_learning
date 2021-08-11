@@ -1,0 +1,13 @@
+@import "global";
+
+.search-mode{
+
+  &__form-group{
+    text-align: right;
+  }
+
+  &__form-btn{
+    height: 50px;
+    width: 120px;
+  }
+}

@@ -1,14 +1,22 @@
 Rails.application.routes.draw do
 
   root 'homes#top'
-  devise_for :users
-  resource :users, only: [:show, :edit, :update] do
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
+  resource :users, only: [:show] do
     post 'start', on: :collection
   end
   resources :contents, only: [:index, :create, :destroy]
-  resources :accounts, only: [:index, :create, :edit, :update, :destroy]
+  resources :accounts, only: [:index, :create, :edit, :update, :destroy] do
+    get 'search', on: :collection
+    get 'search_sub', on: :collection
+  end
   resources :single_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
+    get 'search', on: :collection
   end
   resources :cash_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
@@ -24,6 +32,9 @@ Rails.application.routes.draw do
   end
   resources :ledgers, only: [:index, :edit, :update, :destroy] do
     get 'select', on: :collection
+  end
+  resource :years, only: [:update] do
+    post 'select', on: :collection
   end
 
 end

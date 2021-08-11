@@ -1,0 +1,70 @@
+@import "global";
+
+%select-label{
+  display: block;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.select-month{
+  &__title{
+    margin: 20px 0 10px 0;
+  }
+
+  &__form-group{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  &__box{
+    display: table-cell;
+    border: 1px solid;
+    border-right: none;
+
+    &:last-child{
+      border-right: 1px solid;
+    }
+  }
+
+  &__checkbox{
+    display: none;
+  }
+
+  &__label{
+    @extend %select-label;
+
+    &:hover{
+      background: $blue;
+    }
+
+    &--first{
+      @extend %select-label;
+      background: $blue;
+    }
+
+    &--second{
+      @extend %select-label;
+      background: $blue;
+    }
+
+    &--between{
+      @extend %select-label;
+      background: $blue;
+    }
+  }
+
+  &__box-btn{
+    margin-left: 30px;
+  }
+
+  &__btn{
+    display: block;
+    height: 30px;
+    width: 50px;
+    text-align: center;
+    line-height: 30px;
+  }
+}

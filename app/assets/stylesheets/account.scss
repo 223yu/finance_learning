@@ -1,0 +1,224 @@
+@import "global";
+
+.account{
+  @extend %max-width;
+
+  // title
+  &__title{
+    @extend %title;
+  }
+
+  // add
+  &__add-area{
+    display: flex;
+    justify-content: center;
+  }
+
+  &__add-title{
+    height: 80px;
+    line-height: 80px;
+    margin-right: 30px;
+  }
+
+  &__add-table{
+    @extend %table;
+  }
+
+  &__add-thead{
+    background: $gray;
+  }
+
+  &__add-tr{
+    @extend %tr;
+  }
+
+  &__add-th{
+    @extend %th;
+
+    height: 40px;
+  }
+
+  &__add-td{
+    @extend %td;
+
+    height: 40px;
+
+    &--btn{
+      border: none;
+    }
+  }
+
+  &__add-btn{
+    width: 50px;
+    display: block;
+    margin-left: 10px;
+  }
+
+  &__add-text-field{
+    width: 100px;
+  }
+
+  // index-boxes
+  &__index-boxes{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+  }
+
+  &__index-boxes-title{
+    @extend %title;
+
+    width: 100%;
+  }
+
+  &__index-box{
+    margin: 0 20px;
+  }
+
+  &__index-title{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  &__index-table{
+    @extend %table;
+  }
+
+  &__index-thead{
+    @extend %thead;
+  }
+
+  &__index-th{
+
+    &--code{
+      @extend %th;
+
+      width: 80px;
+      background: $gray;
+    }
+
+    &--name{
+      @extend %th;
+
+      width: 100px;
+      background: $gray;
+    }
+
+    &--balance{
+      @extend %th;
+
+      width: 100px;
+      background: $gray;
+    }
+
+    &--total{
+      @extend %th;
+
+      width: 100px;
+      background: $gray;
+    }
+
+  }
+
+  &__index-td{
+
+    &--code{
+      @extend %td;
+
+      width: 80px;
+    }
+
+    &--name{
+      @extend %td;
+
+      width: 100px;
+    }
+
+    &--balance{
+      @extend %td;
+
+      width: 100px;
+      text-align: right;
+    }
+
+    &--total{
+      @extend %td;
+
+      width: 100px;
+    }
+
+    &--btn{
+      display: table-cell;
+      border: none;
+    }
+  }
+
+  &__index-link{
+    @extend %link;
+
+    margin: 0 5px;
+  }
+
+  //edit
+  &__edit-td{
+    &--code{
+      @extend %td;
+
+      width: 80px;
+      background: $blue;
+    }
+
+    &--name{
+      @extend %td;
+
+      width: 100px;
+      background: $blue;
+    }
+
+    &--balance{
+      @extend %td;
+
+      width: 100px;
+      background: $blue;
+    }
+
+    &--total{
+      @extend %td;
+
+      width: 100px;
+      background: $blue;
+    }
+
+    &--btn{
+      display: table-cell;
+    }
+  }
+
+  &__edit-form{
+
+    &--code{
+      width: 39px;
+    }
+
+    &--name{
+      width: 89px;
+    }
+
+    &--balance{
+      width: 89px;
+    }
+
+    &--total{
+      width: 89px;
+    }
+  }
+
+  &__edit-btn{
+    border: none;
+    background: none;
+    margin-left: 5px;
+    font-size: 16px;
+  }
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_133830) do
+ActiveRecord::Schema.define(version: 2021_08_05_122157) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 2021_08_02_133830) do
   create_table "learnings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "content_id", null: false
-    t.boolean "end_learning", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -96,6 +95,8 @@ ActiveRecord::Schema.define(version: 2021_08_02_133830) do
     t.integer "year", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
