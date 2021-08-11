@@ -2,7 +2,7 @@
 $(document).on('turbolinks:load', function() {
   // 借方コード、貸方コード
   let target = ['journal_debit', 'journal_credit',
-                'debit', 'credit']; //10行目→nomal、11行目→search mode
+                'debit', 'credit']; //4行目→nomal、5行目→search mode
   target.forEach(function(target){
     let target_code = '#' + target + '_code';
     let target_name = '#' + target + '_name';
@@ -21,7 +21,7 @@ $(document).on('turbolinks:load', function() {
 
   // その他の項目は全角を半角に変換するのみ
   target = ['#journal_month', '#journal_day', '#journal_amount',
-            '#month', '#day', '#amount']; //29行目→nomal、30行目→search mode
+            '#month', '#day', '#amount']; //23行目→nomal、24行目→search mode
   target.forEach(function(target){
     $(document).on('input', target, function(){
     let str = $(this).val();
@@ -78,7 +78,8 @@ $(document).on('turbolinks:load', function() {
 // Enterキーでタブ移動出来るようにする
 $(document).on('turbolinks:load', function() {
 
-  const target = ['#journal_month', '#month'];
+  const target = ['#journal_month', '#journal_day', '#journal_debit_code', '#journal_credit_code', '#journal_amount',
+                  '#month', '#day', '#debit_code', '#credit_code', '#amount']; //81行目→nomal、82行目→search mode
   target.forEach(function(target){
     $(document).on('keydown', target, function(){
       enter_change_tab();
