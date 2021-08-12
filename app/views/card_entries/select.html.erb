@@ -1,0 +1,36 @@
+<div class='cash-entry'>
+  <!-- 入力月選択フォーム -->
+  <div class='cash-entry__select-month'>
+    <%= render 'layouts/select-month-account', path: cash_entries_path %>
+  </div>
+
+  <!-- 検索モードボタン -->
+  <div class='cash-entry__search-mode'>
+    <!-- #indexにて非同期生成 -->
+  </div>
+
+  <!-- 仕訳表示 -->
+  <div class='cash-entry__index'>
+    <div class='entry__index-table'>
+      <div class='entry__index-thead'>
+        <div class='entry__index-tr--sinple-entry'>
+          <div class='entry__index-th--date'>月</div>
+          <div class='entry__index-th--date'>日</div>
+          <div class='entry__index-th--nonself-code'>相手科目コード</div>
+          <div class='entry__index-th--name'>相手科目名</div>
+          <div class='entry__index-th--amount'>引落金額</div>
+          <div class='entry__index-th--amount'>利用金額</div>
+          <div class='entry__index-th--description'>摘要</div>
+        </div>
+      </div>
+      <div class='entry__index-tbody'>
+        <!-- #indexにて非同期生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 仕訳入力 -->
+  <div class='cash-entry__new'>
+    <!-- #indexにて非同期生成 -->
+  </div>
+</div>
