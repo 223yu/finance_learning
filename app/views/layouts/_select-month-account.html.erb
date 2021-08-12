@@ -1,0 +1,21 @@
+<div class='select-month'>
+  <p class='select-month__title'>表示する月と科目を選んでください</p>
+  <%= form_with url:  path, method: :get, class:'select-month__form-group', remote: true do |f| %>
+    <div class='select-month__boxes'>
+      <% 12.times do |n| %>
+        <div class='select-month__box'>
+          <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
+          <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label', id:"month#{n + 1}" %>
+        </div>
+      <% end %>
+    </div>
+    <div clas='select-month__form-boxes'>
+      <div class='select-month__account'>
+        <%= f.select :self_code, @accounts, {include_blank: '科目選択'}, class:'select-month__account-form' %>
+      </div>
+      <div class='select-month__box-btn'>
+        <%= f.submit '表示', class:'select-month__btn' %>
+      </div>
+    </div>
+  <% end %>
+</div>

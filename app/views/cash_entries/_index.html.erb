@@ -1,0 +1,28 @@
+<% journals.each do |journal| %>
+  <div class='entry__index-tr<%= journal.id %>'>
+    <div class='entry__index-td--date'><%= journal.date.month %></div>
+    <div class='entry__index-td--date'><%= journal.date.day %></div>
+    <% if journal.debit_id == self_id %>
+      <div class='entry__index-td--nonself-code'><%= journal.credit.code %></div>
+      <div class='entry__index-td--name'><%= journal.credit.name %></div>
+      <div class='entry__index-td--amount'><%= journal.amount.to_s(:delimited) %></div>
+      <div class='entry__index-td--amount'>0</div>
+    <% else %>
+      <div class='entry__index-td--nonself-code'><%= journal.debit.code %></div>
+      <div class='entry__index-td--name'><%= journal.debit.name %></div>
+      <div class='entry__index-td--amount'>0</div>
+      <div class='entry__index-td--amount'><%= journal.amount.to_s(:delimited) %></div>
+    <% end %>
+    <div class='entry__index-td--description'><%= journal.description %></div>
+    <div class='entry__index-td--btn'>
+      <%= link_to edit_cash_entry_path(id: journal.id, self_code: self_code), class:'entry__index-link', remote: true do %>
+        <i class="fas fa-edit"></i>
+      <% end %>
+    </div>
+    <div class='entry__index-td--btn'>
+      <%= link_to cash_entry_path(journal), method: :delete, class:'entry__index-link', remote: true do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+    </div>
+  </div>
+<% end %>

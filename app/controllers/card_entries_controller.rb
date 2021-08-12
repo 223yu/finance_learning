@@ -18,4 +18,7 @@ class CardEntriesController < ApplicationController
   def destroy
   end
 
+  def search
+  end
+
 end
