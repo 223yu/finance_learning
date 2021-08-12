@@ -20,9 +20,11 @@ Rails.application.routes.draw do
   end
   resources :cash_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
+    get 'search', on: :collection
   end
    resources :card_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
+    get 'search', on: :collection
   end
   resources :trial_balances, only: [:index] do
     get 'select', on: :collection

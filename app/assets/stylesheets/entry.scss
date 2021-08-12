@@ -13,13 +13,17 @@
   }
 
   &__index-tbody{
-    height: 400px;
+    max-height: 400px;
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
   &__index-tr{
     width: 900px;
+
+    &--sinple-entry{
+      width: 800px;
+    }
   }
 
   &__index-th{
@@ -35,6 +39,13 @@
 
       background: $gray;
       width: 100px;
+    }
+
+    &--nonself-code{
+      @extend %th;
+
+      background: $gray;
+      width: 150px;
     }
 
     &--name{
@@ -71,6 +82,13 @@
       @extend %th;
 
       width: 100px;
+      border-top: none;
+    }
+
+    &--nonself-code{
+      @extend %th;
+
+      width: 150px;
       border-top: none;
     }
 
@@ -128,6 +146,13 @@
       border-right: none;
     }
 
+    &--nonself-code{
+      @extend %th;
+
+      width: 150px;
+      border-right: none;
+    }
+
     &--name{
       @extend %th;
 
@@ -164,6 +189,12 @@
       @extend %th;
 
       width: 88px;
+    }
+
+    &--nonself-code{
+      @extend %th;
+
+      width: 138px;
     }
 
     &--name{
