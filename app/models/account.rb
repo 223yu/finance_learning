@@ -57,6 +57,7 @@ class Account < ApplicationRecord
     validates :credit_balance_12
   end
 
+  validates :code, :numericality => { :greater_than => 0 }
   validates_uniqueness_of :code, scope: [:user_id, :year]
 
   belongs_to :user

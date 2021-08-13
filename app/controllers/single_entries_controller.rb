@@ -1,5 +1,6 @@
 class SingleEntriesController < ApplicationController
   before_action :select_start_month_to_end_month, only:[:index]
+  after_action :discard_flash_if_xhr
 
   def select
   end
@@ -33,8 +34,13 @@ class SingleEntriesController < ApplicationController
 
   def create
     @journal = Journal.new(journal_params)
-    @journal.arrange_and_save(current_user)
-    @journal_new = Journal.new
+    if @journal.arrange_and_save(current_user)
+      # 作成後の仕訳について残高更新処理
+      update_debit_and_credit_balance(@journal.date.month, @journal.debit_id, @journal.credit_id, @journal.amount)
+      @journal_new = Journal.new
+    else
+      flash[:danger] = '入力が正しくない項目があります'
+    end
   end
 
   def edit
@@ -44,8 +50,25 @@ class SingleEntriesController < ApplicationController
 
   def update
     @journal = Journal.find(params[:id])
+    # 更新前の仕訳情報を取得しておく
+    prev_date = @journal.date
+    prev_debit_id = @journal.debit_id
+    prev_credit_id = @journal.credit_id
+    prev_amount = @journal.amount
+    prev_description = @journal.description
+    # 更新 update時amount,descriptionのみDB更新される
     @journal.update(journal_params)
-    @journal.arrange_and_save(current_user)
+    if @journal.arrange_and_save(current_user)
+      # 更新前の仕訳について残高戻し処理
+      update_debit_and_credit_balance(prev_date.month, prev_debit_id, prev_credit_id, - prev_amount)
+      # 更新後の仕訳について残高更新処理
+      update_debit_and_credit_balance(@journal.date.month, @journal.debit_id, @journal.credit_id, @journal.amount)
+    else
+      # 更新に失敗した場合は更新前に戻す
+      flash[:danger] = '入力が正しくない項目があります'
+      @journal.update(date: prev_date, debit_id: prev_debit_id, credit_id: prev_credit_id, amount: prev_amount, description: prev_description)
+      @journal.arrange_for_display
+    end
   end
 
   def destroy
