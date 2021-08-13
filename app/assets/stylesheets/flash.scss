@@ -1,0 +1,16 @@
+@import "global";
+
+.flash{
+
+  &__danger{
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background: $pink;
+  }
+
+  &__danger-message{
+    @extend %max-width;
+  }
+}

@@ -10,6 +10,8 @@ class Journal < ApplicationRecord
     validates :description
   end
 
+  validates :amount, :numericality => { :greater_than => 0 }
+
   belongs_to :user
   belongs_to :debit, class_name: 'Account'
   belongs_to :credit, class_name: 'Account'
@@ -17,21 +19,26 @@ class Journal < ApplicationRecord
   # 追加メソッド
   # 入力画面から送られてきたパラメータを保存可能な形式に整えて保存する
   def arrange_and_save(user)
+    # 最後のsaveまでエラーが発生しないように各値を整える
     month = self.month.to_i
     day = self.day.to_i
-    self.date = Date.new(user.year, month, day)
-    debit_id = user.code_id(self.debit_code)
-    credit_id = user.code_id(self.credit_code)
-    self.user_id = user.id
-    self.debit_id = debit_id
-    self.credit_id = credit_id
-    if self.save
-      # 科目残高更新
-      debit_account = Account.find(debit_id)
-      debit_account.update_balance(self.amount, month, 'debit')
-      credit_account = Account.find(credit_id)
-      credit_account.update_balance(self.amount, month, 'credit')
+    if Date.valid_date?(user.year, month, day)
+      self.date = Date.new(user.year, month, day)
+    else
+      self.date = ''
     end
+    if Account.find_by(user_id: user.id, year: user.year, code: self.debit_code).present?
+      self.debit_id = user.code_id(self.debit_code)
+    else
+      self.debit_id = ''
+    end
+    if Account.find_by(user_id: user.id, year: user.year, code: self.credit_code).present?
+      self.credit_id = user.code_id(self.credit_code)
+    else
+      self.credit_id = ''
+    end
+    self.user_id = user.id
+    self.save
   end
 
   # 簡易入力において入力画面から送られてきたパラメータを保存可能な形式に整えて保存する
