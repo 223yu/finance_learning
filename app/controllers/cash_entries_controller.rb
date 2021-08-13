@@ -76,7 +76,7 @@ class CashEntriesController < ApplicationController
       # 更新前の仕訳について残高戻し処理
       update_debit_and_credit_balance(prev_date.month, prev_debit_id, prev_credit_id, - prev_amount)
       # 更新後の仕訳について残高更新処理
-      update_debit_and_credit_balance(@journal.month, @journal.debit_id, @journal.credit_id, @journal.amount)
+      update_debit_and_credit_balance(@journal.date.month, @journal.debit_id, @journal.credit_id, @journal.amount)
     else
       # 更新に失敗した場合は更新前に戻す
       flash[:danger] = '入力が正しくない項目があります'

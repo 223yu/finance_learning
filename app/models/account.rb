@@ -103,4 +103,21 @@ class Account < ApplicationRecord
     end
   end
 
+  # 月から[期首残高, 借方残高, 貸方残高, 期末残高]を返す
+  def return_balances(start_month, end_month)
+    debit_balance = 0
+    credit_balance = 0
+    opening_balance = self.send("opening_balance_#{start_month}")
+    (start_month..end_month).to_a.each do |mon|
+      debit_balance += self.send("debit_balance_#{mon}")
+      credit_balance += self.send("credit_balance_#{mon}")
+    end
+    if DEBIT_ACCOUNTS.include?(self.total_account)
+      ending_balance = opening_balance + debit_balance - credit_balance
+    else
+      ending_balance = opening_balance - debit_balance + credit_balance
+    end
+    return [opening_balance, debit_balance, credit_balance, ending_balance]
+  end
+
 end
