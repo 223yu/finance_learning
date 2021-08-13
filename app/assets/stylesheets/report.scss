@@ -1,0 +1,197 @@
+@import "global";
+
+// index
+.report{
+
+  &__index-table{
+    @extend %table;
+  }
+
+  &__index-thead{
+    @extend %thead;
+
+    display: block;
+  }
+
+  &__index-tbody{
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  &__index-th{
+    &--code{
+      @extend %th;
+
+      background: $gray;
+      width: 70px;
+    }
+
+    &--name{
+      @extend %th;
+
+      background: $gray;
+      width: 130px;
+    }
+
+    &--opening-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--debit-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--credit-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--ending-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--ledger{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+  }
+
+  &__index-td{
+    &--code{
+      @extend %th;
+
+      border-top: none;
+      width: 70px;
+    }
+
+    &--name{
+      @extend %th;
+
+      border-top: none;
+      width: 130px;
+    }
+
+    &--opening-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--debit-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--credit-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--ending-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--ledger{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+    }
+
+  }
+
+  &__index-link{
+    @extend %link;
+
+    margin: 0 5px;
+  }
+
+  // total
+  &__total-td{
+    &--code{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 70px;
+    }
+
+    &--name{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 130px;
+    }
+
+    &--opening-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--debit-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--credit-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--ending-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--ledger{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+    }
+  }
+}

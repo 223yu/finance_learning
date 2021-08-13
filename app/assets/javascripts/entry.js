@@ -96,7 +96,7 @@ $(document).on('turbolinks:load', function() {
         index = String(Number(index) + 1);
         $('[tabindex=' + index + ']').focus();
         // 摘要以外でのEnter送信無効
-        if (index != '7' && index != '17'){
+        if (index != '17'){
           e.preventDefault();
         }
       }
