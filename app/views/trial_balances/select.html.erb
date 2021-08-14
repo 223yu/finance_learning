@@ -1,49 +1,49 @@
 <div class='trial-balance'>
+  <h4 class='trial-balance__title'>試算表</h4>
   <!-- 入力月選択フォーム -->
   <div class='trial-balance__select-month'>
     <%= render 'layouts/select-month', path: trial_balances_path %>
   </div>
 
   <!-- 貸借対照表表示 -->
-  <h4 class='trial-balance__title'>貸借対照表</h4>
+  <p class='trial-balance__index-title'>貸借対照表</p>
   <div class='trial-balance__index'>
-    <div class='report__index-table'>
-      <div class='report__index-thead'>
-        <div class='report__index-tr'>
-          <div class='report__index-th--code'>コード</div>
-          <div class='report__index-th--name'>科目名</div>
-          <div class='report__index-th--opening-balance'>期首残高</div>
-          <div class='report__index-th--debit-balance'>借方残高</div>
-          <div class='report__index-th--credit-balance'>貸方残高</div>
-          <div class='report__index-th--ending-balance'>期末残高</div>
-          <div class='report__index-th--ledger'>元帳</div>
-        </div>
-      </div>
-      <div class='report__index-tbody--balance-sheet'>
+    <table class='report__index-table'>
+      <thead class='report__index-thead'>
+        <tr class='report__index-tr'>
+          <th class='report__index-th--code'>コード</th>
+          <th class='report__index-th--name'>科目名</th>
+          <th class='report__index-th--opening-balance'>期首残高</th>
+          <th class='report__index-th--debit-balance'>借方残高</th>
+          <th class='report__index-th--credit-balance'>貸方残高</th>
+          <th class='report__index-th--ending-balance'>期末残高</th>
+          <th class='report__index-th--ledger'>元帳</th>
+        </tr>
+      </thead>
+      <tbody class='report__index-tbody--balance-sheet'>
         <!-- #indexにて非同期生成 -->
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 
   <!-- 損益計算書表示 -->
-  <h4 class='trial-balance__title'>損益計算書</h4>
+  <p class='trial-balance__index-title'>損益計算書</p>
   <div class='trial-balance__index'>
-    <div class='report__index-table'>
-      <div class='report__index-thead'>
-        <div class='report__index-tr'>
-          <div class='report__index-th--code'>コード</div>
-          <div class='report__index-th--name'>科目名</div>
-          <div class='report__index-th--opening-balance'>期首残高</div>
-          <div class='report__index-th--debit-balance'>借方残高</div>
-          <div class='report__index-th--credit-balance'>貸方残高</div>
-          <div class='report__index-th--ending-balance'>期末残高</div>
-          <div class='report__index-th--ledger'>元帳</div>
-        </div>
-      </div>
-      <div class='report__index-tbody--profit-loss'>
+    <table class='report__index-table'>
+      <thead class='report__index-thead'>
+        <tr class='report__index-tr'>
+          <th class='report__index-th--code'>コード</th>
+          <th class='report__index-th--name'>科目名</th>
+          <th class='report__index-th--opening-balance'>期首残高</th>
+          <th class='report__index-th--debit-balance'>借方残高</th>
+          <th class='report__index-th--credit-balance'>貸方残高</th>
+          <th class='report__index-th--ending-balance'>期末残高</th>
+          <th class='report__index-th--ledger'>元帳</th>
+        </tr>
+      </thead>
+      <tbody class='report__index-tbody--profit-loss'>
         <!-- #indexにて非同期生成 -->
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
-
 </div>

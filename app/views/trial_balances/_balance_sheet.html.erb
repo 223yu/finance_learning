@@ -103,12 +103,12 @@
 
 <!-- 純資産 -->
   <% net_asset = [asset, liability].transpose.map{|n| n.inject(:-)} %>
-  <div class='report__total-tr'>
-    <div class='report__total-td--code'></div>
-    <div class='report__total-td--name'>純資産計</div>
-    <div class='report__total-td--opening-balance'><%= net_asset[0].to_s(:delimited) %></div>
-    <div class='report__total-td--debit-balance'><%= ( net_asset[1] - net_asset[2]).to_s(:delimited) %></div>
-    <div class='report__total-td--credit-balance'>0</div>
-    <div class='report__total-td--ending-balance'><%= net_asset[3].to_s(:delimited) %></div>
-    <div class='report__total-td--ledger'></div>
-  </div>
+  <tr class='report__total-tr'>
+    <td class='report__total-td--code'></td>
+    <td class='report__total-td--name'>純資産計</td>
+    <td class='report__total-td--opening-balance'><%= net_asset[0].to_s(:delimited) %></td>
+    <td class='report__total-td--debit-balance'><%= ( net_asset[1] - net_asset[2]).to_s(:delimited) %></td>
+    <td class='report__total-td--credit-balance'>0</td>
+    <td class='report__total-td--ending-balance'><%= net_asset[3].to_s(:delimited) %></td>
+    <td class='report__total-td--ledger'></td>
+  </tr>
