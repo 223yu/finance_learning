@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :transition_tables, only: [:index] do
     get 'select', on: :collection
   end
-  resources :ledgers, only: [:index, :edit, :update, :destroy] do
+  resources :ledgers, only: [:index ] do
     get 'select', on: :collection
   end
   resource :years, only: [:update] do

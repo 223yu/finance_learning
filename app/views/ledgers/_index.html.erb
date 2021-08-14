@@ -1,0 +1,44 @@
+<!-- 変数定義 -->
+<% balance = account.opening_balance_1 %>
+
+<!-- 期首残高 -->
+<tr class='ledger__index-tr'>
+  <td class='ledger__index-td--date'></td>
+  <td class='ledger__index-td--date'></td>
+  <td class='ledger__index-td--nonself-code'></td>
+  <td class='ledger__index-td--name'></td>
+  <td class='ledger__index-td--amount'></td>
+  <td class='ledger__index-td--amount'></td>
+  <td class='ledger__index-td--amount'><%= balance.to_s(:delimited) %></td>
+  <td class='ledger__index-td--description'>期首残高</td>
+</tr>
+
+<% journals.each do |journal| %>
+  <tr class='ledger__index-tr'>
+    <td class='ledger__index-td--date'><%= journal.date.month %></td>
+    <td class='ledger__index-td--date'><%= journal.date.day %></td>
+    <% if journal.debit_id == account.id %>
+      <td class='ledger__index-td--nonself-code'><%= journal.credit.code %></td>
+      <td class='ledger__index-td--name'><%= journal.credit.name %></td>
+      <td class='ledger__index-td--amount'><%= journal.amount.to_s(:delimited) %></td>
+      <td class='ledger__index-td--amount'>0</td>
+      <% if Account::DEBIT_ACCOUNTS.include?(account.total_account) %>
+        <% balance += journal.amount %>
+      <% else %>
+        <% balance -= journal.amount %>
+      <% end %>
+    <% else %>
+      <td class='ledger__index-td--nonself-code'><%= journal.debit.code %></td>
+      <td class='ledger__index-td--name'><%= journal.debit.name %></td>
+      <td class='ledger__index-td--amount'>0</td>
+      <td class='ledger__index-td--amount'><%= journal.amount.to_s(:delimited) %></td>
+      <% if Account::DEBIT_ACCOUNTS.include?(account.total_account) %>
+        <% balance -= journal.amount %>
+      <% else %>
+        <% balance += journal.amount %>
+      <% end %>
+    <% end %>
+    <td class='ledger__index-td--amount'><%= balance.to_s(:delimited) %></td>
+    <td class='ledger__index-td--description'><%= journal.description %></td>
+  </tr>
+<% end %>
