@@ -5,6 +5,16 @@
 
   margin-bottom: 100px;
 
+  &__index{
+    margin-top: 20px;
+    overflow-x: scroll;
+  }
+
+  &__title{
+    text-align: center;
+    margin-top: 20px;
+  }
+
   &__select-month{
     width: 700px;
     display: inline-block;
@@ -15,7 +25,7 @@
     display: inline-block;
   }
 
-  &__title{
+  &__index-title{
     margin-top: 20px;
   }
 

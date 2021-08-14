@@ -5,17 +5,18 @@
 
   &__index-table{
     @extend %table;
+
+    table-layout: fixed;
+    width: 1000px;
   }
 
   &__index-thead{
     @extend %thead;
 
-    display: block;
   }
 
   &__index-tbody{
     max-height: 400px;
-    overflow-x: hidden;
     overflow-y: scroll;
   }
 
@@ -63,6 +64,27 @@
     }
 
     &--ledger{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--total-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--average-balance{
+      @extend %th;
+
+      background: $gray;
+      width: 100px;
+    }
+
+    &--month{
       @extend %th;
 
       background: $gray;
@@ -122,6 +144,30 @@
 
       border-top: none;
       width: 100px;
+    }
+
+    &--total-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--average-balance{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--month{
+      @extend %th;
+
+      border-top: none;
+      width: 100px;
+      text-align: right;
     }
 
   }
@@ -192,6 +238,33 @@
       background: $blue;
       border-top: none;
       width: 100px;
+    }
+
+    &--total-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--average-balance{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--month{
+      @extend %th;
+
+      background: $blue;
+      border-top: none;
+      width: 100px;
+      text-align: right;
     }
   }
 }

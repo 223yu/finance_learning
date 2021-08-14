@@ -120,4 +120,25 @@ class Account < ApplicationRecord
     return [opening_balance, debit_balance, credit_balance, ending_balance]
   end
 
+  # 月から[1月 .. 12月, 累計残高, 平均残高]を返す
+  def return_transition_balances(end_month)
+    array = []
+    # 1月から終了月
+    (1..end_month).to_a.each do |mon|
+      if DEBIT_ACCOUNTS.include?(self.total_account)
+        array.push(self.send("debit_balance_#{mon}") - self.send("credit_balance_#{mon}"))
+      else
+        array.push(self.send("credit_balance_#{mon}") - self.send("debit_balance_#{mon}"))
+      end
+    end
+    # 終了月から12月
+    ((end_month + 1)..12).to_a.each do |mon|
+      array.push(0)
+    end
+    # 累計残高
+    array.push(array.sum)
+    # 平均残高
+    array.push(array[12] / end_month)
+  end
+
 end

@@ -45,6 +45,11 @@
       background: $blue;
     }
 
+    &--first-only{
+      @extend %select-label;
+      background: $blue;
+    }
+
     &--second{
       @extend %select-label;
       background: $blue;
