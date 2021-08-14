@@ -149,6 +149,31 @@ class User < ApplicationRecord
     end
   end
 
+  # 現在の年度から年度更新を行う
+  def update_year(year)
+    next_year = year + 1
+    now_accounts = Account.where(user_id: self.id, year: self.year)
+    now_accounts.each do |account|
+      # 今期末残高を計算
+      if Account::BALANCE_SHEETS_ACCOUNTS.include?(account.total_account)
+        if Account::DEBIT_ACCOUNTS.include?(account.total_account)
+          ending_balance = account.opening_balance_12 + account.debit_balance_12 - account.credit_balance_12
+        else
+          ending_balance = account.opening_balance_12 - account.debit_balance_12 + account.credit_balance_12
+        end
+      else
+        ending_balance = 0
+      end
+      # 翌年度に同じコードの科目が存在する場合
+      if Account.exists?(user_id: self.id, year: next_year, code: account.code)
+        next_account = Account.find_by(user_id: self.id, year: next_year, code: account.code)
+        next_account.update(opening_balance_1: ending_balance)
+      else
+        Account.create(user_id: self.id, year: next_year, code: account.code, name: account.name, total_account: account.total_account, opening_balance_1: ending_balance)
+      end
+    end
+  end
+
   # 勘定科目コードから勘定科目idを返す
   def code_id(code)
     Account.find_by(user_id: self.id, year: self.year, code: code).id

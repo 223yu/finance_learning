@@ -103,6 +103,16 @@ class Account < ApplicationRecord
     end
   end
 
+  # 勘定科目の期首残高を更新
+  def update_opening_balance(prev_balance)
+    update_balance = self.opening_balance_1 - prev_balance
+    (2..12).to_a.each do |mon|
+      update_opening_balance = self.send("opening_balance_#{mon}")
+      update_opening_balance += update_balance
+      update_attributes("opening_balance_#{mon}".to_sym => update_opening_balance)
+    end
+  end
+
   # 月から[期首残高, 借方残高, 貸方残高, 期末残高]を返す
   def return_balances(start_month, end_month)
     debit_balance = 0

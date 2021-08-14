@@ -20,7 +20,7 @@
               <td class='mypage__td'><%= year %>年度</td>
               <td class='mypage__td'><%= year %>年1月1日　〜　<%= year %>年12月31日</td>
               <td class='mypage__td'><%= link_to '年度選択', select_years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
-              <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
+              <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :patch, class:'mypage__td-btn' %> </td>
             </tr>
           <% end %>
         </tbody>
