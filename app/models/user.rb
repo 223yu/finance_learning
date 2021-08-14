@@ -154,12 +154,23 @@ class User < ApplicationRecord
     Account.find_by(user_id: self.id, year: self.year, code: code).id
   end
 
+  # 勘定科目の一覧を返す
+  def accounts_index
+    accounts_array = []
+    accounts = Account.where(user_id: self.id, year: self.year)
+    accounts.each do |account|
+      account_array = ["#{account.code} #{account.name}", account.code]
+      accounts_array.push(account_array)
+    end
+    return accounts_array
+  end
+
   # 合計科目から勘定科目の一覧を返す
   def accounts_index_from_total_account(total_account)
     accounts_array = []
     accounts = Account.where(user_id: self.id, year: self.year, total_account: total_account)
     accounts.each do |account|
-      account_array = [account.name, account.code]
+      account_array = ["#{account.code} #{account.name}", account.code]
       accounts_array.push(account_array)
     end
     return accounts_array
@@ -168,7 +179,7 @@ class User < ApplicationRecord
   # 科目に対する仕訳の一覧を返す
   def journal_index_from_self_code(self_code, date)
     self_id = self.code_id(self_code)
-    journals = Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id))
+    Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id))
   end
 
   # 学習済みであればtrueを返す
