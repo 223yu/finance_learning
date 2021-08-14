@@ -2,15 +2,26 @@
 
 .flash{
 
-  &__danger{
+  %flash{
     position: fixed;
     top: 50px;
     left: 0;
     width: 100%;
+  }
+
+  &__danger{
+    @extend %flash;
+
     background: $pink;
   }
 
-  &__danger-message{
+  &__success{
+    @extend %flash;
+
+    background: $green;
+  }
+
+  &__message{
     @extend %max-width;
   }
 }

@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  after_action :discard_flash_if_xhr
 
   def index
     @account = Account.new
@@ -11,6 +12,7 @@ class AccountsController < ApplicationController
     @account.user_id = current_user.id
     @account.year = current_user.year
     if @account.save
+      @account.update_opening_balance(0)
       flash[:success] = "#{@account.name} を 合計科目:#{@account.total_account} に追加しました"
       redirect_to accounts_path
     else
@@ -24,7 +26,9 @@ class AccountsController < ApplicationController
 
   def update
     @account = Account.find(params[:id])
+    prev_balance = @account.opening_balance_1.to_i
     @account.update(account_params)
+    @account.update_opening_balance(prev_balance)
   end
 
   def destroy

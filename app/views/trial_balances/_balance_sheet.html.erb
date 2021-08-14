@@ -102,7 +102,10 @@
   <%= render 'total', total_account: '負債', array: liability %>
 
 <!-- 純資産 -->
-  <% net_asset = [asset, liability].transpose.map{|n| n.inject(:-)} %>
+  <% net_asset.push(asset[0] - liability[0]) %>
+  <% net_asset.push(asset[1] - asset[2] + liability[1] - liability[2]) %>
+  <% net_asset.push(0) %>
+  <% net_asset.push(asset[3] - liability[3]) %>
   <tr class='report__total-tr'>
     <td class='report__total-td--code'></td>
     <td class='report__total-td--name'>純資産計</td>
