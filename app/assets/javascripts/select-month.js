@@ -4,9 +4,17 @@ $(document).on('turbolinks:load', function() {
   let select_first_month = 0;
   let select_second_month = 0;
 
+  // 推移表(select-month-from1)の場合
   if($('.select-month__label--first-only').length == 1){
     select_count = 1;
     select_first_month = 1;
+  }
+
+  // 試算表→総勘定元帳の場合
+  if($('.select-month__label--second').length == 1){
+    select_count = 2;
+    select_first_month = Number($('.select-month__label--first').attr('for').substr(3,2));
+    select_second_month = Number($('.select-month__label--second').attr('for').substr(3,2));
   }
 
   // 2月目選択後の処理を関数化
@@ -31,55 +39,58 @@ $(document).on('turbolinks:load', function() {
     });
   }
 
-  $('.select-month__label').on('click', function(){
+  let target = ['.select-month__label', '.select-month__label--between',]
+  target.forEach(function(target){
+    $(document).on('click', target, function(){
 
-    if(select_count == 2){
-      if($(this).attr('class') == 'select-month__label--second'){
-        $(this).addClass('select-month__label');
-        $(this).removeClass('select-month__label--second');
-        $('.select-month__label--between').addClass('select-month__label');
-        $('.select-month__label--between').removeClass('select-month__label--between');
-        select_count -= 1;
-      }else if($('.select-month__label--first-only').length == 1){
-        let month_id = "#mon" + String(select_second_month);
-        // 2月目のチェックを外す
-        $(month_id).removeAttr('checked').prop('checked', false).change();
-        // クラス書き換え
-        $('.select-month__label--second').addClass('select-month__label')
-        $('.select-month__label--second').removeClass('select-month__label--second')
-        $('.select-month__label--between').addClass('select-month__label');
-        $('.select-month__label--between').removeClass('select-month__label--between');
-        after_select_second_month(this);
-      }else{
-        let month_id = "#mon" + String(select_first_month);
-        select_first_month = select_second_month;
-        // 1月目のチェックを外す
-        $(month_id).removeAttr('checked').prop('checked', false).change();
-        // クラス書き換え
-        $('.select-month__label--first').addClass('select-month__label');
-        $('.select-month__label--first').removeClass('select-month__label--first');
-        $('.select-month__label--second').addClass('select-month__label--first');
-        $('.select-month__label--second').removeClass('select-month__label--second');
-        $('.select-month__label--between').addClass('select-month__label');
-        $('.select-month__label--between').removeClass('select-month__label--between');
-        after_select_second_month(this);
-      }
-    }else if(select_count == 1){
-      if($(this).attr('class') == 'select-month__label--first'){
-        $(this).addClass('select-month__label');
-        $(this).removeClass('select-month__label--first');
-        select_count -= 1;
-      }else if($(this).attr('class') == 'select-month__label--first-only'){
-        // 特に何も行わない
-      }else{
-        after_select_second_month(this);
+      if(select_count == 2){
+        if($(this).attr('class') == 'select-month__label--second'){
+          $(this).addClass('select-month__label');
+          $(this).removeClass('select-month__label--second');
+          $('.select-month__label--between').addClass('select-month__label');
+          $('.select-month__label--between').removeClass('select-month__label--between');
+          select_count -= 1;
+        }else if($('.select-month__label--first-only').length == 1){
+          let month_id = "#mon" + String(select_second_month);
+          // 2月目のチェックを外す
+          $(month_id).removeAttr('checked').prop('checked', false).change();
+          // クラス書き換え
+          $('.select-month__label--second').addClass('select-month__label')
+          $('.select-month__label--second').removeClass('select-month__label--second')
+          $('.select-month__label--between').addClass('select-month__label');
+          $('.select-month__label--between').removeClass('select-month__label--between');
+          after_select_second_month(this);
+        }else{
+          let month_id = "#mon" + String(select_first_month);
+          select_first_month = select_second_month;
+          // 1月目のチェックを外す
+          $(month_id).removeAttr('checked').prop('checked', false).change();
+          // クラス書き換え
+          $('.select-month__label--first').addClass('select-month__label');
+          $('.select-month__label--first').removeClass('select-month__label--first');
+          $('.select-month__label--second').addClass('select-month__label--first');
+          $('.select-month__label--second').removeClass('select-month__label--second');
+          $('.select-month__label--between').addClass('select-month__label');
+          $('.select-month__label--between').removeClass('select-month__label--between');
+          after_select_second_month(this);
+        }
+      }else if(select_count == 1){
+        if($(this).attr('class') == 'select-month__label--first'){
+          $(this).addClass('select-month__label');
+          $(this).removeClass('select-month__label--first');
+          select_count -= 1;
+        }else if($(this).attr('class') == 'select-month__label--first-only'){
+          // 特に何も行わない
+        }else{
+          after_select_second_month(this);
+          select_count += 1;
+        }
+      }else if(select_count == 0){
+        $(this).addClass('select-month__label--first');
+        $(this).removeClass('select-month__label');
+        select_first_month = $(this).attr('for').substr(3,2);
         select_count += 1;
       }
-    }else if(select_count == 0){
-      $(this).addClass('select-month__label--first');
-      $(this).removeClass('select-month__label');
-      select_first_month = $(this).attr('for').substr(3,2);
-      select_count += 1;
-    }
+    });
   });
 });
