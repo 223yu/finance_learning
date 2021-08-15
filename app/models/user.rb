@@ -216,6 +216,32 @@ class User < ApplicationRecord
     Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id))
   end
 
+  # 選択した合計科目の期末残高の推移を返す
+  def return_balance_array(total_account)
+    array = [0,0,0,0,0,0,0,0,0,0,0,0]
+    accounts = Account.where(user_id: self.id, year: self.year, total_account: total_account)
+    accounts.each do |account|
+      array = [array, account.balance_array_from_1_to_12].transpose.map{|n| n.inject(:+)}
+    end
+    return array
+  end
+
+  # 利益の発生残高の推移を返す
+  def return_profit_balance_array
+    profit_array = [0,0,0,0,0,0,0,0,0,0,0,0]
+    accounts = Account.where(user_id: self.id, year: self.year)
+    accounts.each do |account|
+      if Account::PROFIT_AND_LOSS_STATEMENT.include?(account.total_account)
+        array = []
+        (1..12).to_a.each do |mon|
+          array.push(account.send("credit_balance_#{mon}") - account.send("debit_balance_#{mon}"))
+        end
+        profit_array = [profit_array, array].transpose.map{|n| n.inject(:+)}
+      end
+    end
+    return profit_array
+  end
+
   # 学習済みであればtrueを返す
   def learned?(content)
     Learning.find_by(user_id: self.id, content_id: content.id).present?
