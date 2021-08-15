@@ -152,7 +152,7 @@ class User < ApplicationRecord
   # 現在の年度から年度更新を行う
   def update_year(year)
     next_year = year + 1
-    now_accounts = Account.where(user_id: self.id, year: self.year)
+    now_accounts = Account.where(user_id: self.id, year: year)
     now_accounts.each do |account|
       # 今期末残高を計算
       if Account::BALANCE_SHEETS_ACCOUNTS.include?(account.total_account)
@@ -167,9 +167,12 @@ class User < ApplicationRecord
       # 翌年度に同じコードの科目が存在する場合
       if Account.exists?(user_id: self.id, year: next_year, code: account.code)
         next_account = Account.find_by(user_id: self.id, year: next_year, code: account.code)
+        next_account_prev_balance = next_account.opening_balance_1
         next_account.update(opening_balance_1: ending_balance)
+        next_account.update_opening_balance(next_account_prev_balance)
       else
-        Account.create(user_id: self.id, year: next_year, code: account.code, name: account.name, total_account: account.total_account, opening_balance_1: ending_balance)
+        next_account = Account.create(user_id: self.id, year: next_year, code: account.code, name: account.name, total_account: account.total_account, opening_balance_1: ending_balance)
+        next_account.update_opening_balance(0)
       end
     end
   end
