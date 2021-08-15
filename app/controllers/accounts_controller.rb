@@ -34,9 +34,13 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    account = Account.find(params[:id])
-    @id = account.id
-    account.destroy
+    @account = Account.find(params[:id])
+    if current_user.has_journal_in_this_year?(@account)
+      flash[:danger] = '年度中に仕訳が存在するので勘定科目を削除することはできません'
+    else
+      @account.destroy
+      flash[:success] = '勘定科目を削除しました'
+    end
   end
 
   def search

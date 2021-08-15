@@ -193,6 +193,12 @@ class User < ApplicationRecord
     return accounts_array
   end
 
+  # 指定した科目の仕訳が今期中に存在すればtrueを返す
+  def has_journal_in_this_year?(account)
+    range = self.start_date_to_end_date(1, 12)
+    Journal.where(user_id: self.id, date: range, debit_id: account.id).or(Journal.where(user_id: self.id, date: range, credit_id: account.id)).exists?
+  end
+
   # 合計科目から勘定科目の一覧を返す
   def accounts_index_from_total_account(total_account)
     accounts_array = []
