@@ -1,4 +1,5 @@
 class YearsController < ApplicationController
+  before_action :authenticate_user!
 
   def select
     year = params[:year]

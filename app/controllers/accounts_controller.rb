@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  before_action :authenticate_user!
   after_action :discard_flash_if_xhr
 
   def index
