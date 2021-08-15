@@ -19,18 +19,18 @@
     <tbody class='account__add-tbody'>
       <tr class='account__add-tr'>
         <td class='account__add-td'>
-          <%= f.text_field :code, class:'account__add-text-field' %>
+          <%= f.text_field :code, tabindex: 11, class:'account__add-text-field' %>
         </td>
         <td class='account__add-td'>
-          <%= f.text_field :name, class:'account__add-text-field' %>
+          <%= f.text_field :name, tabindex: 12, class:'account__add-text-field' %>
         </td>
         <td class='account__add-td'>
-          <%= f.text_field :opening_balance_1, class:'account__add-text-field' %>
+          <%= f.text_field :opening_balance_1, tabindex: 13, class:'account__add-text-field' %>
         </td>
         <td class='account__add-td'>
           <%= f.select :total_account, [['現預金'], ['他流動資産'], ['固定資産'],
               ['カード'], ['他流動負債'],['固定負債'], ['収入'], ['原価'],
-              ['販管費'], ['営業外収入'],['営業外費用']], {include_blank: '選択してください'}, class:'account__add-select' %>
+              ['販管費'], ['営業外収入'],['営業外費用']], {include_blank: '選択してください'}, { tabindex: 14, class:'account__add-select' } %>
         </td>
         <td class='account__add-td--btn'>
           <%= f.submit '追加', class:'account__add-btn' %>
