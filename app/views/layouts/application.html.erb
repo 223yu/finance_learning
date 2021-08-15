@@ -31,7 +31,7 @@
             <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to 'マイページ', users_path, class:'navbar__item-link' %>
+            <%= link_to 'マイページ', users_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__dropdown'>
             <a href='#' class='navbar__item-link'>入力</a>

@@ -28,11 +28,15 @@
       <div class='mypage__graph-boxes'>
         <div class='mypage__graph-area'>
           <h4 class='mypage__graph-title'>利益のグラフ</h4>
-          <div class='mypage__graph-box'></div>
+          <div class='mypage__graph-box'>
+            <canvas id='mypage__graph--profit'></canvas>
+          </div>
         </div>
         <div class='mypage__graph-area'>
           <h4 class='mypage__graph-title'>現預金残高のグラフ</h4>
-          <div class='mypage__graph-box'></div>
+          <div class='mypage__graph-box'>
+            <canvas id='mypage__graph--cash'></canvas>
+          </div>
         </div>
       </div>
     <% else %>
@@ -53,3 +57,122 @@
     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:'mypage__btn' %>
   </div>
 </div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
+<script>
+// 現預金残高のグラフ
+let ctx = document.getElementById('mypage__graph--profit')
+const profit_chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+    datasets: [
+      {
+        label: '利益残高',
+        data: [
+          <%= @profit_array[0] %>,
+          <%= @profit_array[1] %>,
+          <%= @profit_array[2] %>,
+          <%= @profit_array[3] %>,
+          <%= @profit_array[4] %>,
+          <%= @profit_array[5] %>,
+          <%= @profit_array[6] %>,
+          <%= @profit_array[7] %>,
+          <%= @profit_array[8] %>,
+          <%= @profit_array[9] %>,
+          <%= @profit_array[10] %>,
+          <%= @profit_array[11] %>,
+          ],
+        borderColor: 'rgba(0,0,255,1)',
+        backgroundColor: 'rgba(0,0,0,0)'
+      }
+    ],
+  },
+  options: {
+    title: {
+      display: true,
+      text: '利益残高の推移'
+    },scales: {
+      xAxes: [
+        {
+          ticks: {}
+        }
+      ],
+      yAxes: [
+        {
+          ticks: {
+            callback: function(label, index, labels) {
+              return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+            }
+          }
+        }
+      ]
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data){
+          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+        }
+      }
+    }
+  }
+});
+
+// 現預金残高のグラフ
+ctx = document.getElementById('mypage__graph--cash')
+const cash_chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+    datasets: [
+      {
+        label: '現預金残高',
+        data: [
+          <%= @cash_array[0] %>,
+          <%= @cash_array[1] %>,
+          <%= @cash_array[2] %>,
+          <%= @cash_array[3] %>,
+          <%= @cash_array[4] %>,
+          <%= @cash_array[5] %>,
+          <%= @cash_array[6] %>,
+          <%= @cash_array[7] %>,
+          <%= @cash_array[8] %>,
+          <%= @cash_array[9] %>,
+          <%= @cash_array[10] %>,
+          <%= @cash_array[11] %>,
+          ],
+        borderColor: 'rgba(0,0,255,1)',
+        backgroundColor: 'rgba(0,0,0,0)'
+      }
+    ],
+  },
+  options: {
+    title: {
+      display: true,
+      text: '現預金残高の推移'
+    },scales: {
+      xAxes: [
+        {
+          ticks: {}
+        }
+      ],
+      yAxes: [
+        {
+          ticks: {
+            callback: function(label, index, labels) {
+              return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+            }
+          }
+        }
+      ]
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data){
+          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+        }
+      }
+    }
+  }
+});
+</script>

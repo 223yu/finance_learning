@@ -151,4 +151,19 @@ class Account < ApplicationRecord
     array.push(array[12] / end_month)
   end
 
+  # 1月から12月までの残高を返す
+  def balance_array_from_1_to_12
+    array = []
+    # 1月から11月の期末残高（2月から12月の期首残高）
+    (2..12).to_a.each do |mon|
+      array.push(self.send("opening_balance_#{mon}"))
+    end
+    # 12月の期末残高
+    if DEBIT_ACCOUNTS.include?(self.total_account)
+      array.push(self.opening_balance_12 + self.debit_balance_12 - self.credit_balance_12)
+    else
+      array.push(self.opening_balance_12 - self.debit_balance_12 + self.credit_balance_12)
+    end
+  end
+
 end
