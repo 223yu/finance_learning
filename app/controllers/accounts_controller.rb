@@ -28,8 +28,9 @@ class AccountsController < ApplicationController
   def update
     @account = Account.find(params[:id])
     prev_balance = @account.opening_balance_1.to_i
-    @account.update(account_params)
-    @account.update_opening_balance(prev_balance)
+    if @account.update(account_params)
+     @account.update_opening_balance(prev_balance)
+    end
   end
 
   def destroy
