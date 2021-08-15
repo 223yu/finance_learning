@@ -1,7 +1,11 @@
-<%= form_with model: @account, url: account_path, class:'account__edit-form-group', remote: true do |f| %>
+<%= form_with model: account, url: account_path, class:'account__edit-form-group', remote: true do |f| %>
   <div class='account__edit-td--code'><%= f.text_field :code, class:'account__edit-form--code' %></div>
   <div class='account__edit-td--name'><%= f.text_field :name, class:'account__edit-form--name' %></div>
-  <div class='account__edit-td--balance'><%= f.text_field :opening_balance_1, class:'account__edit-form--balance' %></div>
+  <% if Account::PROFIT_AND_LOSS_STATEMENT.include?(account.total_account) %>
+    <div class='account__edit-td--balance'><%= f.text_field :opening_balance_1, disabled: true, class:'account__edit-form--balance' %></div>
+  <% else %>
+    <div class='account__edit-td--balance'><%= f.text_field :opening_balance_1, class:'account__edit-form--balance' %></div>
+  <% end %>
   <div class='account__edit-td--total'>
     <%= f.select :total_account, [['現預金'], ['他流動資産'], ['固定資産'],
               ['カード'], ['他流動負債'],['固定負債'], ['収入'], ['原価'],

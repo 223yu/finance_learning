@@ -39,7 +39,7 @@ $(document).on('turbolinks:load', function() {
     });
   }
 
-  let target = ['.select-month__label', '.select-month__label--between',]
+  let target = ['.select-month__label', '.select-month__label--between',];
   target.forEach(function(target){
     $(document).on('click', target, function(){
 

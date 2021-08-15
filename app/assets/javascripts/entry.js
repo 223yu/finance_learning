@@ -7,15 +7,15 @@ $(document).on('turbolinks:load', function() {
     let target_code = '#' + target + '_code';
     let target_name = '#' + target + '_name';
     $(document).on('input', target_code, function(){
-    $(target_name).val(''); //一度削除
-    $('.entry__subbox').html(''); //候補を空に
-    let code = $(this).val();
-    // 全角の場合半角に変換
-    code = double_to_half(code);
-    $(this).val(code);
-    // 実行
-    search(code, target_name);
-    search_sub(code);
+      $(target_name).val(''); //一度削除
+      $('.entry__subbox').html(''); //候補を空に
+      let code = $(this).val();
+      // 全角の場合半角に変換
+      code = double_to_half(code);
+      $(this).val(code);
+      // 実行
+      search(code, target_name);
+      search_sub(code);
     });
   });
 
