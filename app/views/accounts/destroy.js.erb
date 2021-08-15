@@ -1,1 +1,7 @@
-$('.account__index-tr<%= @id %>').html('');
+<% if flash[:success] %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.account__index-tr<%= @account.id %>').html('');
+<% elsif flash[:danger] %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.account__index-tr<%= @account.id %>').html('<%= j(render 'accounts/show', account: @account) %>');
+<% end %>
