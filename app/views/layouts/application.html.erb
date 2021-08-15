@@ -37,13 +37,13 @@
             <a href='#' class='navbar__item-link'>入力</a>
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
-                <%= link_to '単一入力', select_single_entries_path, class:'navbar__item-link' %>
+                <%= link_to '単一入力', select_single_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to '現金入力', select_cash_entries_path, class:'navbar__item-link' %>
+                <%= link_to '現金入力', select_cash_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to 'カード入力', select_card_entries_path, class:'navbar__item-link' %>
+                <%= link_to 'カード入力', select_card_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
             </ul>
           </li>
@@ -62,7 +62,7 @@
             </ul>
           </li>
           <li class='navbar__item'>
-            <%= link_to '設定', accounts_path, class:'navbar__item-link' %>
+            <%= link_to '設定', accounts_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
         <% else %>
           <li class='navbar__item'>
