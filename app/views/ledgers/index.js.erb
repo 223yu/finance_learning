@@ -1,1 +1,1 @@
-$('.ledger__index-tbody').html('<%= j(render 'index', journals: @journals, account: @account) %>');
+$('.ledger__index-tbody').html('<%= j(render 'index', journals: @journals, account: @account, start_month: @get_start_month) %>');

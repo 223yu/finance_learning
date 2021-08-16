@@ -1,5 +1,5 @@
 <!-- 変数定義 -->
-<% balance = account.opening_balance_1 %>
+<% balance = account.send("opening_balance_#{start_month}") %>
 
 <!-- 期首残高 -->
 <tr class='ledger__index-tr'>

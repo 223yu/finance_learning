@@ -31,6 +31,9 @@ class ApplicationController < ActionController::Base
       get_months.each do |get_month|
         if @get_start_month == 0 && get_month.to_i == 1
           @get_start_month = n
+          if n == 12 && @get_end_month == 0
+            @get_end_month = 12
+          end
           n += 1
         elsif get_month.to_i == 1
           @get_end_month = n
