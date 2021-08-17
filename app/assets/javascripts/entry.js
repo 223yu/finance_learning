@@ -116,3 +116,167 @@ $(document).on('turbolinks:load', function() {
     });
   });
 });
+
+// トップまでスクロールすることで追加の仕訳を取得する
+$(document).on('turbolinks:load', function() {
+  // 検索モード中に入力した値を保持しておく
+  // 変数定義
+  let month = '';
+  let day = '';
+  let debit_code = '';
+  let credit_code = '';
+  let amount = '';
+  let description = '';
+
+  $(document).on('input', '#month', function(){
+    month = $('#month').val();
+  });
+
+  $(document).on('input', '#day', function(){
+    day = $('#day').val();
+  });
+
+  $(document).on('input', '#debit_code', function(){
+    debit_code = $('#debit_code').val();
+  });
+
+  $(document).on('input', '#credit_code', function(){
+    credit_code = $('#credit_code').val();
+  });
+
+  $(document).on('input', '#amount', function(){
+    amount = $('#amount').val();
+  });
+
+  $(document).on('input', '#description', function(){
+    description = $('#description').val();
+  });
+
+  // targetに対して実行
+  const target = $('.entry__index-tbody');
+  target.scroll(function(){
+    if (target.scrollTop() == 0){
+      let start_month = $('.search-mode__form-start').val();
+      let end_month = $('.search-mode__form-end').val();
+      let offset = target.children().length;
+      console.log(offset);
+      //検索モード中に実行する場合は保持している(prevがつく)パラメータを利用し実行
+      if($('.search-mode__form-activated').val() == 'true'){
+        // 関数実行
+        add_journal(target, offset, start_month, end_month,
+        prev_month, prev_day, prev_debit_code, prev_credit_code, prev_amount, prev_description);
+      }else{
+        // 関数実行
+        add_journal(target, offset, start_month, end_month,
+          month, day, debit_code, credit_code, amount, description);
+      }
+    }
+  });
+
+  // 検索モードを押した場合、検索ワードをリセットし、検索モードをキャンセルした場合には検索ワードを戻す
+  let prev_month = '';
+  let prev_day = '';
+  let prev_debit_code = '';
+  let prev_credit_code = '';
+  let prev_amount = '';
+  let prev_description = '';
+
+  $(document).on('click', '.search-mode__form-btn', function(){
+    if($('.search-mode__form-activated').val() == 'false'){
+      // 検索ワードを保持
+      prev_month = month;
+      prev_day= day;
+      prev_debit_code = debit_code;
+      prev_credit_code = credit_code;
+      prev_amount = amount;
+      prev_description = description;
+      // 検索ワードをリセット
+      month = '';
+      day = '';
+      debit_code = '';
+      credit_code = '';
+      amount = '';
+      description = '';
+    }else if($('.search-mode__form-activated').val() == 'true'){
+      // 検索ワードを戻す
+      month = prev_month;
+      day = prev_day;
+      debit_code = prev_debit_code;
+      credit_code = prev_credit_code;
+      amount = prev_amount;
+      description = prev_description;
+      // 保持していた検索ワードをリセット
+      prev_month = '';
+      prev_day= '';
+      prev_debit_code = '';
+      prev_credit_code = '';
+      prev_amount = '';
+      prev_description = '';
+    }
+  });
+
+  // targetを押した時、検索ワードをリセットする
+  const click_target = ['.select-month__btn'];
+  click_target.forEach(function(click_target){
+    $(document).on('click', click_target, function(){
+      month = '';
+      day = '';
+      debit_code = '';
+      credit_code = '';
+      amount = '';
+      description = '';
+    });
+  });
+
+  // function集
+  //追加の仕訳を表示する
+  function built_html(data, target){
+    const html = `
+      <div class='entry__index-tr${data.id}'>
+        <div class='entry__index-td--date'>${data.month}</div>
+        <div class='entry__index-td--date'>${data.day}</div>
+        <div class='entry__index-td--code'>${data.debit_code}</div>
+        <div class='entry__index-td--name'>${data.debit_name}</div>
+        <div class='entry__index-td--code'>${data.credit_code}</div>
+        <div class='entry__index-td--name'>${data.credit_name}</div>
+        <div class='entry__index-td--amount'>${data.amount}</div>
+        <div class='entry__index-td--description'>${data.description}</div>
+        <div class='entry__index-td--btn'>
+          <a class='entry__index-link' data-remote='true' href='/single_entries/${data.id}/edit'>
+            <i class='fas fa-edit' aria-hidden='true'></i>
+          </a>
+        </div>
+        <div class='entry__index-td--btn'>
+          <a class='entry__index-link' data-remote='true' rel='nofollow' data-method='delete' href='/single_entries/${data.id}'>
+            <i class='fas fa-trash-alt' aria-hidden='true'></i>
+          </a>
+        </div>
+      </div>
+    `;
+    target.prepend(html);
+  }
+
+  // ajax通信を行い追加の仕訳を取得する
+  function add_journal(target, offset, start_month, end_month,
+          month, day, debit_code, credit_code, amount, description){
+    $.ajax({
+      type: 'GET',
+      url: '/single_entries/scroll',
+      data:{
+        offset: offset, start_month: start_month, end_month: end_month,
+        month: month, day: day, debit_code: debit_code, credit_code: credit_code,
+        amount: amount, description: description
+      },
+      dataType: 'json'
+    })
+    .done(function(data){
+      if(data.length != 0){
+        data.forEach(function(data){
+          built_html(data, target);
+        });
+        // scroll位置を調整
+        $(target).scrollTop(data.length * 41);
+      }
+    });
+  }
+});
