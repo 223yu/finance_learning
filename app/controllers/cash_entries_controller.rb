@@ -29,14 +29,12 @@ class CashEntriesController < ApplicationController
       @journals = @journals.where(debit_id: @self_id, amount: params[:received_amount].to_i) unless params[:received_amount] == ''
       @journals = @journals.where(credit_id: @self_id, amount: params[:invest_amount].to_i) unless params[:invest_amount] == ''
       @journals = @journals.where('description LIKE ?', "%#{params[:description]}%") unless params[:description] == ''
-      # @journals = @journals.order(:date)
 
       @journal = Journal.new
     else
     # nomal mode
       range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
       @journals = current_user.journal_index_from_self_code(@self_code, range, 0)
-      # @journals = @journals.order(:date)
       @journal = Journal.new
     end
   end
@@ -122,7 +120,6 @@ class CashEntriesController < ApplicationController
     @journals = @journals.where(debit_id: self_id, amount: params[:received_amount].to_i) unless params[:received_amount] == ''
     @journals = @journals.where(credit_id: self_id, amount: params[:invest_amount].to_i) unless params[:invest_amount] == ''
     @journals = @journals.where('description LIKE ?', "%#{params[:description]}%") unless params[:description] == ''
-    # @journals = @journals.order(:date)
 
     @journals.each do |journal|
       journal.arrange_for_display_in_simple_entry(self_id)
