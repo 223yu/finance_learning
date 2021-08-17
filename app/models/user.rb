@@ -213,7 +213,7 @@ class User < ApplicationRecord
   # 科目に対する仕訳の一覧を返す
   def journal_index_from_self_code(self_code, date, offset)
     self_id = self.code_id(self_code)
-    Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id)).order(id: 'DESC').limit(15).offset(offset)
+    Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id)).order(date: 'DESC').limit(15).offset(offset)
   end
 
   # 選択した合計科目の期末残高の推移を返す
