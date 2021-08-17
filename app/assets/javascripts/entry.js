@@ -128,6 +128,12 @@ $(document).on('turbolinks:load', function() {
   let amount = '';
   let description = '';
 
+  // simple entry限定
+  let self_code = '';
+  let nonself_code = '';
+  let received_amount = '';
+  let invest_amount = '';
+
   $(document).on('input', '#month', function(){
     month = $('#month').val();
   });
@@ -152,6 +158,23 @@ $(document).on('turbolinks:load', function() {
     description = $('#description').val();
   });
 
+  // simpe entry限定
+  $(document).on('click', '.select-month__btn', function(){
+    self_code = $('#self_code').val();
+  });
+
+  $(document).on('input', '#nonself_code', function(){
+    nonself_code = $('#nonself_code').val();
+  });
+
+  $(document).on('input', '#received_amount', function(){
+    received_amount = $('#received_amount').val();
+  });
+
+  $(document).on('input', '#invest_amount', function(){
+    invest_amount = $('#invest_amount').val();
+  });
+
   // targetに対して実行
   const target = $('.entry__index-tbody');
   target.scroll(function(){
@@ -160,15 +183,30 @@ $(document).on('turbolinks:load', function() {
       let end_month = $('.search-mode__form-end').val();
       let offset = target.children().length;
       console.log(offset);
-      //検索モード中に実行する場合は保持している(prevがつく)パラメータを利用し実行
-      if($('.search-mode__form-activated').val() == 'true'){
-        // 関数実行
-        add_journal(target, offset, start_month, end_month,
-        prev_month, prev_day, prev_debit_code, prev_credit_code, prev_amount, prev_description);
+      // 単一入力(true)か簡易入力(false)かで分岐
+      if($('#self_code').length == 0){
+        //検索モード中に実行する場合は保持している(prevがつく)パラメータを利用し実行
+        if($('.search-mode__form-activated').val() == 'true'){
+          // 関数実行
+          add_journal(target, offset, start_month, end_month,
+          prev_month, prev_day, prev_debit_code, prev_credit_code, prev_amount, prev_description);
+        }else{
+          // 関数実行
+          add_journal(target, offset, start_month, end_month,
+            month, day, debit_code, credit_code, amount, description);
+        }
       }else{
-        // 関数実行
-        add_journal(target, offset, start_month, end_month,
-          month, day, debit_code, credit_code, amount, description);
+        //検索モード中に実行する場合は保持している(prevがつく)パラメータを利用し実行
+        if($('.search-mode__form-activated').val() == 'true'){
+          // 関数実行
+          add_journal_in_simple_entry(target, offset, start_month, end_month,
+          prev_month, prev_day, self_code, prev_nonself_code, prev_received_amount,
+          prev_invest_amount, prev_description);
+        }else{
+          // 関数実行
+          add_journal_in_simple_entry(target, offset, start_month, end_month,
+          month, day, self_code, nonself_code, received_amount, invest_amount, description);
+        }
       }
     }
   });
@@ -181,6 +219,11 @@ $(document).on('turbolinks:load', function() {
   let prev_amount = '';
   let prev_description = '';
 
+  // sinple entry限定
+  let prev_nonself_code = '';
+  let prev_received_amount = '';
+  let prev_invest_amount = '';
+
   $(document).on('click', '.search-mode__form-btn', function(){
     if($('.search-mode__form-activated').val() == 'false'){
       // 検索ワードを保持
@@ -190,6 +233,10 @@ $(document).on('turbolinks:load', function() {
       prev_credit_code = credit_code;
       prev_amount = amount;
       prev_description = description;
+
+      prev_nonself_code = nonself_code;
+      prev_received_amount = received_amount;
+      prev_invest_amount = invest_amount;
       // 検索ワードをリセット
       month = '';
       day = '';
@@ -197,6 +244,10 @@ $(document).on('turbolinks:load', function() {
       credit_code = '';
       amount = '';
       description = '';
+
+      nonself_code = '';
+      received_amount = '';
+      invest_amount = '';
     }else if($('.search-mode__form-activated').val() == 'true'){
       // 検索ワードを戻す
       month = prev_month;
@@ -205,6 +256,10 @@ $(document).on('turbolinks:load', function() {
       credit_code = prev_credit_code;
       amount = prev_amount;
       description = prev_description;
+
+      nonself_code = prev_nonself_code;
+      received_amount = prev_received_amount;
+      invest_amount = prev_invest_amount;
       // 保持していた検索ワードをリセット
       prev_month = '';
       prev_day= '';
@@ -212,20 +267,25 @@ $(document).on('turbolinks:load', function() {
       prev_credit_code = '';
       prev_amount = '';
       prev_description = '';
+
+      prev_nonself_code = '';
+      prev_received_amount = '';
+      prev_invest_amount = '';
     }
   });
 
-  // targetを押した時、検索ワードをリセットする
-  const click_target = ['.select-month__btn'];
-  click_target.forEach(function(click_target){
-    $(document).on('click', click_target, function(){
-      month = '';
-      day = '';
-      debit_code = '';
-      credit_code = '';
-      amount = '';
-      description = '';
-    });
+  // 「表示」ボタンを押した時、検索ワードをリセットする
+  $(document).on('click', '.select-month__btn', function(){
+    month = '';
+    day = '';
+    debit_code = '';
+    credit_code = '';
+    amount = '';
+    description = '';
+
+    nonself_code = '';
+    received_amount = '';
+    invest_amount = '';
   });
 
   // function集
@@ -239,7 +299,7 @@ $(document).on('turbolinks:load', function() {
         <div class='entry__index-td--name'>${data.debit_name}</div>
         <div class='entry__index-td--code'>${data.credit_code}</div>
         <div class='entry__index-td--name'>${data.credit_name}</div>
-        <div class='entry__index-td--amount'>${data.amount}</div>
+        <div class='entry__index-td--amount'>${data.amount.toLocaleString()}</div>
         <div class='entry__index-td--description'>${data.description}</div>
         <div class='entry__index-td--btn'>
           <a class='entry__index-link' data-remote='true' href='/single_entries/${data.id}/edit'>
@@ -273,6 +333,56 @@ $(document).on('turbolinks:load', function() {
       if(data.length != 0){
         data.forEach(function(data){
           built_html(data, target);
+        });
+        // scroll位置を調整
+        $(target).scrollTop(data.length * 41);
+      }
+    });
+  }
+
+  //簡易入力において追加の仕訳を表示する
+  function built_html_in_simple_entry(data, target){
+    const html = `
+      <div class='entry__index-tr${data.id}'>
+        <div class='entry__index-td--date'>${data.month}</div>
+        <div class='entry__index-td--date'>${data.day}</div>
+        <div class='entry__index-td--nonself-code'>${data.nonself_code}</div>
+        <div class='entry__index-td--name'>${data.nonself_name}</div>
+        <div class='entry__index-td--amount'>${data.received_amount.toLocaleString()}</div>
+        <div class='entry__index-td--amount'>${data.invest_amount.toLocaleString()}</div>
+        <div class='entry__index-td--description'>${data.description}</div>
+        <div class='entry__index-td--btn'>
+          <a class='entry__index-link' data-remote='true' href='/cash_entries/${data.id}/edit?self_code=${data.self_code}'>
+            <i class='fas fa-edit' aria-hidden='true'></i>
+          </a>
+        </div>
+        <div class='entry__index-td--btn'>
+          <a class='entry__index-link' data-remote='true' rel='nofollow' data-method='delete' href='/cash_entries/${data.id}'>
+            <i class='fas fa-trash-alt' aria-hidden='true'></i>
+          </a>
+        </div>
+      </div>
+    `;
+    target.prepend(html);
+  }
+
+  // 簡易入力においてajax通信を行い追加の仕訳を取得する
+  function add_journal_in_simple_entry(target, offset, start_month, end_month,
+          month, day, self_code, nonself_code, received_amount, invest_amount, description){
+    $.ajax({
+      type: 'GET',
+      url: '/cash_entries/scroll',
+      data:{
+        offset: offset, start_month: start_month, end_month: end_month,
+        month: month, day: day, self_code: self_code, nonself_code: nonself_code,
+        received_amount: received_amount, invest_amount: invest_amount, description: description
+      },
+      dataType: 'json'
+    })
+    .done(function(data){
+      if(data.length != 0){
+        data.forEach(function(data){
+          built_html_in_simple_entry(data, target);
         });
         // scroll位置を調整
         $(target).scrollTop(data.length * 41);

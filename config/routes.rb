@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :cash_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
     get 'search', on: :collection
+    get 'scroll', on: :collection
   end
    resources :card_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
