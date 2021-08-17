@@ -21,7 +21,7 @@ class CashEntriesController < ApplicationController
         range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
       end
       # 入力された内容で検索
-      @journals = current_user.journal_index_from_self_code(@self_code, range)
+      @journals = current_user.journal_index_from_self_code(@self_code, range, 0)
       unless params[:nonself_code] == ''
         nonself_id = current_user.code_id(params[:nonself_code].to_i)
         @journals = @journals.where(debit_id: nonself_id).or(@journals.where(credit_id: nonself_id))
@@ -35,7 +35,7 @@ class CashEntriesController < ApplicationController
     else
     # nomal mode
       range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
-      @journals = current_user.journal_index_from_self_code(@self_code, range)
+      @journals = current_user.journal_index_from_self_code(@self_code, range, 0)
       @journals = @journals.order(:date)
       @journal = Journal.new
     end
@@ -98,6 +98,40 @@ class CashEntriesController < ApplicationController
     @end_month = params[:end_month]
     @activated = params[:activated]
     @journal = Journal.new
+  end
+
+  def scroll
+    @self_code = params[:self_code]
+    self_id = current_user.code_id(@self_code)
+    # 日付の入力が正しければ採用し、入力がないor誤りの場合、最初に選択した期間を採用
+    start_month = params[:start_month].to_i
+    end_month = params[:end_month].to_i
+    if Date.valid_date?(current_user.year, params[:month].to_i, params[:day].to_i)
+      range = Date.new(current_user.year, params[:month].to_i, params[:day].to_i)
+    else
+      range = current_user.start_date_to_end_date(start_month, end_month)
+    end
+    # データの取得
+    offset = params[:offset]
+    @journals = current_user.journal_index_from_self_code(@self_code, range, offset)
+    # 検索ワードがあれば絞り込み
+    unless params[:nonself_code] == ''
+      nonself_id = current_user.code_id(params[:nonself_code].to_i)
+      @journals = @journals.where(debit_id: nonself_id).or(@journals.where(credit_id: nonself_id))
+    end
+    @journals = @journals.where(debit_id: self_id, amount: params[:received_amount].to_i) unless params[:received_amount] == ''
+    @journals = @journals.where(credit_id: self_id, amount: params[:invest_amount].to_i) unless params[:invest_amount] == ''
+    @journals = @journals.where('description LIKE ?', "%#{params[:description]}%") unless params[:description] == ''
+    @journals = @journals.order(:date)
+
+    @journals.each do |journal|
+      journal.arrange_for_display_in_simple_entry(self_id)
+    end
+
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   private

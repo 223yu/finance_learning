@@ -1,6 +1,11 @@
-$('.entry__index-tbody').html('<%= j(render 'index', journals: @journals, self_id: @self_id, self_code: @self_code) %>');
+<!-- 一度初期化してから再度仕訳を表示 -->
+$('.entry__index-tbody').html('');
+<% @journals.each do |journal| %>
+  $('.entry__index-tbody').prepend('<%= j(render 'show', journal: journal, self_id: @self_id, self_code: @self_code) %>');
+<% end %>
+
 $('.cash-entry__new').html('<%= j(render 'new', journal: @journal) %>');
-$('.cash-entry__search-mode').html('<%= j(render 'layouts/search-mode',path: search_cash_entries_path) %>');
+$('.cash-entry__search-mode').html('<%= j(render 'layouts/search-mode-simple',path: search_cash_entries_path) %>');
 <!-- self-codeをセット -->
 $('.entry__form--self-code').val(<%= @self_code %>);
 $('.search-mode__form-self-code').val(<%= @self_code %>);
