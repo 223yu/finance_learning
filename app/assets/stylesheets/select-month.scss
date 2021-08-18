@@ -6,6 +6,9 @@
   width: 50px;
   text-align: center;
   line-height: 50px;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .select-month{
@@ -35,10 +38,6 @@
 
   &__label{
     @extend %select-label;
-
-    &:hover{
-      background: $blue;
-    }
 
     &--first{
       @extend %select-label;
