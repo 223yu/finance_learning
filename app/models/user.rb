@@ -216,6 +216,12 @@ class User < ApplicationRecord
     Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id)).order(date: 'DESC').limit(15).offset(offset)
   end
 
+  # 総勘定元帳にて科目に対する仕訳の一覧を返す
+  def journal_index_from_self_code_in_ledger(self_code, date)
+    self_id = self.code_id(self_code)
+    Journal.where(user_id: self.id, date: date, debit_id: self_id).or(Journal.where(user_id: self.id, date: date, credit_id: self_id)).order(:date)
+  end
+
   # 選択した合計科目の期末残高の推移を返す
   def return_balance_array(total_account)
     array = [0,0,0,0,0,0,0,0,0,0,0,0]
