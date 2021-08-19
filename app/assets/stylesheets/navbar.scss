@@ -10,7 +10,7 @@
   z-index: 10;
 
   %__list{
-    width: 150px;
+    width: 130px;
     height: 50px;
     line-height: 50px;
     text-align: center;
@@ -23,6 +23,7 @@
 
   &__logo-image{
     @extend %link;
+    color: white;
   }
 
   &__item{
@@ -31,6 +32,7 @@
 
   &__item-link{
     @extend %link;
+    color: white;
   }
 
   &__user-name{
@@ -48,6 +50,8 @@
 
     &:hover &-item{
       height: 40px;
+      text-align: left;
+      padding-left: 15px;
     }
   }
 

@@ -41,22 +41,22 @@
 
     &--first{
       @extend %select-label;
-      background: $blue;
+      background: $yellow;
     }
 
     &--first-only{
       @extend %select-label;
-      background: $blue;
+      background: $yellow;
     }
 
     &--second{
       @extend %select-label;
-      background: $blue;
+      background: $yellow;
     }
 
     &--between{
       @extend %select-label;
-      background: $blue;
+      background: $yellow;
     }
   }
 
