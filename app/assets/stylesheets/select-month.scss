@@ -59,11 +59,6 @@
       @extend %select-label;
       background: $yellow;
     }
-
-    &--active{
-      @extend %select-label;
-      background: $yellow;
-    }
   }
 
   &__box-btn{
