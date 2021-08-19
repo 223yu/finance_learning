@@ -13,7 +13,7 @@ $(document).on('turbolinks:load', function() {
       // 保持している変数を更新
       prev_month = Number($(this).attr('for').substr(3,2));
       // 当月のクラスを変更する
-      $(this).addClass('select-month-from1__label--second');
+      $(this).addClass('select-month-from1__label--first');
       $(this).removeClass('select-month-from1__label');
       $(this).prev().prop('checked', true);
       // 前月までを全て着色
@@ -26,11 +26,11 @@ $(document).on('turbolinks:load', function() {
 
   // ホバー時
   $('.select-month-from1__label').mousemove(function(){
-    if($('.select-month-from1__label--second').length == 1){
+    if($('.select-month-from1__label--first').length == 1){
       if($(this).attr('class') == 'select-month-from1__label'){
-        $('.select-month-from1__label--second').addClass('select-month-from1__label--between');
-        $('.select-month-from1__label--second').removeClass('select-month-from1__label--second');
-        $(this).addClass('select-month-from1__label--second');
+        $('.select-month-from1__label--first').addClass('select-month-from1__label--between');
+        $('.select-month-from1__label--first').removeClass('select-month-from1__label--first');
+        $(this).addClass('select-month-from1__label--first');
         $(this).removeClass('select-month-from1__label');
         // checkboxを更新
         $('.select-month-from1__checkbox').prop('checked', false);
@@ -42,8 +42,8 @@ $(document).on('turbolinks:load', function() {
       this_month = Number($(this).attr('for').substr(3,2));
       if(this_month < prev_month){
         $(`[for="mon${prev_month}"]`).addClass('select-month-from1__label');
-        $(`[for="mon${prev_month}"]`).removeClass('select-month-from1__label--second');
-        $(this).addClass('select-month-from1__label--second');
+        $(`[for="mon${prev_month}"]`).removeClass('select-month-from1__label--first');
+        $(this).addClass('select-month-from1__label--first');
         $(this).removeClass('select-month-from1__label--between');
         prev_month = this_month;
       }
@@ -67,6 +67,8 @@ $(document).on('turbolinks:load', function() {
 
   // 終了月クリック解除時
   $('.select-month-from1__label').mouseup(function(){
+    $('.select-month-from1__label--first').addClass('select-month-from1__label--second');
+    $('.select-month-from1__label--first').removeClass('select-month-from1__label--first');
     $('.select-month-from1__label--between').addClass('select-month-from1__label--second');
     $('.select-month-from1__label--between').removeClass('select-month-from1__label--between');
     // checkboxにcheckを入れる
@@ -82,6 +84,8 @@ $(document).on('turbolinks:load', function() {
   // リセット
   function reset(){
     $('.select-month-from1__checkbox').prop('checked', false);
+    $('.select-month-from1__label--first').addClass('select-month-from1__label');
+    $('.select-month-from1__label--first').removeClass('select-month-from1__label--first');
     $('.select-month-from1__label--second').addClass('select-month-from1__label');
     $('.select-month-from1__label--second').removeClass('select-month-from1__label--second');
     $('.select-month-from1__label--between').addClass('select-month-from1__label');
