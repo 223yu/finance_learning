@@ -37,12 +37,15 @@
             <a href='#' class='navbar__item-link'>入力</a>
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to '単一入力', select_single_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to '現金入力', select_cash_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to 'カード入力', select_card_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
             </ul>
@@ -51,12 +54,15 @@
             <a href='#' class='navbar__item-link'>レポート</a>
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to '試算表', select_trial_balances_path, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to '推移表', select_transition_tables_path, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
                 <%= link_to '総勘定元帳', select_ledgers_path, class:'navbar__item-link' %>
               </li>
             </ul>

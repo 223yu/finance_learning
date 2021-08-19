@@ -4,7 +4,7 @@
     <div class='select-month__boxes'>
       <% 12.times do |n| %>
         <div class='select-month__box'>
-          <%= f.check_box "mon#{n + 1}", onclick: false, class:'select-month__checkbox' %>
+          <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
           <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label', id:"month#{n + 1}" %>
         </div>
       <% end %>
