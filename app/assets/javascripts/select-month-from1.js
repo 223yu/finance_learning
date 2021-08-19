@@ -41,8 +41,12 @@ $(document).on('turbolinks:load', function() {
       // ホバー状態で逆方向にマウスを動かした時
       this_month = Number($(this).attr('for').substr(3,2));
       if(this_month < prev_month){
-        $(`[for="mon${prev_month}"]`).addClass('select-month-from1__label');
-        $(`[for="mon${prev_month}"]`).removeClass('select-month-from1__label--first');
+        // checkboxを更新
+        $('.select-month-from1__checkbox').prop('checked', false);
+        if($(`[for="mon${prev_month}"]`).attr('class') == 'select-month-from1__label--first'){
+          $(`[for="mon${prev_month}"]`).addClass('select-month-from1__label');
+          $(`[for="mon${prev_month}"]`).removeClass('select-month-from1__label--first');
+        }
         $(this).addClass('select-month-from1__label--first');
         $(this).removeClass('select-month-from1__label--between');
         prev_month = this_month;
