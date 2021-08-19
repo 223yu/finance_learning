@@ -1,12 +1,9 @@
 <div class='mypage'>
 
   <div class='mypage__cumurative-journal'>
-    <p class='mypage__cumurative-journal-item'>累計仕訳数</p>
+    <h4 class='mypage__cumurative-journal-title'>累計仕訳数</h4>
     <p class='mypage__cumurative-journal-item'>
       <%= current_user.journals.length %>仕訳
-    </p>
-    <p class='mypage__cumurative-journal-item'>
-      引き続き頑張りましょう！
     </p>
   </div>
 
@@ -18,7 +15,7 @@
           <% current_user.has_years.each do |year| %>
             <tr class='mypage__tr'>
               <td class='mypage__td'><%= year %>年度</td>
-              <td class='mypage__td'><%= year %>年1月1日　〜　<%= year %>年12月31日</td>
+              <td class='mypage__td'><%= year %>年1月1日 〜 <%= year %>年12月31日</td>
               <td class='mypage__td'><%= link_to '年度選択', select_years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
               <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :patch, class:'mypage__td-btn' %> </td>
             </tr>
@@ -83,7 +80,7 @@ const profit_chart = new Chart(ctx, {
           <%= @profit_array[10] %>,
           <%= @profit_array[11] %>,
           ],
-        borderColor: 'rgba(0,0,255,1)',
+        borderColor: 'rgba(255 ,192 , 0, 1)',
         backgroundColor: 'rgba(0,0,0,0)'
       }
     ],
@@ -91,11 +88,11 @@ const profit_chart = new Chart(ctx, {
   options: {
     title: {
       display: true,
-      text: '利益残高の推移'
+      text: '利益残高の推移',
     },scales: {
       xAxes: [
         {
-          ticks: {}
+          ticks: {},
         }
       ],
       yAxes: [
@@ -141,7 +138,7 @@ const cash_chart = new Chart(ctx, {
           <%= @cash_array[10] %>,
           <%= @cash_array[11] %>,
           ],
-        borderColor: 'rgba(0,0,255,1)',
+        borderColor: 'rgba(255 ,192 , 0, 1)',
         backgroundColor: 'rgba(0,0,0,0)'
       }
     ],

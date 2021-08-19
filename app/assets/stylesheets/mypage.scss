@@ -4,21 +4,18 @@
   // cumurative-journal
   &__cumurative-journal{
     @extend %max-width;
-
-    height: 50px;
     margin-top: 30px;
   }
 
   &__cumurative-journal-item{
-    height: 50px;
-    width: 200px;
+    padding: 5px 10px;
     display: inline-block;
+    border-bottom: 1px solid;
   }
 
   // year-choice
   &__year-choice{
     @extend %max-width;
-
     height: 400px;
     margin-top: 30px;
   }
@@ -29,61 +26,75 @@
 
   &__tr{
     @extend %tr;
+    border-bottom: 1px solid;
   }
 
   &__td{
     @extend %td;
+    border: none;
+    border-bottom: 1px solid;
+    padding: 5px 10px;
   }
 
   &__td-btn{
-    @extend %link;
-
-    height: 30px;
+    @extend %btn;
     width: 100px;
-    display: block;
-    text-align: center;
-    line-height: 30px;
-    border: 1px solid;
-    border-radius: 5px;
   }
 
   &__graph-boxes{
     @extend %max-width;
-
     display: flex;
   }
 
   &__graph-area{
     width: 400px;
     margin: 30px 50px 30px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__graph-title{
+    margin-bottom: 5px;
   }
 
   &__graph-box{
+    position: relative;
     height: 200px;
     width: 400px;
+    background: white;
+    color: black;
     border: 1px solid;
     border-radius: 30px;
+
+    &:after{
+      position: absolute;
+      content: '';
+      height: 200px;
+      width: 400px;
+      background: black;
+      top: 5px;
+      left: 5px;
+      z-index: -1;
+      border-radius: 30px;
+    }
   }
 
   // buttons
   &__buttons {
     @extend %max-width;
-
     display: flex;
     justify-content: flex-start;
   }
 
   &__btn{
-    @extend %link;
-
-    display: block;
-    height: 50px;
+    @extend %btn;
     width: 150px;
-    border: 1px solid;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 50px;
-    margin-right: 30px;
+    height: 40px;
+    line-height: 40px;
+
+    &:nth-child(1){
+      margin-right: 30px;
+    }
   }
 
 }

@@ -60,6 +60,8 @@
     padding: 0;
     text-align: center;
     z-index: 100;
+    position: relative;
+    left: 30px;
   }
 
   &__dropdown-item{

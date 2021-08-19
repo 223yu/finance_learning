@@ -33,6 +33,7 @@
   }
 
   &__form-row-btn{
+    @extend %btn;
     width: 200px;
   }
 
