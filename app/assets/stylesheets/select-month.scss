@@ -11,7 +11,8 @@
   user-select: none;
 }
 
-.select-month{
+.select-month,
+.select-month-from1{
   &__title{
     margin: 20px 0 10px 0;
   }
@@ -55,6 +56,11 @@
     }
 
     &--between{
+      @extend %select-label;
+      background: $yellow;
+    }
+
+    &--active{
       @extend %select-label;
       background: $yellow;
     }

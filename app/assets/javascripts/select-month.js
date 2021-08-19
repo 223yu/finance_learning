@@ -4,6 +4,7 @@ $(document).on('turbolinks:load', function() {
   let this_month = '';
   let prev_month = '';
   let start_month = '';
+
   // 開始月クリック時
   $('.select-month__label').mousedown(function(){
     // 初期化
@@ -37,10 +38,7 @@ $(document).on('turbolinks:load', function() {
         reset();
       }
     });
-  });
-
-  // ホバー状態で逆方向にマウスを動かした時
-  $('.select-month__label').mousemove(function(){
+    // ホバー状態で逆方向にマウスを動かした時
     this_month = Number($(this).attr('for').substr(3,2));
     if((start_month <= this_month && this_month < prev_month) || (prev_month < this_month && this_month <= start_month)){
       $(`[for="mon${prev_month}"]`).addClass('select-month__label');
