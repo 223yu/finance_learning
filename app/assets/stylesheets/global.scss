@@ -20,10 +20,36 @@ html, body{
 }
 
 main{
-  height: 100%;
+  min-height: 100%;
   padding-top: 50px; //header分全体を下げる
   padding-bottom: 50px; //footer分全体を上げる
   background: $silver;
+}
+
+h4{
+  position: relative;
+  left: 20px;
+  &:before{
+    content: '';
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border: 2px solid white;
+    position: absolute;
+    top: 2px;
+    left: -25px;
+  }
+
+  &:after{
+    content: '';
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border: 2px solid $yellow;
+    position: absolute;
+    top: 7px;
+    left: -20px;
+  }
 }
 
 // コンテナ

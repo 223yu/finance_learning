@@ -14,7 +14,9 @@
     <header>
       <ul class='navbar'>
         <li class='navbar__logo'>
-          <%= link_to 'LOGO', root_path, class:'navbar__logo-image' %>
+          <%= link_to root_path, class:'navbar__logo-link' do %>
+            <%= image_tag 'logo.png', class:'navbar__logo-image' %>
+          <% end %>
         </li>
         <% if user_signed_in? %>
           <li class='navbar__item'>
