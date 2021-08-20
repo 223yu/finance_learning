@@ -21,9 +21,15 @@
    margin-right: auto;
   }
 
-  &__logo-image{
+  &__logo-link{
     @extend %link;
-    color: white;
+  }
+
+  &__logo-image{
+    height: 45px;
+    width: 45px;
+    position: relative;
+    top: 2.5px;
   }
 
   &__item{
