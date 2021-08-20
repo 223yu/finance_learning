@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :learnings, dependent: :destroy
   has_many :accounts, dependent: :destroy
   has_many :journals, dependent: :destroy
+  has_many :imports, dependent: :destroy
 
   # 追加メソッド
   # deviseにおいてパスワード入力なしでupdateを行う

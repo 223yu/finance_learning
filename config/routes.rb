@@ -40,5 +40,9 @@ Rails.application.routes.draw do
   resource :years, only: [:update] do
     post 'select', on: :collection
   end
+  resources :single_entry_imports, only: [:index, :create, :edit, :update, :destroy] do
+    get 'import', on: :collection
+    delete 'all_destroy', on: :collection
+  end
 
 end

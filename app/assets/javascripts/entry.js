@@ -2,7 +2,8 @@
 $(document).on('turbolinks:load', function() {
   // 借方コード、貸方コード
   let target = ['journal_debit', 'journal_credit', 'journal_nonself',
-                'debit', 'credit', 'nonself']; //4行目→nomal、5行目→search mode
+                'debit', 'credit', 'nonself',
+                'import_debit', 'import_credit']; //4行目→nomal、5行目→search mode、6行目→csv import
   target.forEach(function(target){
     let target_code = '#' + target + '_code';
     let target_name = '#' + target + '_name';
@@ -21,7 +22,8 @@ $(document).on('turbolinks:load', function() {
 
   // その他の項目は全角を半角に変換するのみ
   target = ['#journal_month', '#journal_day', '#journal_amount', '#journal_received_amount', '#journal_invest_amount',
-            '#month', '#day', '#amount', '#received_amount', '#invest_amount']; //23行目→nomal、24行目→search mode
+            '#month', '#day', '#amount', '#received_amount', '#invest_amount',
+            '#import_month', '#import_day', '#import_amount']; //24行目→nomal、25行目→search mode、26行目→csv import
   target.forEach(function(target){
     $(document).on('input', target, function(){
     let str = $(this).val();
@@ -79,7 +81,8 @@ $(document).on('turbolinks:load', function() {
 $(document).on('turbolinks:load', function() {
 
   const target = ['#journal_month', '#journal_day', '#journal_debit_code', '#journal_credit_code', '#journal_amount', '#journal_nonself_code', '#journal_received_amount', '#journal_invest_amount',
-                  '#month', '#day', '#debit_code', '#credit_code', '#amount', '#nonself_code', '#received_amount', 'invest_amount']; //81行目→nomal、82行目→search mode
+                  '#month', '#day', '#debit_code', '#credit_code', '#amount', '#nonself_code', '#received_amount', 'invest_amount',
+                  '#import_month', '#import_day', '#import_debit_code', '#import_credit_code', '#import_amount']; //83行目→nomal、84行目→search mode、85行目→csv import
   target.forEach(function(target){
     $(document).on('keydown', target, function(){
       enter_change_tab();

@@ -50,6 +50,10 @@
                 <i class="fas fa-caret-right"></i>
                 <%= link_to 'カード入力', select_card_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
+              <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to 'CSV取込', single_entry_imports_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
+              </li>
             </ul>
           </li>
           <li class='navbar__dropdown'>

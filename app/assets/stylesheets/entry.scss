@@ -16,6 +16,11 @@
     max-height: 400px;
     overflow-x: hidden;
     overflow-y: scroll;
+
+    &--import{
+      @extend .entry__index-tbody;
+      margin-bottom: 20px;
+    }
   }
 
   &__index-tr{

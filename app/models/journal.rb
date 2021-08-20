@@ -7,7 +7,6 @@ class Journal < ApplicationRecord
     validates :credit_id
     validates :date
     validates :amount
-    validates :description
   end
 
   validates :amount, :numericality => { :greater_than => 0 }

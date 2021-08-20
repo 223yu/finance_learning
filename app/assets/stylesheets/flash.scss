@@ -1,23 +1,17 @@
 @import "global";
 
 .flash{
-
-  %flash{
-    position: fixed;
+    position: sticky;
     top: 50px;
     left: 0;
-    width: 100%;
-  }
 
   &__danger{
-    @extend %flash;
-
+    width: 100%;
     background: $pink;
   }
 
   &__success{
-    @extend %flash;
-
+    width: 100%;
     background: $green;
   }
 
