@@ -65,6 +65,10 @@ class Account < ApplicationRecord
     foreign_key: 'debit_id', dependent: :destroy
   has_many :credit_journals, class_name: 'Journal',
     foreign_key: 'credit_id', dependent: :destroy
+  has_many :debit_imports, class_name: 'Import',
+    foreign_key: 'debit_id', dependent: :destroy
+  has_many :credit_imports, class_name: 'Import',
+    foreign_key: 'credit_id', dependent: :destroy
 
   # 追加メソッド
   # 勘定科目の残高を更新

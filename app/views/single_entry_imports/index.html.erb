@@ -1,0 +1,37 @@
+<div class='single-entry-import'>
+  <!-- csv新規取込フォーム -->
+  <h4 class='single-entry-import__new-title'>CSV新規取込</h4>
+  <%= form_with url: single_entry_imports_path, method: :post, class:'single-entry-import__form-group', local:true do |f| %>
+    <%= f.file_field :file, class:'single-entry-import__file-field' %>
+    <%= f.submit 'インポート', class:'single-entry-import__form-btn' %>
+  <% end %>
+
+  <!-- 仕訳表示 -->
+  <h4 class='single-entry-import__index-title'>取込待ち仕訳一覧</h4>
+  <%= link_to '取込実行', import_single_entry_imports_path, class:'single-entry-import__btn' %>
+  <%= link_to '全て削除', all_destroy_single_entry_imports_path, method: :delete, class:'single-entry-import__btn' %>
+  <div class='single-entry-import__index'>
+    <div class='entry__index-table'>
+      <div class='entry__index-thead'>
+        <div class='entry__index-tr'>
+          <div class='entry__index-th--date'>月</div>
+          <div class='entry__index-th--date'>日</div>
+          <div class='entry__index-th--code'>借方コード</div>
+          <div class='entry__index-th--name'>借方科目名</div>
+          <div class='entry__index-th--code'>貸方コード</div>
+          <div class='entry__index-th--name'>貸方科目名</div>
+          <div class='entry__index-th--amount'>金額</div>
+          <div class='entry__index-th--description'>摘要</div>
+        </div>
+      </div>
+      <div class='entry__index-tbody--import'>
+        <% @imports.each do |import| %>
+          <%= render 'show', import: import %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 科目候補表示 -->
+  <div class='entry__subbox'></div>
+</div>

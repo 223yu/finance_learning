@@ -1,0 +1,20 @@
+<div class='entry__index-tr<%= import.id %>'>
+  <div class='entry__index-td--date'><%= import.date.month %></div>
+  <div class='entry__index-td--date'><%= import.date.day %></div>
+  <div class='entry__index-td--code'><%= import.debit.code %></div>
+  <div class='entry__index-td--name'><%= import.debit.name %></div>
+  <div class='entry__index-td--code'><%= import.credit.code %></div>
+  <div class='entry__index-td--name'><%= import.credit.name %></div>
+  <div class='entry__index-td--amount'><%= import.amount.to_s(:delimited) %></div>
+  <div class='entry__index-td--description'><%= import.description %></div>
+  <div class='entry__index-td--btn'>
+    <%= link_to edit_single_entry_import_path(import), class:'entry__index-link', remote: true do %>
+      <i class="fas fa-edit"></i>
+    <% end %>
+  </div>
+  <div class='entry__index-td--btn'>
+    <%= link_to single_entry_import_path(import), method: :delete, class:'entry__index-link', remote: true do %>
+      <i class="fas fa-trash-alt"></i>
+    <% end %>
+  </div>
+</div>
