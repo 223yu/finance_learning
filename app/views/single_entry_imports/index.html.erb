@@ -1,7 +1,7 @@
 <div class='single-entry-import'>
   <!-- csv新規取込フォーム -->
   <h4 class='single-entry-import__new-title'>CSV新規取込</h4>
-  <%= form_with url: single_entry_imports_path, method: :post, class:'single-entry-import__form-group' do |f| %>
+  <%= form_with url: single_entry_imports_path, method: :post, class:'single-entry-import__form-group', local:true do |f| %>
     <%= f.file_field :file, class:'single-entry-import__file-field' %>
     <%= f.submit 'インポート', class:'single-entry-import__form-btn' %>
   <% end %>
