@@ -12,13 +12,14 @@
   }
 
   &__index-title{
-    margin: 20px 0 10px 0;
+    margin: 20px 40px 10px 0;
+    display: inline-block;
   }
 
   &__btn{
     @extend %btn;
 
-    width: 100px;
+    width: 130px;
     display: inline-block;
   }
 }

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :single_entry_imports, only: [:index, :create, :edit, :update, :destroy] do
     get 'import', on: :collection
     delete 'all_destroy', on: :collection
+    get 'download', on: :collection
   end
 
 end

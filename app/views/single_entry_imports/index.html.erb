@@ -8,6 +8,7 @@
 
   <!-- 仕訳表示 -->
   <h4 class='single-entry-import__index-title'>取込待ち仕訳一覧</h4>
+  <%= button_to 'csvダウンロード', download_single_entry_imports_path, method: :get, class:'single-entry-import__btn' %>
   <%= link_to '取込実行', import_single_entry_imports_path, class:'single-entry-import__btn' %>
   <%= link_to '全て削除', all_destroy_single_entry_imports_path, method: :delete, class:'single-entry-import__btn' %>
   <div class='single-entry-import__index'>

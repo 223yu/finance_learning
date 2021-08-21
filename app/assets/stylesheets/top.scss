@@ -2,6 +2,7 @@
 
 .top{
   @extend %max-width;
+  margin-bottom: 100px;
 
   // title
   &__title{
