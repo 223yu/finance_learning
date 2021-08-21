@@ -5,37 +5,47 @@
   margin-bottom: 100px;
 
   // title
-  &__title{
-    height: 310px;
-    width: 1000px;
-    margin: 50px auto 0 auto;
-    background-image: url(top__title.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
+  &__title-box{
+    height: 300px;
+    width: 980px;
+    background: white;
+    margin-top: 50px;
+    border: 1px solid black;
     position: relative;
 
     // 右側の線
     &:before{
       content: '';
-      height: 313px;
+      height: 300px;
       width: 1px;
       background-color: black;
       position: absolute;
-      top: 10px;
-      left: 1015px;
+      top: 20px;
+      left: 1000px;
     }
 
     // 下側の線
     &:after{
       content: '';
       height: 1px;
-      width: 991px;
+      width: 980px;
       background-color: black;
       position: absolute;
-      top: 323px;
-      left: 25px;
+      top: 320px;
+      left: 20px;
     }
 
+  }
+
+  &__title-box-title{
+    display: block;
+    margin-top: 165px;
+    margin-left: 30px;
+  }
+
+  &__title-box-text{
+    display: block;
+    margin-left: 30px;
   }
 
   // about

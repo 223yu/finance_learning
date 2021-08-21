@@ -4,16 +4,15 @@
   @extend %max-width;
 
   position: relative;
-  height: 50px;
+  height: 60px;
   list-style: none;
   display: flex;
   z-index: 10;
 
   %__list{
     width: 130px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
+    height: 60px;
+    line-height: 60px;
   }
 
   &__logo{
@@ -29,11 +28,12 @@
     height: 45px;
     width: 45px;
     position: relative;
-    top: 2.5px;
+    top: 7.5px;
   }
 
   &__item{
     @extend %__list;
+    text-align: center;
   }
 
   &__item-link{
@@ -42,17 +42,18 @@
   }
 
   &__user-name{
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
   }
 
   &__user-year{
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
   }
 
   &__dropdown{
     @extend %__list;
+    text-align: center;
 
     &:hover &-item{
       height: 40px;
