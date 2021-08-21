@@ -2,36 +2,63 @@
 
 .content{
   @extend %max-width;
-
   display: flex;
+  position: relative;
 
   // table
+  &__table-boxes{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 60px;
+    height: 10vh;
+    width: 200px;
+    padding-top: 30px;
+  }
+
+  &__table-label{
+    position: static;
+    margin-bottom: 10px;
+
+    &:before,
+    &:after{
+      content: none;
+    }
+  }
+
   &__table-box{
-    position: fixed;
+    height: 50px;
     width: 200px;
-    margin: 30px;
-  }
+    margin-bottom: 5px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 20px;
 
-  &__table{
-    @extend %table;
+    &:hover{
+      background: $gray;
 
-    width: 200px;
-  }
+      & div a {
+        color: white;
+      }
 
-  &__table-tr{
-    @extend %tr;
-  }
-
-  &__table-td{
-    @extend %td;
-
-    width: 30px;
+      & .content__table-link{
+        background: $yellow;
+      }
+    }
   }
 
   &__table-title{
-    @extend %td;
-
     padding: 5px;
+    padding-left: 15px;
+    display: block;
+  }
+
+  &__table-check{
+    width: 30px;
+    display: block;
+    margin-right: 10px;
   }
 
   &__table-title-link{
@@ -44,24 +71,51 @@
     display: block;
     height: 30px;
     width: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: $silver;
+    border-radius: 15px;
   }
 
   // post-boxes
   &__post-boxes{
     width: 700px;
-    margin: 30px 30px 30px 250px;
+    margin: 30px auto;
+  }
+
+  &__post-box-area{
+    position: relative;
+    z-index: 0;
   }
 
   &__post-box{
     width: 700px;
     margin: 30px 0;
-    border: 1px solid;
+    border-radius: 20px;
     position: relative;
+    background: white;
+
+    &:before{
+      content: '';
+      display: block;
+      height: 100%;
+      width: 700px;
+      background: black;
+      border-radius: 20px;
+      position: absolute;
+      bottom: -5px;
+      left: 5px;
+      z-index: -1;
+    }
   }
 
   &__post-title{
-    padding: 5px;
-    border-bottom: 1px solid;
+    padding: 10px;
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    background: $gray;
+    color: white;
   }
 
   &__post-trigger{
@@ -77,15 +131,40 @@
   }
 
   &__post-btn{
+    width: 0;
+    height: 0;
     position: absolute;
-    top: -55px;
+    top: -30px;
     left: 650px;
     margin-top: 45px;
+    border-style: solid;
+    border-width: 20px 15px 0 15px;
+    border-color: $silver transparent transparent transparent;
+
+    &:before{
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 20px 15px 0 15px;
+      border-color: $gray transparent transparent transparent;
+      position: relative;
+      top: -10px;
+      right: 15px;
+    }
+
+    &:hover{
+      border-color: $yellow transparent transparent transparent;
+    }
   }
 
   &__post-body{
     position: relative;
     overflow: hidden;
+    border: 1px solid;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    padding: 10px;
     height: 150px; //隠したい高さ
 
     &:before{
@@ -95,22 +174,25 @@
       left: 0;
       width: 100%;
       height: 40px; //グラデーションで隠す高さ
+      border-radius: 20px;
       background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.9) 50%, #fff 100%);
       content: '';
     }
   }
 
   &__post-box-lock{
-    height: 185px;
+    height: 200px;
     width: 698px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(211, 211, 211, 0.7);
+    border-radius: 20px;
+    background: $gray;
+    opacity: 0.7;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 1px;
   }
 
   &__post-box-lock-area{
@@ -118,7 +200,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(255,255,255,1);
+    background: white;
   }
 
   &__post-box-lock-text{
