@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resource :users, only: [:show] do
     post 'start', on: :collection
   end
-  resources :contents, only: [:index, :create, :destroy]
+  resource :contents, only: [:show, :create, :destroy]
   resources :accounts, only: [:index, :create, :edit, :update, :destroy] do
     get 'search', on: :collection
     get 'search_sub', on: :collection
