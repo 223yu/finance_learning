@@ -33,6 +33,7 @@
   &__index-th{
     @extend %th;
     background: $gray;
+    border: 1px solid black;
 
     &--date{
       @extend .entry__index-th;

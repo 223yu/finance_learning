@@ -6,12 +6,15 @@
   margin-bottom: 100px;
 
   &__index{
-    margin-top: 20px;
-    overflow-x: scroll;
+    height: 400px;
+    width: 1000px;
+    margin-top: 10px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
   }
 
   &__title{
-    text-align: center;
     margin-top: 20px;
   }
 

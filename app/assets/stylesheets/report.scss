@@ -5,265 +5,121 @@
 
   &__index-table{
     @extend %table;
-
     table-layout: fixed;
-    width: 1000px;
+    width: 950px;
+    position: relative;
   }
 
   &__index-thead{
     @extend %thead;
-
   }
 
   &__index-tbody{
-    max-height: 400px;
-    overflow-y: scroll;
+    // height: 400px;
+    // overflow-y: scroll;
   }
 
   &__index-th{
-    &--code{
-      @extend %th;
+    @extend %th;
+    border: 1px solid black;
+    background: $gray;
+    position: sticky;
+    top: -1px;
 
-      background: $gray;
-      width: 70px;
-    }
-
-    &--name{
-      @extend %th;
-
-      background: $gray;
-      width: 130px;
-    }
-
-    &--opening-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--debit-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--credit-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--ending-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--ledger{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--total-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
-    &--average-balance{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
+    &--code,
+    &--ledger,
+    &--total-balance,
+    &--average-balance,
     &--month{
-      @extend %th;
-
-      background: $gray;
+      @extend .report__index-th;
       width: 100px;
+    }
+
+    &--name,
+    &--account,
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance{
+      @extend .report__index-th;
+      width: 150px;
+    }
+
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      &:first-child{
+        z-index: 2;
+      }
     }
   }
 
   &__index-td{
-    &--code{
-      @extend %th;
+    @extend %th;
+    border-top: none;
+    background: white;
 
-      border-top: none;
-      width: 70px;
-    }
-
-    &--name{
-      @extend %th;
-
-      border-top: none;
-      width: 130px;
-    }
-
-    &--opening-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--debit-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--credit-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--ending-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
+    &--code,
+    &--name,
+    &--account,
     &--ledger{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
+      @extend .report__index-td;
     }
 
-    &--total-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
     }
 
-    &--average-balance{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance,
+    &--total-balance,
+    &--average-balance,
     &--month{
-      @extend %th;
-
-      border-top: none;
-      width: 100px;
+      @extend .report__index-td;
       text-align: right;
     }
-
   }
 
   &__index-link{
     @extend %link;
-
     margin: 0 5px;
   }
 
   // total
   &__total-td{
-    &--code{
-      @extend %th;
+    @extend %th;
+    background: $yellow;
+    border-top: none;
 
-      background: $blue;
-      border-top: none;
-      width: 70px;
-    }
-
-    &--name{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 130px;
-    }
-
-    &--opening-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--debit-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--credit-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
-    &--ending-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
+    &--code,
+    &--name,
+    &--account,
     &--ledger{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
+      @extend .report__total-td;
     }
 
-    &--total-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
     }
 
-    &--average-balance{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
-      text-align: right;
-    }
-
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance,
+    &--total-balance,
+    &--average-balance,
     &--month{
-      @extend %th;
-
-      background: $blue;
-      border-top: none;
-      width: 100px;
+      @extend .report__total-td;
       text-align: right;
     }
   }

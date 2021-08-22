@@ -85,7 +85,7 @@
 !-- 当期純利益 -->
   <% net_income = [operating_income, non_operating_income].transpose.map{|n| n.inject(:+)} %>
   <tr class='report__index-tr'>
-    <td class='report__total-td--name'>当期純利益計</td>
+    <th class='report__total-td--account'>当期純利益計</th>
     <td class='report__total-td--total-balance'><%= net_income[12].to_s(:delimited) %></td>
     <td class='report__total-td--average-balance'><%= net_income[13].to_s(:delimited) %></td>
     <td class='report__total-td--month'><%= net_income[0].to_s(:delimited) %></td>
