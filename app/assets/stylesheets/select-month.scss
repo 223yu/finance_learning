@@ -6,6 +6,7 @@
   width: 50px;
   text-align: center;
   line-height: 50px;
+  background: white;
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -66,11 +67,8 @@
   }
 
   &__btn{
-    display: block;
-    height: 30px;
+    @extend %btn;
     width: 50px;
-    text-align: center;
-    line-height: 30px;
   }
 
   &__account-form{
