@@ -1,7 +1,10 @@
+<div class='errors'>
+  <%= render 'layouts/errors', obj: @user %>
+</div>
 <div class='devise'>
   <h4 class='devise__title'>ユーザ情報編集</h4>
 
-  <%= form_with model: @user, url: user_registration_path, method: :put, class:'devise__form-group' do |f| %>
+  <%= form_with model: @user, url: user_registration_path, method: :put, class:'devise__form-group', locak: true do |f| %>
     <%= render 'devise/shared/error_messages', resource: resource %>
 
     <div class='devise__form-row'>
