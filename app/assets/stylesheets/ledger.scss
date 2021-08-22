@@ -4,12 +4,12 @@
   @extend %max-width;
 
   &__index{
-    margin: 20px 0 100px 0;
-    overflow-x: scroll;
+    height: 400px;
+    margin: 10px 0 50px 0;
+    overflow-y: scroll;
   }
 
   &__title{
-    text-align: center;
     margin-top: 20px;
   }
 
@@ -32,75 +32,64 @@
 
   &__index-tbody{
     max-height: 400px;
-    overflow-y: scroll;
   }
 
   &__index-th{
-    &--nonself-code{
-      @extend %th;
+    @extend %th;
+    background: $gray;
+    border: 1px solid black;
+    position: sticky;
+    top: -1px;
 
-      background: $gray;
+    &--nonself-code,
+    &--amount{
+      @extend .ledger__index-th;
       width: 100px;
     }
 
     &--name{
-      @extend %th;
-
-      background: $gray;
+      @extend .ledger__index-th;
       width: 150px;
     }
 
     &--date{
-      @extend %th;
-
-      background: $gray;
+      @extend .ledger__index-th;
       width: 50px;
     }
 
-    &--amount{
-      @extend %th;
-
-      background: $gray;
-      width: 100px;
-    }
-
     &--description{
-      @extend %th;
-
-      background: $gray;
+      @extend .ledger__index-th;
       width: 200px;
     }
   }
 
   &__index-td{
-    &--nonself-code{
-      @extend %th;
+    @extend %th;
+    background: white;
 
+    &--nonself-code{
+      @extend .ledger__index-td;
       width: 100px;
     }
 
     &--name{
-      @extend %th;
-
+      @extend .ledger__index-td;
       width: 150px;
     }
 
     &--date{
-      @extend %th;
-
+      @extend .ledger__index-td;
       width: 50px;
     }
 
     &--amount{
-      @extend %th;
-
+      @extend .ledger__index-td;
       width: 100px;
       text-align: right;
     }
 
     &--description{
-      @extend %th;
-
+      @extend .ledger__index-td;
       width: 200px;
     }
   }
