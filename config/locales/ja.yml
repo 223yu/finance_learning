@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        email: メールアドレス
+        password: パスワード
+        name: 名前
+        year: 年度
+
+      account:
+        code: コード
+        name: 科目名
+        total_account: 合計科目

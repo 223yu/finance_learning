@@ -2,15 +2,17 @@
 
 .flash{
   position: sticky;
-  top: 50px;
+  top: 60px;
   left: 0;
 
-  &__danger{
+  &__danger,
+  &__alert{
     width: 100%;
     background: $pink;
   }
 
-  &__success{
+  &__success,
+  &__notice{
     width: 100%;
     background: $green;
   }
