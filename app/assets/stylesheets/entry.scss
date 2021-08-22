@@ -8,7 +8,6 @@
 
   &__index-thead{
     @extend %thead;
-
     display: block;
   }
 
@@ -32,90 +31,73 @@
   }
 
   &__index-th{
-    &--date{
-      @extend %th;
+    @extend %th;
+    background: $gray;
 
-      background: $gray;
+    &--date{
+      @extend .entry__index-th;
       width: 50px;
     }
 
     &--code{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 100px;
     }
 
     &--nonself-code{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 150px;
     }
 
     &--name{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 150px;
     }
 
     &--amount{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 100px;
     }
 
     &--description{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 200px;
     }
   }
 
   &__index-td{
+    @extend %th;
+    border-top: none;
+    background: white;
     &--date{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 50px;
-      border-top: none;
     }
 
     &--code{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 100px;
-      border-top: none;
     }
 
     &--nonself-code{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 150px;
-      border-top: none;
     }
 
     &--name{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 150px;
-      border-top: none;
     }
 
     &--amount{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 100px;
-      border-top: none;
+      text-align: right;
     }
 
     &--description{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 200px;
-      border-top: none;
     }
 
     &--btn{
@@ -127,7 +109,6 @@
 
   &__index-link{
     @extend %link;
-
     margin: 0 5px;
   }
 
@@ -137,45 +118,38 @@
   }
 
   &__new-td{
+    @extend %th;
+    border-right: none;
     &--date{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 50px;
-      border-right: none;
     }
 
     &--code{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 100px;
-      border-right: none;
     }
 
     &--nonself-code{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 150px;
-      border-right: none;
     }
 
     &--name{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 150px;
-      border-right: none;
     }
 
     &--amount{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 100px;
-      border-right: none;
+      text-align: right;
     }
 
     &--description{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 200px;
+      border-right: 1px solid;
     }
 
     &--btn{
@@ -186,39 +160,33 @@
   &__form{
     &--date{
       @extend %th;
-
       width: 38px;
     }
 
     &--code{
       @extend %th;
-
       width: 88px;
     }
 
     &--nonself-code{
       @extend %th;
-
       width: 138px;
     }
 
     &--name{
       @extend %th;
-
       width: 138px;
-      background: $gray;
-      opacity: 0.7;
+      background: $silver;
     }
 
     &--amount{
       @extend %th;
-
       width: 88px;
+      text-align: right;
     }
 
     &--description{
       @extend %th;
-
       width: 188px;
     }
   }

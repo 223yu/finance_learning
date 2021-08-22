@@ -7,7 +7,10 @@
   }
 
   &__form-btn{
+    @extend %btn;
     height: 50px;
+    line-height: 50px;
     width: 120px;
+    margin-left: auto;
   }
 }
