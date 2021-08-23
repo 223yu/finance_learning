@@ -58,14 +58,14 @@
     &1{
       @extend .top__about-box;
       margin: 70px auto 0 0;
-      background-image: url(top__about-box1.png);
+      background-image: image-url('top__about-box1.png');
     }
 
     &2{
       @extend .top__about-box;
       margin-top: -20px;
       margin-left: auto;
-      background-image: url(top__about-box2.png);
+      background-image: image-url('top__about-box2.png');
     }
 
     &3{
@@ -73,7 +73,7 @@
       width: 840px;
       margin-top: 50px;
       margin-right: auto;
-      background-image: url(top__about-box3.png);
+      background-image: image-url('top__about-box3.png');
     }
   }
 
@@ -82,7 +82,7 @@
     height: 110px;
     width: 900px;
     margin: 50px auto 0 auto;
-    background-image: url(top__worry-title.png);
+    background-image: image-url('top__worry-title.png');
     background-size: 100%;
     background-repeat: no-repeat;
   }
@@ -91,7 +91,7 @@
     height: 500px;
     width: 1000px;
     margin: 0 auto;
-    background-image: url(top__worry-boxes.png);
+    background-image: image-url('top__worry-boxes.png');
     background-size: 100%;
     background-repeat: no-repeat;
   }
@@ -158,7 +158,7 @@
     height: 110px;
     width: 900px;
     margin: 50px auto 0 auto;
-    background-image: url(top__solution-title.png);
+    background-image: image-url('top__solution-title.png');
     background-size: 100%;
     background-repeat: no-repeat;
   }
@@ -170,16 +170,16 @@
     background-repeat: no-repeat;
     &1{
       @extend .top__solution-box;
-      background-image: url(top__solution-box1.png);
+      background-image: image-url('top__solution-box1.png');
       margin-top: 30px;
     }
     &2{
       @extend .top__solution-box;
-      background-image: url(top__solution-box2.png);
+      background-image: image-url('top__solution-box2.png');
     }
     &3{
       @extend .top__solution-box;
-      background-image: url(top__solution-box3.png);
+      background-image: image-url('top__solution-box3.png');
     }
   }
 
