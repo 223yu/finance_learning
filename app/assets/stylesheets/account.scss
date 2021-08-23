@@ -5,7 +5,7 @@
 
   // title
   &__title{
-    @extend %title;
+    margin-top: 20px;
   }
 
   // add
@@ -26,6 +26,7 @@
 
   &__add-thead{
     background: $gray;
+    color: white;
   }
 
   &__add-tr{
@@ -34,13 +35,12 @@
 
   &__add-th{
     @extend %th;
-
+    border: 1px solid black;
     height: 40px;
   }
 
   &__add-td{
     @extend %td;
-
     height: 40px;
 
     &--btn{
@@ -49,9 +49,9 @@
   }
 
   &__add-btn{
+    @extend %btn;
     width: 50px;
-    display: block;
-    margin-left: 10px;
+    margin-left: 20px;
   }
 
   &__add-text-field{
@@ -64,12 +64,6 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 100px;
-  }
-
-  &__index-boxes-title{
-    @extend %title;
-
-    width: 100%;
   }
 
   &__index-box{
@@ -91,62 +85,42 @@
   }
 
   &__index-th{
+    @extend %th;
+    background: $gray;
+    border: 1px solid black;
 
     &--code{
-      @extend %th;
-
+      @extend .account__index-th;
       width: 80px;
-      background: $gray;
     }
 
-    &--name{
-      @extend %th;
-
-      width: 100px;
-      background: $gray;
-    }
-
-    &--balance{
-      @extend %th;
-
-      width: 100px;
-      background: $gray;
-    }
-
+    &--name,
+    &--balance,
     &--total{
-      @extend %th;
-
+      @extend .account__index-th;
       width: 100px;
-      background: $gray;
     }
-
   }
 
   &__index-td{
+    @extend %td;
+    border-top: none;
 
     &--code{
-      @extend %td;
-
+      @extend .account__index-td;
       width: 80px;
     }
 
-    &--name{
-      @extend %td;
-
+    &--name,
+    &--total{
+      @extend .account__index-td;
       width: 100px;
     }
 
     &--balance{
-      @extend %td;
-
+      @extend .account__index-td;
       width: 100px;
       text-align: right;
-    }
-
-    &--total{
-      @extend %td;
-
-      width: 100px;
     }
 
     &--btn{
@@ -157,38 +131,24 @@
 
   &__index-link{
     @extend %link;
-
     margin: 0 5px;
   }
 
   //edit
   &__edit-td{
+    @extend %td;
+    background: $yellow;
+
     &--code{
-      @extend %td;
-
+      @extend .account__edit-td;
       width: 80px;
-      background: $blue;
     }
 
-    &--name{
-      @extend %td;
-
-      width: 100px;
-      background: $blue;
-    }
-
-    &--balance{
-      @extend %td;
-
-      width: 100px;
-      background: $blue;
-    }
-
+    &--name,
+    &--balance,
     &--total{
-      @extend %td;
-
+      @extend .account__edit-td;
       width: 100px;
-      background: $blue;
     }
 
     &--btn{
