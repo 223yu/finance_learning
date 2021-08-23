@@ -31,7 +31,7 @@
             </p>
           </li>
           <li class='navbar__item'>
-            <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
+            <%= link_to '学習コンテンツ', contents_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
             <%= link_to 'マイページ', users_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
@@ -62,15 +62,15 @@
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
                 <i class="fas fa-caret-right"></i>
-                <%= link_to '試算表', select_trial_balances_path, class:'navbar__item-link' %>
+                <%= link_to '試算表', select_trial_balances_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
                 <i class="fas fa-caret-right"></i>
-                <%= link_to '推移表', select_transition_tables_path, class:'navbar__item-link' %>
+                <%= link_to '推移表', select_transition_tables_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
                 <i class="fas fa-caret-right"></i>
-                <%= link_to '総勘定元帳', select_ledgers_path, class:'navbar__item-link' %>
+                <%= link_to '総勘定元帳', select_ledgers_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
             </ul>
           </li>
@@ -79,13 +79,13 @@
           </li>
         <% else %>
           <li class='navbar__item'>
-            <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
+            <%= link_to '学習コンテンツ', contents_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to '新規登録', new_user_registration_path, class:'navbar__item-link' %>
+            <%= link_to '新規登録', new_user_registration_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to 'ログイン', new_user_session_path, class:'navbar__item-link' %>
+            <%= link_to 'ログイン', new_user_session_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
         <% end %>
       </ul>
