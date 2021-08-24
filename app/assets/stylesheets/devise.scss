@@ -49,15 +49,11 @@
   }
 
   &__link-btn{
-    @extend %link;
-
-    display: block;
+    @extend %btn;
     height: 50px;
+    line-height: 50px;
     width: 300px;
     margin: 0 auto;
-    border: 1px solid;
-    border-radius: 30px;
-    line-height: 50px;
   }
 
   &__link-text{
