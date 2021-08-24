@@ -14,9 +14,16 @@ class LedgersController < ApplicationController
       @accounts = current_user.accounts_index
     end
     @self_code = params[:self_code]
-    @account = Account.find_by(user_id: current_user.id, year: current_user.year, code: @self_code)
-    range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
-    @journals = current_user.journal_index_from_self_code_in_ledger(@self_code, range)
+    if @get_start_month == 0 || @self_code == ''
+      flash[:danger] = '表示する月と科目を選択してください。'
+      respond_to do |format|
+        format.js { render ajax_redirect_to(request.referer) }
+      end
+    else
+      @account = Account.find_by(user_id: current_user.id, year: current_user.year, code: @self_code)
+      range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
+      @journals = current_user.journal_index_from_self_code_in_ledger(@self_code, range)
+    end
   end
 
 end

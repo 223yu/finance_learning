@@ -27,9 +27,17 @@ class SingleEntriesController < ApplicationController
       @journal = Journal.new
     else
     # nomal mode
-      range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
-      @journals = Journal.where(user_id: current_user.id, date: range).order(id: 'DESC').limit(15).offset(0)
-      @journal = Journal.new
+      # 月が選択されていない状態で「表示」ボタンが押された場合redirectする
+      if @get_start_month == 0
+        flash[:danger] = '表示する月を選択してください。'
+        respond_to do |format|
+          format.js { render ajax_redirect_to(request.referer) }
+        end
+      else
+        range = current_user.start_date_to_end_date(@get_start_month, @get_end_month)
+        @journals = Journal.where(user_id: current_user.id, date: range).order(id: 'DESC').limit(15).offset(0)
+        @journal = Journal.new
+      end
     end
   end
 

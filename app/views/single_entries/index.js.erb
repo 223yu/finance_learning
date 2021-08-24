@@ -1,4 +1,5 @@
 <!-- 一度初期化してから再度仕訳を表示 -->
+$('.flash').html('<%= j(render 'layouts/flash') %>');
 $('.entry__index-tbody').html('');
 <% @journals.each do |journal| %>
   $('.entry__index-tbody').prepend('<%= j(render 'show', journal: journal) %>');

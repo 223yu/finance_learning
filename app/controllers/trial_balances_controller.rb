@@ -6,7 +6,15 @@ class TrialBalancesController < ApplicationController
   end
 
   def index
-    @accounts = Account.where(user_id: current_user.id, year: current_user.year)
+    # 月が選択されていない状態で「表示」ボタンが押された場合redirectする
+    if @get_start_month == 0
+      flash[:danger] = '表示する月を選択してください。'
+      respond_to do |format|
+        format.js { render ajax_redirect_to(request.referer) }
+      end
+    else
+      @accounts = Account.where(user_id: current_user.id, year: current_user.year)
+    end
   end
 
 end

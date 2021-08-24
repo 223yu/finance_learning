@@ -1,2 +1,3 @@
+$('.flash').html('<%= j(render 'layouts/flash') %>');
 $('.report__index-tbody--balance-sheet').html('<%= j(render 'balance_sheet', accounts: @accounts, start_month: @get_start_month, end_month: @get_end_month) %>');
 $('.report__index-tbody--profit-loss').html('<%= j(render 'profit_loss', accounts: @accounts, start_month: @get_start_month, end_month: @get_end_month) %>');
