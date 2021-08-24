@@ -12,6 +12,11 @@
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
+
+    &--profit-loss{
+      @extend .trial-balance__index;
+      display: none;
+    }
   }
 
   &__title{
@@ -30,6 +35,7 @@
 
   &__index-title{
     margin-top: 20px;
+    display: none;
   }
 
 }
