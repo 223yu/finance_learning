@@ -198,28 +198,4 @@
     width: 300px;
     margin: 50px auto;
   }
-
-  &__guest-login{
-    height: 120px;
-    width: 120px;
-    position: fixed;
-    right: 100px;
-    bottom: 100px;
-    text-decoration: none;
-    color: black;
-    background: white;
-    border: 1px solid;
-    border-radius: 20px;
-    text-align: center;
-    z-index: 200;
-
-    &:hover{
-      background: $yellow;
-      transition: 0.5s;
-    }
-
-    &-image{
-      height: 80px;
-    }
-  }
 }

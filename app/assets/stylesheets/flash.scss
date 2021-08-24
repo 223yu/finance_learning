@@ -4,6 +4,7 @@
   position: sticky;
   top: 60px;
   left: 0;
+  z-index: 10;
 
   &__danger,
   &__alert{

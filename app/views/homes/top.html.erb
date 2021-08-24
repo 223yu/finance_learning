@@ -32,14 +32,6 @@
     </div>
   </div>
 
-  <!-- ログインしていない場合のみゲストログインボタンを表示 -->
-  <% unless user_signed_in? %>
-    <%= link_to guest_sign_in_path, method: :post, class:'top__guest-login' do %>
-      <%= image_tag 'top__guest-login.png', class:'top__guest-login-image' %>
-      <p class='top__guest-login-text'>ゲストログイン</p>
-    <% end %>
-  <% end %>
-
   <div class='top__login-btn fade__off'>
     <%= link_to new_user_registration_path, class:'top__login-btn' do %>
       <span class='top__login-text'>ログインして使ってみる</span>
