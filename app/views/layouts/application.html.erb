@@ -87,6 +87,9 @@
           <li class='navbar__item'>
             <%= link_to 'ログイン', new_user_session_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
+          <li class='navbar__item'>
+            <%= link_to 'ゲストログイン', guest_sign_in_path, method: :post, class:'navbar__item-link' %>
+          </li>
         <% end %>
       </ul>
     </header>
