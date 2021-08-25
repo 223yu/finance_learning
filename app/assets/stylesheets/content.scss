@@ -195,7 +195,15 @@
     }
 
     & ol{
-      margin-left: 20px;
+      margin: 1em 0;
+      padding-left: 40px;
+      list-style-type: disc;
+    }
+
+    & ul{
+      margin: 1em 0;
+    	padding-left: 40px;
+    	list-style-type: disc;
     }
 
     & img{
@@ -207,6 +215,39 @@
 
     & figure figcaption{
       text-align: center;
+    }
+
+    & table{
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+
+    & th{
+      width: 100px;
+      border: 1px solid;
+      background: $silver;
+
+      &:first-child{
+        width: 70px;
+      }
+    }
+
+    & td{
+      text-align: center;
+      border: 1px solid;
+    }
+
+    // 行間を表現する際に利用する
+    & span{
+      display: block;
+      height: 50px;
+    }
+
+    &--column{
+      width: 600px;
+      background: $silver;
+      margin: 0 auto;
+      padding: 5px;
     }
   }
 
