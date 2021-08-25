@@ -13,7 +13,7 @@
           </h3>
           <label class='content__post-btn' for='content-trigger<%= content.id %>'></label>
           <input id='content-trigger<%= content.id %>' class='content__post-trigger' type='checkbox'>
-          <div class='content__post-body'><%= sanitize content.body, tags: %w(h5 p ul ol li img figure figcaption) %></div>
+          <div class='content__post-body'><%= sanitize content.body, tags: %w(h5 p ul ol li img table thead tbody tr th td span br div figure figcaption) %></div>
           <% if content.user_limited && user_signed_in? == false %>
           <div class='content__post-box-lock'>
             <div class='content__post-box-lock-area'>
