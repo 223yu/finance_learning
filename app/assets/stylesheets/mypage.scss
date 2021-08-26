@@ -1,9 +1,10 @@
 @import "global";
 
 .mypage{
+  @extend %max-width;
+
   // cumurative-journal
   &__cumurative-journal{
-    @extend %max-width;
     margin-top: 30px;
   }
 
@@ -15,7 +16,6 @@
 
   // year-choice
   &__year-choice{
-    @extend %max-width;
     height: 400px;
     margin-top: 30px;
 
@@ -48,7 +48,6 @@
   }
 
   &__graph-boxes{
-    @extend %max-width;
     display: flex;
   }
 
@@ -87,7 +86,6 @@
 
   // buttons
   &__buttons {
-    @extend %max-width;
     display: flex;
     justify-content: flex-start;
   }

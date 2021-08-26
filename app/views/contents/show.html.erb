@@ -1,3 +1,28 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>「学習が終了したら✔️」</h4>
+        <p>赤枠部分をクリックすることで✔をつけることができます。️</p>
+        <p>また、各タイトルをクリックすることで、画面右側のコンテンツ箇所までスクロールします。</p>
+        <%= image_tag 'content/check.png', height: '50px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>コンテンツ</h4>
+        <p>初期状態ではコンテンツの一部が表示されています。</p>
+        <p>右上の▽ボタンをクリックすることでコンテンツ全体を表示することができます。</p>
+        <%= image_tag 'content/body.png', height: '200px', width: 'auto' %>
+        <p>また、コンテンツにはログインユーザ限定の内容がありますので、下の画像のように表示される場合はログイン後、学習を進めてください。</p>
+        <%= image_tag 'content/body-locked.png', height: '200px', width: 'auto' %>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class='content'>
   <% if user_signed_in? %>
     <div class='content__table-boxes'>
