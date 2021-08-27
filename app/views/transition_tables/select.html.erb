@@ -1,3 +1,26 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>表示する月を選んでください</h4>
+        <p>表示したい期間をドラッグ&ドロップで選択してください。ドラッグした月の色が黄色に変わります。️</p>
+        <p>他の画面と異なり推移表画面では開始月の1月は固定されています。</p>
+        <p>期間を選択したら「表示」ボタンを押してください。</p>
+        <%= image_tag 'transition-table/select-month.png', height: '50px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>損益計算書</h4>
+        <p>損益計算書の発生残高が表示されます。</p>
+        <p>選択した期間以外は全て0が表示されます。また、平均金額は選択した月数で割った金額が表示されます。</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class='trial-balance'>
   <h4 class='trial-balance__title'>推移表</h4>
   <!-- 入力月選択フォーム -->
