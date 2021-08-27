@@ -1,11 +1,41 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>勘定科目設定全般</h4>
+        <p class='modal__alert'>勘定科目の設定を変更する場合に、別のタブを開いている時は、先に別のタブを閉じてから行なってください。️</p>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>勘定科目追加</h4>
+        <p>追加したい勘定科目を入力してください。️</p>
+        <p>合計科目で損益科目を選んだ場合には期首残高を入力することはできません。</p>
+        <p>入力を終えたら「追加」ボタンを押して登録してください。</p>
+        <%= image_tag 'account/new.png', height: '80px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>勘定科目一覧</h4>
+        <p>登録済み勘定科目の一覧が表示されます。</p>
+        <p>各勘定科目右側の1つ目のアイコンをクリックすると編集モードに変わり、2つ目のアイコンをクリックすると仕訳を削除します。</p>
+        <p>年度中に登録している仕訳が存在する場合勘定科目を削除することはできません。</p>
+        <%= image_tag 'account/index.png', height: '120px', width: 'auto' %>
+        <p>【編集モード】</p>
+        <p>登録済み勘定科目の内容を編集することができます。編集後は右側のアイコンをクリックし保存してください。</p>
+        <%= image_tag 'account/edit.png', height: '40px', width: 'auto' %>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class='errors'>
   <%= render 'layouts/errors', obj: @account %>
 </div>
 <div class='account'>
-  <h4 class='account__title'>勘定科目設定</h4>
-
   <div class='account__add-area'>
-    <p class='account__add-title'>勘定科目追加</p>
+    <h4 class='account__add-title'>勘定科目追加</h4>
     <div class='account__add-new'>
       <%= render 'new', account: @account %>
     </div>
