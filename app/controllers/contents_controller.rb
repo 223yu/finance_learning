@@ -15,5 +15,4 @@ class ContentsController < ApplicationController
     learning.destroy
     @contents = Content.all
   end
-
 end

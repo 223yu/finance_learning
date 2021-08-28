@@ -1,5 +1,4 @@
 class HomesController < ApplicationController
-
   def top
   end
 
@@ -15,5 +14,4 @@ class HomesController < ApplicationController
     flash[:notice] = 'ゲストユーザとしてログインしました。'
     redirect_to users_path
   end
-
 end

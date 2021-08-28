@@ -1,6 +1,6 @@
 class LedgersController < ApplicationController
   before_action :authenticate_user!
-  before_action :select_start_month_to_end_month, only:[:index]
+  before_action :select_start_month_to_end_month, only: [:index]
 
   def select
     @accounts = current_user.accounts_index
@@ -8,7 +8,7 @@ class LedgersController < ApplicationController
 
   def index
     # 試算表からリンクで飛んできている（同期処理）場合、viewに受け渡すパラメータを調整
-    if params[:start_month] != nil
+    if !params[:start_month].nil?
       @get_start_month = params[:start_month].to_i
       @get_end_month = params[:end_month].to_i
       @accounts = current_user.accounts_index
@@ -25,5 +25,4 @@ class LedgersController < ApplicationController
       @journals = current_user.journal_index_from_self_code_in_ledger(@self_code, range)
     end
   end
-
 end

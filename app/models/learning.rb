@@ -1,5 +1,4 @@
 class Learning < ApplicationRecord
-
   with_options presence: true do
     validates :user_id
     validates :content_id
@@ -9,5 +8,4 @@ class Learning < ApplicationRecord
 
   belongs_to :user
   belongs_to :content
-
 end

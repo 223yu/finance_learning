@@ -1,6 +1,6 @@
 class CashEntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :select_start_month_to_end_month, only:[:index]
+  before_action :select_start_month_to_end_month, only: [:index]
   after_action :discard_flash_if_xhr
 
   def select
@@ -17,7 +17,7 @@ class CashEntriesController < ApplicationController
     else
       @self_id = current_user.code_id(@self_code)
       if params[:start_month]
-      # search mode
+        # search mode
         # 日付の入力が正しければ採用し、入力がないor誤りの場合、最初に選択した期間を採用
         @get_start_month = params[:start_month].to_i
         @get_end_month = params[:end_month].to_i
@@ -38,7 +38,7 @@ class CashEntriesController < ApplicationController
 
         @journal = Journal.new
       else
-      # nomal mode
+        # nomal mode
         if @get_start_month == 0
           flash[:danger] = '表示する月を選択してください。'
           respond_to do |format|
@@ -147,8 +147,7 @@ class CashEntriesController < ApplicationController
 
   private
 
-    def journal_params
-      params.require(:journal).permit(:month, :day, :self_code, :nonself_code, :received_amount, :invest_amount, :description)
-    end
-
+  def journal_params
+    params.require(:journal).permit(:month, :day, :self_code, :nonself_code, :received_amount, :invest_amount, :description)
+  end
 end

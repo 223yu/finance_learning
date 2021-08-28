@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-
   root 'homes#top'
   post '/guest_sign_in', to: 'homes#guest_sign_in'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    omniauth_callbacks: 'users/omniauth_callbacks',
   }
   resource :users, only: [:show] do
     post 'start', on: :collection
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'scroll', on: :collection
   end
-   resources :card_entries, only: [:index, :create, :edit, :update, :destroy] do
+  resources :card_entries, only: [:index, :create, :edit, :update, :destroy] do
     get 'select', on: :collection
     get 'search', on: :collection
   end
@@ -35,7 +34,7 @@ Rails.application.routes.draw do
   resources :transition_tables, only: [:index] do
     get 'select', on: :collection
   end
-  resources :ledgers, only: [:index ] do
+  resources :ledgers, only: [:index] do
     get 'select', on: :collection
   end
   resource :years, only: [:update] do
@@ -46,5 +45,4 @@ Rails.application.routes.draw do
     delete 'all_destroy', on: :collection
     get 'download', on: :collection
   end
-
 end

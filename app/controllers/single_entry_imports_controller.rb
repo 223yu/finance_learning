@@ -25,7 +25,7 @@ class SingleEntryImportsController < ApplicationController
             error_present = true
           end
         else
-          flash[:danger] <<  "#{n}行目:存在しない日付です。"
+          flash[:danger] << "#{n}行目:存在しない日付です。"
           error_present = true
         end
         if Account.find_by(user_id: current_user.id, year: current_user.year, code: row[3].to_i).present?
@@ -46,7 +46,7 @@ class SingleEntryImportsController < ApplicationController
           flash[:danger] << "#{n}行目:金額が正しくありません。"
           error_present = true
         end
-        if row[6] == nil
+        if row[6].nil?
           import.description = ''
         else
           import.description = row[6]
@@ -133,8 +133,7 @@ class SingleEntryImportsController < ApplicationController
 
   private
 
-    def journal_params
-      params.require(:import).permit(:month, :day, :debit_code, :credit_code, :amount, :description)
-    end
-
+  def journal_params
+    params.require(:import).permit(:month, :day, :debit_code, :credit_code, :amount, :description)
+  end
 end
