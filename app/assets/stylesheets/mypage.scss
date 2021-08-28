@@ -2,6 +2,7 @@
 
 .mypage{
   @extend %max-width;
+  position: relative;
 
   // cumurative-journal
   &__cumurative-journal{
@@ -16,7 +17,6 @@
 
   // year-choice
   &__year-choice{
-    height: 400px;
     margin-top: 30px;
 
     &-form-btn{
@@ -88,6 +88,7 @@
   &__buttons {
     display: flex;
     justify-content: flex-start;
+    margin-bottom: 20px;
   }
 
   &__btn{
