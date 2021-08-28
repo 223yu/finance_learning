@@ -6,12 +6,12 @@ if @journals
     json.day journal.day
     json.nonself_code journal.nonself_code
     json.nonself_name journal.nonself_name
-    if journal.received_amount == nil
+    if journal.received_amount.nil?
       json.received_amount 0
     else
       json.received_amount journal.received_amount
     end
-    if journal.invest_amount == nil
+    if journal.invest_amount.nil?
       json.invest_amount 0
     else
       json.invest_amount journal.invest_amount

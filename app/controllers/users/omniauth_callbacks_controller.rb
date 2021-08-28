@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
   # callback for google
   def google_oauth2
     callback_for(:google)
@@ -26,5 +25,4 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def after_sign_in_path_for(resoure)
     users_path
   end
-
 end

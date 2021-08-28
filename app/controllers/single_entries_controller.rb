@@ -1,6 +1,6 @@
 class SingleEntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :select_start_month_to_end_month, only:[:index]
+  before_action :select_start_month_to_end_month, only: [:index]
   after_action :discard_flash_if_xhr
 
   def select
@@ -8,7 +8,7 @@ class SingleEntriesController < ApplicationController
 
   def index
     if params[:start_month]
-    # search mode
+      # search mode
       # 日付の入力が正しければ採用し、入力がないor誤りの場合、最初に選択した期間を採用
       @get_start_month = params[:start_month].to_i
       @get_end_month = params[:end_month].to_i
@@ -26,7 +26,7 @@ class SingleEntriesController < ApplicationController
 
       @journal = Journal.new
     else
-    # nomal mode
+      # nomal mode
       # 月が選択されていない状態で「表示」ボタンが押された場合redirectする
       if @get_start_month == 0
         flash[:danger] = '表示する月を選択してください。'
@@ -123,8 +123,7 @@ class SingleEntriesController < ApplicationController
 
   private
 
-    def journal_params
-      params.require(:journal).permit(:month, :day, :debit_code, :credit_code, :amount, :description)
-    end
-
+  def journal_params
+    params.require(:journal).permit(:month, :day, :debit_code, :credit_code, :amount, :description)
+  end
 end

@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     prev_balance = @account.opening_balance_1.to_i
     if @account.update(account_params)
-     @account.update_opening_balance(prev_balance)
+      @account.update_opening_balance(prev_balance)
     end
   end
 
@@ -52,7 +52,7 @@ class AccountsController < ApplicationController
   end
 
   def search_sub
-    @accounts = Account.where(user_id: current_user.id, year: current_user.year ).where("code LIKE ?", "%#{params[:code]}%")
+    @accounts = Account.where(user_id: current_user.id, year: current_user.year).where("code LIKE ?", "%#{params[:code]}%")
     respond_to do |format|
       format.html
       format.json
@@ -61,8 +61,7 @@ class AccountsController < ApplicationController
 
   private
 
-    def account_params
-      params.require(:account).permit(:code, :name, :total_account, :opening_balance_1)
-    end
-
+  def account_params
+    params.require(:account).permit(:code, :name, :total_account, :opening_balance_1)
+  end
 end

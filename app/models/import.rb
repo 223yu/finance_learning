@@ -26,28 +26,27 @@ class Import < ApplicationRecord
     else
       self.date = ''
     end
-    if Account.find_by(user_id: user.id, year: user.year, code: self.debit_code).present?
-      self.debit_id = user.code_id(self.debit_code)
+    if Account.find_by(user_id: user.id, year: user.year, code: debit_code).present?
+      self.debit_id = user.code_id(debit_code)
     else
       self.debit_id = ''
     end
-    if Account.find_by(user_id: user.id, year: user.year, code: self.credit_code).present?
-      self.credit_id = user.code_id(self.credit_code)
+    if Account.find_by(user_id: user.id, year: user.year, code: credit_code).present?
+      self.credit_id = user.code_id(credit_code)
     else
       self.credit_id = ''
     end
     self.user_id = user.id
-    self.save
-  end
-  
-  # 入力画面に表示するために受け渡すパラメータを整える
-  def arrange_for_display
-    self.month = self.date.month
-    self.day = self.date.day
-    self.debit_code = Account.find(self.debit_id).code
-    self.credit_code = Account.find(self.credit_id).code
-    self.debit_name = Account.find(self.debit_id).name
-    self.credit_name = Account.find(self.credit_id).name
+    save
   end
 
+  # 入力画面に表示するために受け渡すパラメータを整える
+  def arrange_for_display
+    self.month = date.month
+    self.day = date.day
+    self.debit_code = Account.find(debit_id).code
+    self.credit_code = Account.find(credit_id).code
+    self.debit_name = Account.find(debit_id).name
+    self.credit_name = Account.find(credit_id).name
+  end
 end

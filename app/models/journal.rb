@@ -26,68 +26,67 @@ class Journal < ApplicationRecord
     else
       self.date = ''
     end
-    if Account.find_by(user_id: user.id, year: user.year, code: self.debit_code).present?
-      self.debit_id = user.code_id(self.debit_code)
+    if Account.find_by(user_id: user.id, year: user.year, code: debit_code).present?
+      self.debit_id = user.code_id(debit_code)
     else
       self.debit_id = ''
     end
-    if Account.find_by(user_id: user.id, year: user.year, code: self.credit_code).present?
-      self.credit_id = user.code_id(self.credit_code)
+    if Account.find_by(user_id: user.id, year: user.year, code: credit_code).present?
+      self.credit_id = user.code_id(credit_code)
     else
       self.credit_id = ''
     end
     self.user_id = user.id
-    self.save
+    save
   end
 
   # 簡易入力において入力画面から送られてきたパラメータを保存可能な形式に整えて保存する
   def arrange_and_save_in_simple_entry(user)
-    if self.received_amount != ''
-      self.debit_code = self.self_code.to_i
-      self.credit_code = self.nonself_code.to_i
-      self.amount = self.received_amount.to_i
-    elsif self.invest_amount != ''
-      self.debit_code = self.nonself_code.to_i
-      self.credit_code = self.self_code.to_i
-      self.amount = self.invest_amount.to_i
+    if received_amount != ''
+      self.debit_code = self_code.to_i
+      self.credit_code = nonself_code.to_i
+      self.amount = received_amount.to_i
+    elsif invest_amount != ''
+      self.debit_code = nonself_code.to_i
+      self.credit_code = self_code.to_i
+      self.amount = invest_amount.to_i
     end
-    self.arrange_and_save(user)
+    arrange_and_save(user)
   end
 
   # 入力画面に表示するために受け渡すパラメータを整える
   def arrange_for_display
-    self.month = self.date.month
-    self.day = self.date.day
-    self.debit_code = Account.find(self.debit_id).code
-    self.credit_code = Account.find(self.credit_id).code
-    self.debit_name = Account.find(self.debit_id).name
-    self.credit_name = Account.find(self.credit_id).name
+    self.month = date.month
+    self.day = date.day
+    self.debit_code = Account.find(debit_id).code
+    self.credit_code = Account.find(credit_id).code
+    self.debit_name = Account.find(debit_id).name
+    self.credit_name = Account.find(credit_id).name
   end
 
   # 簡易入力において入力画面に表示するために受け渡すパラメータを整える
   def arrange_for_display_in_simple_entry(self_id)
-    self.month = self.date.month
-    self.day = self.date.day
-    if self.debit_id == self_id
-      self.self_code = Account.find(self.debit_id).code
-      self.nonself_code = Account.find(self.credit_id).code
-      self.nonself_name = Account.find(self.credit_id).name
-      self.received_amount = self.amount
-    elsif self.credit_id == self_id
-      self.self_code = Account.find(self.credit_id).code
-      self.nonself_code = Account.find(self.debit_id).code
-      self.nonself_name = Account.find(self.debit_id).name
-      self.invest_amount = self.amount
+    self.month = date.month
+    self.day = date.day
+    if debit_id == self_id
+      self.self_code = Account.find(debit_id).code
+      self.nonself_code = Account.find(credit_id).code
+      self.nonself_name = Account.find(credit_id).name
+      self.received_amount = amount
+    elsif credit_id == self_id
+      self.self_code = Account.find(credit_id).code
+      self.nonself_code = Account.find(debit_id).code
+      self.nonself_name = Account.find(debit_id).name
+      self.invest_amount = amount
     end
   end
 
   # 残高更新後仕訳削除
   def delete_after_updating_balance
-    debit_account = Account.find(self.debit_id)
-    debit_account.update_balance(- self.amount, self.date.month, 'debit')
-    credit_account = Account.find(self.credit_id)
-    credit_account.update_balance(- self.amount, self.date.month, 'credit')
-    self.destroy
+    debit_account = Account.find(debit_id)
+    debit_account.update_balance(- amount, date.month, 'debit')
+    credit_account = Account.find(credit_id)
+    credit_account.update_balance(- amount, date.month, 'credit')
+    destroy
   end
-
 end
