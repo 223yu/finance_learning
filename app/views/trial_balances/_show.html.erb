@@ -6,6 +6,6 @@
   <td class='report__index-td--credit-balance'><%= array[2].to_s(:delimited) %></td>
   <td class='report__index-td--ending-balance'><%= array[3].to_s(:delimited) %></td>
   <td class='report__index-td--ledger'>
-    <%= link_to 'show', ledgers_path(self_code: account.code, start_month: start_month, end_month: end_month), class:'report__index-link' %>
+    <%= link_to '表示', ledgers_path(self_code: account.code, start_month: start_month, end_month: end_month), class:'report__index-link' %>
   </td>
 </tr>

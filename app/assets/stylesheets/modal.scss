@@ -8,12 +8,16 @@
     font-size: 30px;
     color: $gray;
     z-index: 100;
+
+    @include mq(xl){
+      right: calc(-50px + (100vw - 1000px)/2);
+    }
   }
 
   &__close-btn{
-    top: 60px;
     color: black;
     z-index: 200;
+    top: 60px;
   }
 
   &__area{

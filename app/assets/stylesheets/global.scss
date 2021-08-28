@@ -14,6 +14,20 @@ $blue: rgba(135, 206, 250, 1);
 $pink: rgba(255, 193, 193, 0.7);
 $green: rgba(0, 255, 127, 0.7);
 
+// ブレイクポイント
+$breakpoints: (
+  'sm': 'screen and (min-width: 540px)',
+  'md': 'screen and (min-width: 720px)',
+  'lg': 'screen and (min-width: 960px)',
+  'xl': 'screen and (min-width: 1140px)'
+) !default;
+
+@mixin mq($breakpoint: md){
+  @media #{map-get($breakpoints, $breakpoint)}{
+    @content;
+  }
+}
+
 // その他
 html, body{
   height: 100%;
