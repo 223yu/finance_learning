@@ -3,7 +3,7 @@
 <% gross_profit = [] %> <!-- 売上総利益  -->
 <% operating_profit = [] %> <!-- 営業利益  -->
 <% non_operating_income = [] %> <!-- 営業外収入 -->
-<% non_operating_profit = [] %> <!-- 営業外利益 --
+<% non_operating_profit = [] %> <!-- 営業外利益 -->
 <% net_profit = [] %> <!-- 当期純利益  -->
 
 <!-- 売上 -->
@@ -34,7 +34,7 @@
 
   <%= render 'total', total_account: '原価', array: total_balance_array %>
 <!-- 売上総利益 -->
-  <% gross_profit.push(0) %>
+  <% gross_profit.push(sales[0] - total_balance_array[0]) %>
   <% gross_profit.push(sales[1] + total_balance_array[1]) %>
   <% gross_profit.push(sales[2] + total_balance_array[2]) %>
   <% gross_profit.push(sales[3] - total_balance_array[3]) %>
@@ -55,7 +55,7 @@
   <%= render 'total', total_account: '販管費', array: total_balance_array %>
 
 <!-- 営業利益 -->
-  <% operating_profit.push(0) %>
+  <% operating_profit.push(gross_profit[0] - total_balance_array[0]) %>
   <% operating_profit.push(gross_profit[1] + total_balance_array[1]) %>
   <% operating_profit.push(gross_profit[2] + total_balance_array[2]) %>
   <% operating_profit.push(gross_profit[3] - total_balance_array[3]) %>
@@ -91,7 +91,7 @@
   <%= render 'total', total_account: '営業外費用', array: total_balance_array %>
 
 <!-- 営業外利益 -->
-  <% non_operating_profit.push(0) %>
+  <% non_operating_profit.push(non_operating_income[0] - total_balance_array[0]) %>
   <% non_operating_profit.push(non_operating_income[1] + total_balance_array[1]) %>
   <% non_operating_profit.push(non_operating_income[2] + total_balance_array[2]) %>
   <% non_operating_profit.push(non_operating_income[3] - total_balance_array[3]) %>
@@ -99,7 +99,7 @@
   <%= render 'total', total_account: '営業外利益', array: non_operating_profit %>
 
 <!-- 当期純利益 -->
-  <% net_profit.push(0) %>
+  <% net_profit.push(operating_profit[0] + non_operating_profit[0]) %>
   <% net_profit.push(operating_profit[1] + non_operating_profit[1]) %>
   <% net_profit.push(operating_profit[2] + non_operating_profit[2]) %>
   <% net_profit.push(operating_profit[3] + non_operating_profit[3]) %>
