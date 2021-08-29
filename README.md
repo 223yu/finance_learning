@@ -25,6 +25,7 @@
 ## 設計書
 - ER図
 <img src='app/assets/images/readme/erd.png'>
+
 - [機能一覧](https://docs.google.com/document/d/1_c5HmQF25Q6d3DatxCLNRaJy-4wkwoj4tmX-aX1MWzg/edit?usp=sharing)
 - [画面遷移図](https://drive.google.com/file/d/1cpIB_k5r8FZJ6cOOY_hBE229Z8o5E3Q6/view?usp=sharing)
 - [ワイヤーフレーム](https://drive.google.com/file/d/1hgPkVwPKku_hDD0TM4RtyETLd6Q3jNDX/view?usp=sharing)
