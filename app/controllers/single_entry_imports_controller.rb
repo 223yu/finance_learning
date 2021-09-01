@@ -2,7 +2,7 @@ class SingleEntryImportsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @imports = Import.where(user_id: current_user.id)
+    @imports = Import.where(user_id: current_user.id, pending: false)
   end
 
   def create
@@ -97,23 +97,11 @@ class SingleEntryImportsController < ApplicationController
   end
 
   def import
-    imports = Import.where(user_id: current_user.id)
-    imports.each do |import|
-      journal = Journal.new
-      journal.user_id = import.user_id
-      journal.debit_id = import.debit_id
-      journal.credit_id = import.credit_id
-      journal.date = import.date
-      journal.amount = import.amount
-      journal.description = import.description
-      if journal.save
-        update_debit_and_credit_balance(journal.date.month, journal.debit_id, journal.credit_id, journal.amount)
-        import.destroy
-      else
-        flash[:danger] = '取込に失敗した仕訳があります。'
-      end
-    end
-    flash[:success] = "仕訳の取込を終了しました。"
+    imports = Import.where(user_id: current_user.id, pending: false)
+    # 取得した仕訳を待機中に変更
+    imports.update_all('"pending"="true"')
+    CsvImportJob.perform_later(current_user.id)
+    flash[:success] = '仕訳の取込を実行しています。しばらくしてから画面を再表示してください。'
     redirect_to single_entry_imports_path
   end
 
@@ -122,7 +110,7 @@ class SingleEntryImportsController < ApplicationController
     imports.each do |import|
       import.destroy
     end
-    flash[:success] = "取込待ち仕訳一覧の仕訳を全て削除しました。"
+    flash[:success] = '取込待ち仕訳一覧の仕訳を全て削除しました。'
     redirect_to single_entry_imports_path
   end
 
