@@ -99,7 +99,7 @@ class SingleEntryImportsController < ApplicationController
   def import
     imports = Import.where(user_id: current_user.id, pending: false)
     # 取得した仕訳を待機中に変更
-    imports.update_all('"pending"="true"')
+    imports.update_all(pending: true)
     CsvImportJob.perform_later(current_user.id)
     flash[:success] = '仕訳の取込を実行しています。しばらくしてから画面を再表示してください。'
     redirect_to single_entry_imports_path
