@@ -63,6 +63,17 @@ class User < ApplicationRecord
   def start_date_to_end_date(start_month, end_month)
     start_date(start_month)..end_date(end_month)
   end
+  
+  # 勘定科目の一覧を返す
+  def accounts_index
+    accounts_array = []
+    accounts = Account.where(user_id: id, year: year)
+    accounts.each do |account|
+      account_array = ["#{account.code} #{account.name}", account.code]
+      accounts_array.push(account_array)
+    end
+    accounts_array
+  end
 
   # 勘定科目の初期データ作成
   def accounts_setting(year)
@@ -182,17 +193,6 @@ class User < ApplicationRecord
   # 勘定科目コードから勘定科目idを返す
   def code_id(code)
     Account.find_by(user_id: id, year: year, code: code).id
-  end
-
-  # 勘定科目の一覧を返す
-  def accounts_index
-    accounts_array = []
-    accounts = Account.where(user_id: id, year: year)
-    accounts.each do |account|
-      account_array = ["#{account.code} #{account.name}", account.code]
-      accounts_array.push(account_array)
-    end
-    accounts_array
   end
 
   # 指定した科目の仕訳が今期中に存在すればtrueを返す
