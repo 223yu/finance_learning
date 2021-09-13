@@ -14,11 +14,6 @@
     @extend %thead;
   }
 
-  &__index-tbody{
-    // height: 400px;
-    // overflow-y: scroll;
-  }
-
   &__index-th{
     @extend %th;
     border: 1px solid black;
@@ -60,6 +55,8 @@
     @extend %th;
     border-top: none;
     background: white;
+    overflow-y: scroll;
+    white-space: nowrap;
 
     &--code,
     &--name,
@@ -97,6 +94,8 @@
     @extend %th;
     background: $yellow;
     border-top: none;
+    overflow-y: scroll;
+    white-space: nowrap;
 
     &--code,
     &--name,

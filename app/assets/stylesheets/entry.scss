@@ -70,35 +70,37 @@
     @extend %th;
     border-top: none;
     background: white;
+    overflow-x: scroll;
     &--date{
       @extend .entry__index-td;
       width: 50px;
+      max-width: 50px;
     }
 
     &--code{
       @extend .entry__index-td;
       width: 100px;
+      max-width: 100px;
     }
 
-    &--nonself-code{
-      @extend .entry__index-td;
-      width: 150px;
-    }
-
+    &--nonself-code,
     &--name{
       @extend .entry__index-td;
       width: 150px;
+      max-width: 150px;
     }
 
     &--amount{
       @extend .entry__index-td;
       width: 100px;
+      max-width: 100px;
       text-align: right;
     }
 
     &--description{
       @extend .entry__index-td;
       width: 200px;
+      max-width: 200px;
     }
 
     &--btn{
