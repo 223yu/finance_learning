@@ -102,21 +102,25 @@
     @extend %td;
     border-top: none;
     background: white;
+    overflow-x: scroll;
 
     &--code{
       @extend .account__index-td;
       width: 80px;
+      max-width: 80px;
     }
 
     &--name,
     &--total{
       @extend .account__index-td;
       width: 100px;
+      max-width: 100px;
     }
 
     &--balance{
       @extend .account__index-td;
       width: 100px;
+      max-width: 100px;
       text-align: right;
     }
 
@@ -159,14 +163,8 @@
       width: 39px;
     }
 
-    &--name{
-      width: 89px;
-    }
-
-    &--balance{
-      width: 89px;
-    }
-
+    &--name,
+    &--balance,
     &--total{
       width: 89px;
     }
