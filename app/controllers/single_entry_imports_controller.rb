@@ -11,6 +11,7 @@ class SingleEntryImportsController < ApplicationController
       # 変数定義
       n = 2 # 取込行
       success_count = 0 # 成功数
+      error_count = 0 # 失敗数
       error_present = false
       flash[:danger] = ''
       # csv取込実行
@@ -21,29 +22,24 @@ class SingleEntryImportsController < ApplicationController
           if current_user.year == row[0].to_i
             import.date = Date.new(row[0].to_i, row[1].to_i, row[2].to_i)
           else
-            flash[:danger] << "#{n}行目:現在の年度と異なる年が入力されています。"
             error_present = true
           end
         else
-          flash[:danger] << "#{n}行目:存在しない日付です。"
           error_present = true
         end
         if Account.find_by(user_id: current_user.id, year: current_user.year, code: row[3].to_i).present?
           import.debit_id = current_user.code_id(row[3].to_i)
         else
-          flash[:danger] << "#{n}行目:借方コードが正しくありません。"
           error_present = true
         end
         if Account.find_by(user_id: current_user.id, year: current_user.year, code: row[4].to_i).present?
           import.credit_id = current_user.code_id(row[4].to_i)
         else
-          flash[:danger] <<  "#{n}行目:貸方コードが正しくありません。"
           error_present = true
         end
         if row[5].to_i > 0
           import.amount = row[5].to_i
         else
-          flash[:danger] << "#{n}行目:金額が正しくありません。"
           error_present = true
         end
         if row[6].nil?
@@ -51,7 +47,10 @@ class SingleEntryImportsController < ApplicationController
         else
           import.description = row[6]
         end
-        if error_present == false
+        if error_present == true
+          error_count += 1
+          flash[:danger] << " #{n}行."
+        elsif error_present == false
           if import.save
             success_count += 1
           end
@@ -60,6 +59,9 @@ class SingleEntryImportsController < ApplicationController
         error_present = false
       end
       flash[:success] = "#{success_count}件の仕訳を取り込みました。"
+      if error_count > 0
+        flash[:danger] << "以上、#{error_count}件のエラーが発生しました。"
+      end
     else
       flash[:danger] = 'ファイルを読み込むことができませんでした。'
     end
