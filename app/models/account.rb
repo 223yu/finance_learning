@@ -74,15 +74,17 @@ class Account < ApplicationRecord
   # 追加メソッド
   # 勘定科目の残高を更新
   def update_balance(amount, month, debit_or_credit)
+    # 更新する値をhashに格納していき、一括更新
+    hash = {}
     # monthの借方or貸方残高を更新
     if debit_or_credit == 'debit'
       update_amount = send("debit_balance_#{month}")
       update_amount += amount
-      update_attributes("debit_balance_#{month}".to_sym => update_amount)
+      hash["debit_balance_#{month}"] = update_amount
     elsif debit_or_credit == 'credit'
       update_amount = send("credit_balance_#{month}")
       update_amount += amount
-      update_attributes("credit_balance_#{month}".to_sym => update_amount)
+      hash["credit_balance_#{month}"] = update_amount
     end
 
     # 借方科目か貸方科目かで期首残高を更新する金額の正負を決める
@@ -104,18 +106,21 @@ class Account < ApplicationRecord
     ("#{month + 1}".to_i..12).to_a.each do |mon|
       update_opening_balance = send("opening_balance_#{mon}")
       update_opening_balance += update_balance
-      update_attributes("opening_balance_#{mon}".to_sym => update_opening_balance)
+      hash["opening_balance_#{mon}"] = update_opening_balance
     end
+    update_attributes(hash)
   end
 
   # 勘定科目の期首残高を更新
   def update_opening_balance(prev_balance)
     update_balance = opening_balance_1 - prev_balance
+    hash = {}
     (2..12).to_a.each do |mon|
       update_opening_balance = send("opening_balance_#{mon}")
       update_opening_balance += update_balance
-      update_attributes("opening_balance_#{mon}".to_sym => update_opening_balance)
+      hash["opening_balance_#{mon}"] = update_opening_balance
     end
+    update_attributes(hash)
   end
 
   # 月から[期首残高, 借方残高, 貸方残高, 期末残高]を返す
