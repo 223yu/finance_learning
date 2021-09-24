@@ -56,27 +56,31 @@ class Journal < ApplicationRecord
 
   # 入力画面に表示するために受け渡すパラメータを整える
   def arrange_for_display
+    debit_account = Account.find(debit_id)
+    credit_account = Account.find(credit_id)
     self.month = date.month
     self.day = date.day
-    self.debit_code = Account.find(debit_id).code
-    self.credit_code = Account.find(credit_id).code
-    self.debit_name = Account.find(debit_id).name
-    self.credit_name = Account.find(credit_id).name
+    self.debit_code = debit_account.code
+    self.credit_code = credit_account.code
+    self.debit_name = debit_account.name
+    self.credit_name = credit_account.name
   end
 
   # 簡易入力において入力画面に表示するために受け渡すパラメータを整える
   def arrange_for_display_in_simple_entry(self_id)
+    debit_account = Account.find(debit_id)
+    credit_account = Account.find(credit_id)
     self.month = date.month
     self.day = date.day
     if debit_id == self_id
-      self.self_code = Account.find(debit_id).code
-      self.nonself_code = Account.find(credit_id).code
-      self.nonself_name = Account.find(credit_id).name
+      self.self_code = debit_account.code
+      self.nonself_code = credit_account.code
+      self.nonself_name = credit_account.name
       self.received_amount = amount
     elsif credit_id == self_id
-      self.self_code = Account.find(credit_id).code
-      self.nonself_code = Account.find(debit_id).code
-      self.nonself_name = Account.find(debit_id).name
+      self.self_code = credit_account.code
+      self.nonself_code = debit_account.code
+      self.nonself_name = debit_account.name
       self.invest_amount = amount
     end
   end

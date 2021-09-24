@@ -76,24 +76,20 @@ class CashEntriesController < ApplicationController
   def update
     @journal = Journal.find(params[:id])
     # 更新前の仕訳情報を取得しておく
-    prev_date = @journal.date
-    prev_debit_id = @journal.debit_id
-    prev_credit_id = @journal.credit_id
-    prev_amount = @journal.amount
-    prev_description = @journal.description
+    prev_hash = @journal.attributes
     # 更新 update時descriptionのみDB更新される
     @journal.update(journal_params)
     @self_code = @journal.self_code
     @self_id = current_user.code_id(@self_code)
     if @journal.arrange_and_save_in_simple_entry(current_user)
       # 更新前の仕訳について残高戻し処理
-      update_debit_and_credit_balance(prev_date.month, prev_debit_id, prev_credit_id, - prev_amount)
+      update_debit_and_credit_balance(prev_hash["date"].month, prev_hash["debit_id"], prev_hash["credit_id"], - prev_hash["amount"])
       # 更新後の仕訳について残高更新処理
       update_debit_and_credit_balance(@journal.date.month, @journal.debit_id, @journal.credit_id, @journal.amount)
     else
       # 更新に失敗した場合は更新前に戻す
       flash[:danger] = '入力が正しくない項目があります'
-      @journal.update(date: prev_date, debit_id: prev_debit_id, credit_id: prev_credit_id, amount: prev_amount, description: prev_description)
+      @journal.update(date: prev_hash["date"], debit_id: prev_hash["debit_id"], credit_id: prev_hash["credit_id"], amount: prev_hash["amount"], description: prev_hash["description"])
       @journal.arrange_for_display_in_simple_entry(@self_id)
     end
   end
@@ -137,11 +133,6 @@ class CashEntriesController < ApplicationController
 
     @journals.each do |journal|
       journal.arrange_for_display_in_simple_entry(self_id)
-    end
-
-    respond_to do |format|
-      format.html
-      format.json
     end
   end
 
