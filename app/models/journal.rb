@@ -40,18 +40,44 @@ class Journal < ApplicationRecord
     save
   end
 
+  # 簡易入力において保存可能であればtrueを返す
+  def arrange_valid_in_simple_entry?(user)
+    is_true = true
+    if self.received_amount != ''
+      is_true = false if self.received_amount.to_i < 0
+    end
+    if self.invest_amount != ''
+      is_true = false if self.invest_amount.to_i < 0
+    end
+    if self.received_amount == '' && self.invest_amount == ''
+      is_true = false
+    end
+    unless Account.find_by(user_id: user.id, year: user.year, code: self.self_code ).present?
+      is_true = false
+    end
+    unless Account.find_by(user_id: user.id, year: user.year, code: self.nonself_code ).present?
+      is_true = false
+    end
+    unless Date.valid_date?(user.year, self.month.to_i, self.day.to_i)
+      is_true = false
+    end
+    is_true
+  end
+
   # 簡易入力において入力画面から送られてきたパラメータを保存可能な形式に整えて保存する
   def arrange_and_save_in_simple_entry(user)
-    if received_amount != ''
-      self.debit_code = self_code.to_i
-      self.credit_code = nonself_code.to_i
-      self.amount = received_amount.to_i
-    elsif invest_amount != ''
-      self.debit_code = nonself_code.to_i
-      self.credit_code = self_code.to_i
-      self.amount = invest_amount.to_i
+    if self.arrange_valid_in_simple_entry?(user)
+      if received_amount != ''
+        self.debit_code = self_code.to_i
+        self.credit_code = nonself_code.to_i
+        self.amount = received_amount.to_i
+      elsif invest_amount != ''
+        self.debit_code = nonself_code.to_i
+        self.credit_code = self_code.to_i
+        self.amount = invest_amount.to_i
+      end
+      arrange_and_save(user)
     end
-    arrange_and_save(user)
   end
 
   # 入力画面に表示するために受け渡すパラメータを整える
@@ -92,5 +118,50 @@ class Journal < ApplicationRecord
     credit_account = Account.find(credit_id)
     credit_account.update_balance(- amount, date.month, 'credit')
     destroy
+  end
+
+  # 科目残高更新
+  def update_debit_and_credit_balance(reverse = false)
+    is_valid = true
+    Journal.transaction(joinable: false, requires_new: true) do
+      if Account.find_by(id: self.debit_id).present? && Account.find_by(id: self.credit_id).present?
+        if reverse
+          debit_account = Account.find(self.debit_id)
+          is_valid &= debit_account.update_balance(- self.amount, self.date.month, 'debit')
+          credit_account = Account.find(self.credit_id)
+          is_valid &= credit_account.update_balance(- self.amount, self.date.month, 'credit')
+        else
+          debit_account = Account.find(self.debit_id)
+          is_valid &= debit_account.update_balance(self.amount, self.date.month, 'debit')
+          credit_account = Account.find(self.credit_id)
+          is_valid &= credit_account.update_balance(self.amount, self.date.month, 'credit')
+        end
+      else
+        is_valid = false
+      end
+
+      unless is_valid
+        raise ActiveRecord::Rollback
+      end
+    end
+    is_valid
+  end
+
+  # 簡易入力画面において仕訳の更新を行う
+  def self_update_and_update_account_balance_in_simple_entry(user, journal_params)
+    is_valid = true
+    Journal.transaction(joinable: false, requires_new: true) do
+      # 更新前に残高を戻す処理
+      is_valid &= self.update_debit_and_credit_balance(true)
+      # パラメータの値にて更新
+      is_valid &= self.update(journal_params)
+      is_valid &= self.arrange_and_save_in_simple_entry(user)
+      is_valid &= self.update_debit_and_credit_balance
+
+      unless is_valid
+        raise ActiveRecord::Rollback
+      end
+    end
+    is_valid
   end
 end
