@@ -55,9 +55,7 @@ class CashEntriesController < ApplicationController
 
   def create
     @journal = Journal.new(journal_params)
-    if @journal.arrange_and_save_in_simple_entry(current_user)
-      # 作成後の仕訳について残高更新処理
-      update_debit_and_credit_balance(@journal.date.month, @journal.debit_id, @journal.credit_id, @journal.amount)
+    if @journal.self_create_and_update_account_balance_in_simple_entry(current_user)
       @journal_new = Journal.new
     else
       flash[:danger] = '入力が正しくない項目があります'
@@ -89,7 +87,9 @@ class CashEntriesController < ApplicationController
   def destroy
     journal = Journal.find(params[:id])
     @id = journal.id
-    journal.delete_after_updating_balance
+    unless journal.delete_after_updating_balance
+      flash[:danger] = '仕訳の削除に失敗しました'
+    end
   end
 
   def search
