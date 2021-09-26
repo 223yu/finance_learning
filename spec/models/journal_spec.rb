@@ -119,21 +119,71 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         @journal.description = 'テスト'
         @journal.self_code = @account.code
         @journal.nonself_code = @other_account.code
-        @journal.received_amount = ''
+        @journal.received_amount = 500
         @journal.invest_amount = ''
       end
 
+      it '正しい値の時saveすることができる' do
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_truthy
+        expect(Journal.all.length).to eq 1
+      end
+
+      it '月が誤っている時、保存できずにfalseを返す' do
+        @journal.month = 13
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+      it '日が誤っている時、保存できずにfalseを返す' do
+        @journal.day = 32
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+      it '自身コードが誤っている時、保存できずにfalseを返す' do
+        @journal.self_code = 999
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+       it '相手コードが誤っている時、保存できずにfalseを返す' do
+        @journal.nonself_code = 999
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+      it '入金額、出金額共に''の時、保存できずにfalseを返す' do
+        @journal.received_amount = ''
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+      it '入金額が''で、出金額が正しくない時、保存できずにfalseを返す' do
+        @journal.received_amount = ''
+        @journal.invest_amount = -1
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
+      it '出金額が''で、入金額が正しくない時、保存できずにfalseを返す' do
+        @journal.received_amount = -1
+        expect(@journal.arrange_and_save_in_simple_entry(@user)).to be_falsey
+        expect(Journal.all.length).to eq 0
+      end
+
       it '入金額に入力がある場合、借方=自身になる' do
-        @journal.received_amount = 500
         @journal.arrange_and_save_in_simple_entry(@user)
         expect(@journal.debit).to eq @account
         expect(@journal.credit).to eq @other_account
+        expect(Journal.all.length).to eq 1
       end
       it '出金額に入力がある場合、貸方=自身になる' do
+        @journal.received_amount = ''
         @journal.invest_amount = 500
         @journal.arrange_and_save_in_simple_entry(@user)
         expect(@journal.debit).to eq @other_account
         expect(@journal.credit).to eq @account
+        expect(Journal.all.length).to eq 1
       end
     end
 
@@ -223,6 +273,128 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(@journal.invest_amount).to eq 500
         end
       end
+    end
+
+    describe 'update_debit_and_credit_balance' do
+      before do
+        @user = create(:user, year: 2021)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        (1..12).to_a.each do |mon|
+          account.update("debit_balance_#{mon}".to_sym => 1000)
+          account.update("credit_balance_#{mon}".to_sym => 2000)
+          account.update("opening_balance_#{mon}".to_sym => 10000)
+          other_account.update("debit_balance_#{mon}".to_sym => 3000)
+          other_account.update("credit_balance_#{mon}".to_sym => 4000)
+          other_account.update("opening_balance_#{mon}".to_sym => 20000)
+        end
+        @journal = create(:journal, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
+      end
+
+      describe '正常に動いた場合、残高が更新されていることのテスト' do
+        context 'reverse = falseの場合' do
+          before do
+            @journal.update_debit_and_credit_balance
+            @account = Account.find(1)
+            @other_account = Account.find(2)
+          end
+
+          it '借方コードの貸方残高、貸方コードの借方残高は更新されていない' do
+            (1..12).to_a.each do |mon|
+              expect(@account.send("credit_balance_#{mon}")).to eq 2000
+              expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            end
+          end
+          it '借方コードの2月以外借方残高、貸方コードの2月以外貸方残高は更新されていない' do
+            expect(@account.debit_balance_1).to eq 1000
+            expect(@other_account.credit_balance_1).to eq 4000
+            (3..12).to_a.each do |mon|
+              expect(@account.send("debit_balance_#{mon}")).to eq 1000
+              expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            end
+          end
+          it '借方コードの2月借方残高、貸方コードの2月貸方残高は正しく更新されている' do
+            expect(@account.debit_balance_2).to eq 1500
+            expect(@other_account.credit_balance_2).to eq 4500
+          end
+          it '1,2月の期首残高は変わっていない' do
+            (1..2).to_a.each do |mon|
+              expect(@account.send("opening_balance_#{mon}")).to eq 10000
+              expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+            end
+          end
+          it '3月以降の期首残高は正しく更新されている' do
+            (3..12).to_a.each do |mon|
+              expect(@account.send("opening_balance_#{mon}")).to eq 10500
+              expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
+            end
+          end
+        end
+
+        context 'reverse = trueの場合' do
+          before do
+            @journal.update_debit_and_credit_balance(true)
+            @account = Account.find(1)
+            @other_account = Account.find(2)
+          end
+
+          it '借方コードの貸方残高、貸方コードの借方残高は更新されていない' do
+            (1..12).to_a.each do |mon|
+              expect(@account.send("credit_balance_#{mon}")).to eq 2000
+              expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            end
+          end
+          it '借方コードの2月以外借方残高、貸方コードの2月以外貸方残高は更新されていない' do
+            expect(@account.debit_balance_1).to eq 1000
+            expect(@other_account.credit_balance_1).to eq 4000
+            (3..12).to_a.each do |mon|
+              expect(@account.send("debit_balance_#{mon}")).to eq 1000
+              expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            end
+          end
+          it '借方コードの2月借方残高、貸方コードの2月貸方残高は正しく更新されている' do
+            expect(@account.debit_balance_2).to eq 500
+            expect(@other_account.credit_balance_2).to eq 3500
+          end
+          it '1,2月の期首残高は変わっていない' do
+            (1..2).to_a.each do |mon|
+              expect(@account.send("opening_balance_#{mon}")).to eq 10000
+              expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+            end
+          end
+          it '3月以降の期首残高は正しく更新されている' do
+            (3..12).to_a.each do |mon|
+              expect(@account.send("opening_balance_#{mon}")).to eq 9500
+              expect(@other_account.send("opening_balance_#{mon}")).to eq 20500
+            end
+          end
+        end
+      end
+      describe 'ロールバックが発生した場合、残高が更新されていないことのテスト' do
+        before do
+          @journal.debit = nil
+          @journal.update_debit_and_credit_balance
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it '全ての残高が変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@account.send("debit_balance_#{mon}")).to eq 1000
+            expect(@account.send("credit_balance_#{mon}")).to eq 2000
+            expect(@account.send("opening_balance_#{mon}")).to eq 10000
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+          end
+        end
+      end
+    end
+    
+    describe 'self_create_and_update_account_balance_in_simple_entry' do
+    end
+    
+    describe 'self_update_and_update_account_balance_in_simple_entry' do
     end
 
     context 'delete_after_updating_balance' do
