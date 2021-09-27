@@ -10,14 +10,14 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
     let(:import) { build(:import, user: user, debit: account, credit: account) }
     subject { import.valid? }
 
-    context 'テストデータが正しく保存されることのテスト' do
+    describe 'テストデータが正しく保存されることのテスト' do
       it 'import' do
         import
         is_expected.to eq true
       end
     end
 
-    context '空白登録できないことのテスト' do
+    describe '空白登録できないことのテスト' do
 
       it 'dateカラム' do
         import.date = ''
@@ -29,14 +29,14 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
       end
     end
 
-    context '空白登録できることのテスト' do
+    describe '空白登録できることのテスト' do
       it 'descriptionカラム' do
         import.description = ''
         is_expected.to eq true
       end
     end
 
-    context '金額には正の整数のみ登録できることのテスト' do
+    describe '金額には正の整数のみ登録できることのテスト' do
       it '負の数は登録することができない' do
         import.amount = -1
         is_expected.to eq false
@@ -53,13 +53,13 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
   end
 
   describe 'アソシエーションのテスト' do
-    context 'ユーザモデルとの関係' do
+    describe 'ユーザモデルとの関係' do
       it 'N:1となっている' do
         expect(Import.reflect_on_association(:user).macro).to eq :belongs_to
       end
     end
 
-    context '勘定科目モデルとの関係' do
+    describe '勘定科目モデルとの関係' do
       it '借方科目がN:1となっている' do
         expect(Import.reflect_on_association(:debit).macro).to eq :belongs_to
       end
@@ -70,7 +70,7 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
   end
 
   describe 'メソッドのテスト' do
-    context 'arrange_and_save' do
+    describe 'arrange_and_save' do
       before do
         @user = create(:user, year: 2021)
         account = create(:account, user: @user)
@@ -108,7 +108,7 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
       end
     end
 
-    context 'arrange_for_display' do
+    describe 'arrange_for_display' do
       before do
         @user = create(:user, year: 2021)
         @account = create(:account, user: @user)
@@ -134,6 +134,127 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
       end
       it '貸方科目名が正しい' do
         expect(@import.credit_name).to eq 'test'
+      end
+    end
+
+    describe 'self_update' do
+      before do
+        @user = create(:user, year: 2021)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        @import = create(:import, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
+      end
+
+      it 'テストデータが正常に更新されることのテスト' do
+        import_params = { month:3, day: 1, debit_code: 100, credit_code: 101, amount: 1000, description: 'test' }
+        @import.self_update(@user, import_params)
+        @import = Import.find(1)
+        expect(@import.date).to eq Date.new(2021,3,1)
+        expect(@import.amount).to eq 1000
+        expect(Import.all.length).to eq 1
+      end
+
+      it 'ロールバックが発生した場合、更新されていないことのテスト' do
+        import_params = { month:'', day: 1, debit_code: 100, credit_code: 101, amount: 1000, description: 'test' }
+        @import.self_update(@user, import_params)
+        @import = Import.find(1)
+        expect(@import.date).to eq Date.new(2021,2,1)
+        expect(@import.amount).to eq 500
+        expect(Import.all.length).to eq 1
+      end
+    end
+
+    describe 'create_journal_from_import' do
+      before do
+        @user = create(:user, year: 2021)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        hash = {}
+        other_hash = {}
+        (1..12).to_a.each do |mon|
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
+        end
+        account.update(hash)
+        other_account.update(other_hash)
+        @import = create(:import, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
+      end
+
+      context '正常に実行された場合' do
+        before do
+          @import.create_journal_from_import
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it 'importのレコード数' do
+          expect(Import.all.length).to eq 0
+        end
+        it 'journalのレコード数' do
+          expect(Journal.all.length).to eq 1
+        end
+        it '借方科目の貸方残高は変わっていない' do
+        (1..12).to_a.each do |mon|
+          expect(@account.send("credit_balance_#{mon}")).to eq 2000
+        end
+        end
+        it '貸方科目の借方残高は変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+          end
+        end
+        it '借方科目の仕訳作成月以前の期首残高、仕訳作成月より前の借方残高は変わっていない' do
+          expect(@account.opening_balance_1).to eq 10000
+          expect(@account.opening_balance_2).to eq 10000
+          expect(@account.debit_balance_1).to eq 1000
+        end
+        it '貸方科目の仕訳作成月以前の期首残高、仕訳作成月より前の貸方残高は変わっていない' do
+          expect(@other_account.opening_balance_1).to eq 20000
+          expect(@other_account.opening_balance_2).to eq 20000
+          expect(@other_account.credit_balance_1).to eq 4000
+        end
+        it '借方科目の仕訳作成月の借方残高、仕訳作成月より後の期首残高は変わっている' do
+          expect(@account.debit_balance_2).to eq 1500
+          (3..12).to_a.each do |mon|
+            expect(@account.send("opening_balance_#{mon}")).to eq 10500
+          end
+        end
+        it '貸方科目の仕訳作成月の貸方残高、仕訳作成月より後の期首残高は変わっている' do
+          expect(@other_account.credit_balance_2).to eq 4500
+          (3..12).to_a.each do |mon|
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
+          end
+        end
+      end
+
+      context 'ロールバックが発生した場合' do
+        before do
+          @import.update_attribute(:amount, 0)
+          @import.create_journal_from_import
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it 'importのレコード数' do
+          expect(Import.all.length).to eq 1
+        end
+        it 'journalのレコード数' do
+          expect(Journal.all.length).to eq 0
+        end
+        it '勘定科目の残高が変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@account.send("debit_balance_#{mon}")).to eq 1000
+            expect(@account.send("credit_balance_#{mon}")).to eq 2000
+            expect(@account.send("opening_balance_#{mon}")).to eq 10000
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+          end
+        end
       end
     end
   end

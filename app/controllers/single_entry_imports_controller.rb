@@ -75,19 +75,8 @@ class SingleEntryImportsController < ApplicationController
 
   def update
     @import = Import.find(params[:id])
-    # 更新前の仕訳情報を取得しておく
-    prev_date = @import.date
-    prev_debit_id = @import.debit_id
-    prev_credit_id = @import.credit_id
-    prev_amount = @import.amount
-    prev_description = @import.description
-    # 更新 update時amount,descriptionのみDB更新される
-    @import.update(journal_params)
-    if @import.arrange_and_save(current_user)
-    else
-      # 更新に失敗した場合は更新前に戻す
+    unless @import.self_update(current_user, import_params)
       flash[:danger] = '入力が正しくない項目があります'
-      @import.update(date: prev_date, debit_id: prev_debit_id, credit_id: prev_credit_id, amount: prev_amount, description: prev_description)
       @import.arrange_for_display
     end
   end
@@ -95,7 +84,9 @@ class SingleEntryImportsController < ApplicationController
   def destroy
     import = Import.find(params[:id])
     @id = import.id
-    import.destroy
+    unless import.destroy
+      falsh[:danger] = '仕訳の削除に失敗しました'
+    end
   end
 
   def import
@@ -123,7 +114,7 @@ class SingleEntryImportsController < ApplicationController
 
   private
 
-  def journal_params
+  def import_params
     params.require(:import).permit(:month, :day, :debit_code, :credit_code, :amount, :description)
   end
 end
