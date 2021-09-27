@@ -10,14 +10,14 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
     let(:journal) { build(:journal, user: user, debit: account, credit: account) }
     subject { journal.valid? }
 
-    context 'テストデータが正しく保存されることのテスト' do
+    describe 'テストデータが正しく保存されることのテスト' do
       it 'journal' do
         journal
         is_expected.to eq true
       end
     end
 
-    context '空白登録できないことのテスト' do
+    describe '空白登録できないことのテスト' do
 
       it 'dateカラム' do
         journal.date = ''
@@ -29,14 +29,14 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
       end
     end
 
-    context '空白登録できることのテスト' do
+    describe '空白登録できることのテスト' do
       it 'descriptionカラム' do
         journal.description = ''
         is_expected.to eq true
       end
     end
 
-    context '金額には正の整数のみ登録できることのテスト' do
+    describe '金額には正の整数のみ登録できることのテスト' do
       it '負の数は登録することができない' do
         journal.amount = -1
         is_expected.to eq false
@@ -53,13 +53,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
   end
 
   describe 'アソシエーションのテスト' do
-    context 'ユーザモデルとの関係' do
+    describe 'ユーザモデルとの関係' do
       it 'N:1となっている' do
         expect(Journal.reflect_on_association(:user).macro).to eq :belongs_to
       end
     end
 
-    context '勘定科目モデルとの関係' do
+    describe '勘定科目モデルとの関係' do
       it '借方科目がN:1となっている' do
         expect(Journal.reflect_on_association(:debit).macro).to eq :belongs_to
       end
@@ -70,7 +70,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
   end
 
   describe 'メソッドのテスト' do
-    context 'arrange_and_save' do
+    describe 'arrange_and_save' do
       before do
         @user = create(:user, year: 2021)
         account = create(:account, user: @user)
@@ -108,7 +108,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
       end
     end
 
-    context 'arrange_and_save_in_simple_entry' do
+    describe 'arrange_and_save_in_simple_entry' do
       before do
         @user = create(:user, year: 2021)
         @account = create(:account, user: @user)
@@ -187,7 +187,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
       end
     end
 
-    context 'arrange_for_display' do
+    describe 'arrange_for_display' do
       before do
         @user = create(:user, year: 2021)
         @account = create(:account, user: @user)
@@ -280,14 +280,18 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         @user = create(:user, year: 2021)
         account = create(:account, user: @user)
         other_account = create(:account, user: @user, code: 101, name: 'test')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          account.update("debit_balance_#{mon}".to_sym => 1000)
-          account.update("credit_balance_#{mon}".to_sym => 2000)
-          account.update("opening_balance_#{mon}".to_sym => 10000)
-          other_account.update("debit_balance_#{mon}".to_sym => 3000)
-          other_account.update("credit_balance_#{mon}".to_sym => 4000)
-          other_account.update("opening_balance_#{mon}".to_sym => 20000)
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
         end
+        account.update(hash)
+        other_account.update(other_hash)
         @journal = create(:journal, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
       end
 
@@ -370,7 +374,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           end
         end
       end
-      describe 'ロールバックが発生した場合、残高が更新されていないことのテスト' do
+      context 'ロールバックが発生した場合、残高が更新されていないことのテスト' do
         before do
           @journal.debit = nil
           @journal.update_debit_and_credit_balance
@@ -390,26 +394,207 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
       end
     end
-    
-    describe 'self_create_and_update_account_balance_in_simple_entry' do
-    end
-    
-    describe 'self_update_and_update_account_balance_in_simple_entry' do
-    end
 
-    context 'delete_after_updating_balance' do
+    describe 'self_create_and_update_account_balance_in_simple_entry' do
       before do
         @user = create(:user, year: 2021)
         account = create(:account, user: @user)
         other_account = create(:account, user: @user, code: 101, name: 'test')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          account.update("debit_balance_#{mon}".to_sym => 1000)
-          account.update("credit_balance_#{mon}".to_sym => 2000)
-          account.update("opening_balance_#{mon}".to_sym => 10000)
-          other_account.update("debit_balance_#{mon}".to_sym => 3000)
-          other_account.update("credit_balance_#{mon}".to_sym => 4000)
-          other_account.update("opening_balance_#{mon}".to_sym => 20000)
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
         end
+        account.update(hash)
+        other_account.update(other_hash)
+        @journal = Journal.new(month: 2, day: 1, self_code: account.code,
+                              nonself_code: other_account.code, received_amount: 500,
+                              invest_amount: '', description: 'test')
+      end
+
+      describe 'テストデータが正常に保存されることのテスト' do
+        before do
+          @journal.self_create_and_update_account_balance_in_simple_entry(@user)
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it '仕訳のレコードが一つ増えている' do
+          expect(Journal.all.length).to eq 1
+        end
+        it '借方科目の貸方残高は変わっていない' do
+        (1..12).to_a.each do |mon|
+          expect(@account.send("credit_balance_#{mon}")).to eq 2000
+        end
+        end
+        it '貸方科目の借方残高は変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+          end
+        end
+        it '借方科目の仕訳作成月以前の期首残高、仕訳作成月より前の借方残高は変わっていない' do
+          expect(@account.opening_balance_1).to eq 10000
+          expect(@account.opening_balance_2).to eq 10000
+          expect(@account.debit_balance_1).to eq 1000
+        end
+        it '貸方科目の仕訳作成月以前の期首残高、仕訳作成月より前の貸方残高は変わっていない' do
+          expect(@other_account.opening_balance_1).to eq 20000
+          expect(@other_account.opening_balance_2).to eq 20000
+          expect(@other_account.credit_balance_1).to eq 4000
+        end
+        it '借方科目の仕訳作成月の借方残高、仕訳作成月より後の期首残高は変わっている' do
+          expect(@account.debit_balance_2).to eq 1500
+          (3..12).to_a.each do |mon|
+            expect(@account.send("opening_balance_#{mon}")).to eq 10500
+          end
+        end
+        it '貸方科目の仕訳作成月の貸方残高、仕訳作成月より後の期首残高は変わっている' do
+          expect(@other_account.credit_balance_2).to eq 4500
+          (3..12).to_a.each do |mon|
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
+          end
+        end
+      end
+
+      describe 'ロールバックが発生した場合、残高が更新されていないことのテスト' do
+        before do
+          @journal.self_code = ''
+          @journal.self_create_and_update_account_balance_in_simple_entry(@user)
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it '仕訳のレコード数が変わっていない' do
+          expect(Journal.all.length).to eq 0
+        end
+        it '勘定科目の残高が変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@account.send("debit_balance_#{mon}")).to eq 1000
+            expect(@account.send("credit_balance_#{mon}")).to eq 2000
+            expect(@account.send("opening_balance_#{mon}")).to eq 10000
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+          end
+        end
+      end
+    end
+
+    describe 'self_update_and_update_account_balance_in_simple_entry' do
+      before do
+        @user = create(:user, year: 2021)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        hash = {}
+        other_hash = {}
+        (1..12).to_a.each do |mon|
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
+        end
+        account.update(hash)
+        other_account.update(other_hash)
+        @journal = create(:journal, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
+      end
+
+      describe 'テストデータが正常に保存されることのテスト' do
+        before do
+          journal_params = { month: 3, day: 1, self_code: 100, nonself_code: 101, received_amount: 1000, description: 'test'}
+          @journal.self_update_and_update_account_balance_in_simple_entry(@user, journal_params)
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it '仕訳のレコード数は変わっていない' do
+          expect(Journal.all.length).to eq 1
+        end
+        it '以下の残高は変わっていない' do
+          # 自身科目の貸方残高、相手科目の借方残高
+          (1..12).to_a.each do |mon|
+            expect(@account.send("credit_balance_#{mon}")).to eq 2000
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+          end
+          # 自身科目の1,2月期首残高、相手科目の1,2月期首残高
+          expect(@account.opening_balance_1).to eq 10000
+          expect(@account.opening_balance_2).to eq 10000
+          expect(@other_account.opening_balance_1).to eq 20000
+          expect(@other_account.opening_balance_2).to eq 20000
+          # 自身科目の1月借方残高、相手科目の1月貸方残高
+          expect(@account.debit_balance_1).to eq 1000
+          expect(@other_account.credit_balance_1).to eq 4000
+          # 自身科目の4月以降借方残高、相手科目の4月以降貸方残高
+          (4..12).to_a.each do |mon|
+            expect(@account.send("debit_balance_#{mon}")).to eq 1000
+            expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+          end
+        end
+        it '以下の残高は変わっている' do
+          # 自身科目の2月借方残高、相手科目の2月貸方残高
+          expect(@account.debit_balance_2).to eq 500
+          expect(@other_account.credit_balance_2).to eq 3500
+          # 自身科目の3月借方残高、相手科目の3月貸方残高
+          expect(@account.debit_balance_3).to eq 2000
+          expect(@other_account.credit_balance_3).to eq 5000
+          # 自身科目の3月期首残高、相手科目の3月期首残高
+          expect(@account.opening_balance_3).to eq 9500
+          expect(@other_account.opening_balance_3).to eq 20500
+          # 自身科目の4月以降期首残高、相手科目の4月以降期首残高
+          (4..12).to_a.each do |mon|
+            expect(@account.send("opening_balance_#{mon}")).to eq 10500
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
+          end
+        end
+      end
+
+      describe 'ロールバックが発生した場合、残高が更新されていないことのテスト' do
+        before do
+          journal_params = { month: '', day: 1, self_code: 100, nonself_code: 101, received_amount: 1000, description: 'test'}
+          @journal.self_update_and_update_account_balance_in_simple_entry(@user, journal_params)
+          @account = Account.find(1)
+          @other_account = Account.find(2)
+        end
+
+        it '仕訳のレコード数が変わっていない' do
+          expect(Journal.all.length).to eq 1
+        end
+        it '勘定科目の残高が変わっていない' do
+          (1..12).to_a.each do |mon|
+            expect(@account.send("debit_balance_#{mon}")).to eq 1000
+            expect(@account.send("credit_balance_#{mon}")).to eq 2000
+            expect(@account.send("opening_balance_#{mon}")).to eq 10000
+            expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
+            expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
+            expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
+          end
+        end
+      end
+    end
+
+    describe 'delete_after_updating_balance' do
+      before do
+        @user = create(:user, year: 2021)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        hash = {}
+        other_hash = {}
+        (1..12).to_a.each do |mon|
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
+        end
+        account.update(hash)
+        other_account.update(other_hash)
         journal = create(:journal, date: Date.new(2021,2,1), user: @user, debit: account, credit: other_account)
         journal.delete_after_updating_balance
         @account = Account.find(1)

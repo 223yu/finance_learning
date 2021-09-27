@@ -9,14 +9,14 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
     let(:account) { build(:account, user: user) }
     subject { account.valid? }
 
-    context 'テストデータが正しく保存されることのテスト' do
+    describe 'テストデータが正しく保存されることのテスト' do
       it 'account' do
         account
         is_expected.to eq true
       end
     end
 
-    context '空白登録できないことのテスト' do
+    describe '空白登録できないことのテスト' do
 
       it 'codeカラム' do
         account.code = ''
@@ -40,7 +40,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
       end
     end
 
-    context '一意性のテスト' do
+    describe '一意性のテスト' do
       it 'user,year,codeの組み合わせは一意であることのテスト' do
         create(:account, user: user)
         account
@@ -93,13 +93,13 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
   end
 
   describe 'アソシエーションのテスト' do
-    context 'ユーザモデルとの関係' do
+    describe 'ユーザモデルとの関係' do
       it 'N:1となっている' do
         expect(Account.reflect_on_association(:user).macro).to eq :belongs_to
       end
     end
 
-    context '仕訳モデルとの関係' do
+    describe '仕訳モデルとの関係' do
       it '借方科目が1:Nとなっている' do
         expect(Account.reflect_on_association(:debit_journals).macro).to eq :has_many
       end
@@ -108,7 +108,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
       end
     end
 
-    context '仕訳取込モデルとの関係' do
+    describe '仕訳取込モデルとの関係' do
       it '借方科目が1:Nとなっている' do
         expect(Account.reflect_on_association(:debit_imports).macro).to eq :has_many
       end
@@ -124,14 +124,18 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         user = create(:user, year: 2021)
         @account = create(:account, user: user)
         @other_account = create(:account, user: user, code: 101, total_account: 'カード')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          @account.update("debit_balance_#{mon}".to_sym => 1000)
-          @account.update("credit_balance_#{mon}".to_sym => 2000)
-          @account.update("opening_balance_#{mon}".to_sym => 10000)
-          @other_account.update("debit_balance_#{mon}".to_sym => 3000)
-          @other_account.update("credit_balance_#{mon}".to_sym => 4000)
-          @other_account.update("opening_balance_#{mon}".to_sym => 20000)
+          hash["debit_balance_#{mon}"] = 1000
+          hash["credit_balance_#{mon}"] = 2000
+          hash["opening_balance_#{mon}"] = 10000
+          other_hash["debit_balance_#{mon}"] = 3000
+          other_hash["credit_balance_#{mon}"] = 4000
+          other_hash["opening_balance_#{mon}"] = 20000
         end
+        @account.update(hash)
+        @other_account.update(other_hash)
       end
 
       context '借方の場合' do
@@ -205,13 +209,15 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
       end
     end
 
-    context 'update_opening_balance' do
+    describe 'update_opening_balance' do
       it '勘定科目の期首残高を更新すると2月以降も更新される' do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
+        hash = {}
         (1..12).to_a.each do |mon|
-          account.update("opening_balance_#{mon}".to_sym => (mon * 100))
+          hash["opening_balance_#{mon}"] = mon*100
         end
+        account.update(hash)
         prev_balance = account.opening_balance_1
         account.update(opening_balance_1: 101)
         account.update_opening_balance(prev_balance)
@@ -222,57 +228,69 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
       end
     end
 
-    context 'return_balances' do
+    describe 'return_balances' do
       it '月から[期首残高, 借方残高, 貸方残高, 期末残高]を返す' do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          account.update("debit_balance_#{mon}".to_sym => (mon * 200))
-          account.update("credit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          other_account.update("debit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("credit_balance_#{mon}".to_sym => (mon * 200))
+          hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          hash["debit_balance_#{mon}"] = mon * 200
+          hash["credit_balance_#{mon}"] = mon * 100
+          other_hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          other_hash["debit_balance_#{mon}"] = mon * 100
+          other_hash["credit_balance_#{mon}"] = mon * 200
         end
+        account.update(hash)
+        other_account.update(other_hash)
 
         expect(account.return_balances(2, 4)).to eq [200, 1800, 900, 1100]
         expect(other_account.return_balances(2, 4)).to eq [200, 900, 1800, 1100]
       end
     end
 
-    context 'return_transition_balances' do
+    describe 'return_transition_balances' do
       it '月から[1月 .. 12月, 累計残高, 平均残高]を返す' do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          account.update("debit_balance_#{mon}".to_sym => (mon * 200))
-          account.update("credit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          other_account.update("debit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("credit_balance_#{mon}".to_sym => (mon * 200))
+          hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          hash["debit_balance_#{mon}"] = mon * 200
+          hash["credit_balance_#{mon}"] = mon * 100
+          other_hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          other_hash["debit_balance_#{mon}"] = mon * 100
+          other_hash["credit_balance_#{mon}"] = mon * 200
         end
+        account.update(hash)
+        other_account.update(other_hash)
 
         expect(account.return_transition_balances(5)).to eq [100, 200, 300, 400, 500, 0, 0, 0, 0, 0, 0, 0, 1500, 300]
         expect(other_account.return_transition_balances(5)).to eq [100, 200, 300, 400, 500, 0, 0, 0, 0, 0, 0, 0, 1500, 300]
       end
     end
 
-    context 'balance_array_from_1_to_12' do
+    describe 'balance_array_from_1_to_12' do
       it '1月から12月までの残高を返す' do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
+        hash = {}
+        other_hash = {}
         (1..12).to_a.each do |mon|
-          account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          account.update("debit_balance_#{mon}".to_sym => (mon * 200))
-          account.update("credit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("opening_balance_#{mon}".to_sym => 50 * (mon * mon - mon + 2))
-          other_account.update("debit_balance_#{mon}".to_sym => (mon * 100))
-          other_account.update("credit_balance_#{mon}".to_sym => (mon * 200))
+          hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          hash["debit_balance_#{mon}"] = mon * 200
+          hash["credit_balance_#{mon}"] = mon * 100
+          other_hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
+          other_hash["debit_balance_#{mon}"] = mon * 100
+          other_hash["credit_balance_#{mon}"] = mon * 200
         end
+        account.update(hash)
+        other_account.update(other_hash)
 
         expect(account.balance_array_from_1_to_12).to eq [200, 400, 700, 1100, 1600, 2200, 2900, 3700, 4600, 5600, 6700, 7900]
         expect(other_account.balance_array_from_1_to_12).to eq [200, 400, 700, 1100, 1600, 2200, 2900, 3700, 4600, 5600, 6700, 7900]

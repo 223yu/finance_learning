@@ -71,8 +71,7 @@ class Journal < ApplicationRecord
         is_true = false
       end
     end
-    self.save
-    is_true
+    is_true &= self.save
   end
 
   # 入力画面に表示するために受け渡すパラメータを整える
@@ -109,7 +108,7 @@ class Journal < ApplicationRecord
   # 科目残高更新
   def update_debit_and_credit_balance(reverse = false)
     is_valid = true
-    Journal.transaction(joinable: false, requires_new: true) do
+    Account.transaction(joinable: false, requires_new: true) do
       if Account.find_by(id: self.debit_id).present? && Account.find_by(id: self.credit_id).present?
         if reverse
           debit_account = Account.find(self.debit_id)
@@ -132,14 +131,14 @@ class Journal < ApplicationRecord
     end
     is_valid
   end
-  
+
   # 簡易入力画面において仕訳の作成を行う
   def self_create_and_update_account_balance_in_simple_entry(user)
     is_valid = true
     Journal.transaction(joinable: false, requires_new: true) do
       is_valid &= self.arrange_and_save_in_simple_entry(user)
       is_valid &= self.update_debit_and_credit_balance
-      
+
       unless is_valid
         raise ActiveRecord::Rollback
       end
@@ -164,14 +163,14 @@ class Journal < ApplicationRecord
     end
     is_valid
   end
-  
+
   # 残高更新後仕訳削除
   def delete_after_updating_balance
     is_valid = true
     Journal.transaction(joinable: false, requires_new: true) do
       is_valid &= self.update_debit_and_credit_balance(true)
       is_valid &= self.destroy
-      
+
       unless is_valid
         raise ActiveRecord::Rollback
       end
