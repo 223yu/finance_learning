@@ -18,26 +18,26 @@ class Import < ApplicationRecord
   # 追加メソッド
   # 入力画面から送られてきたパラメータを保存可能な形式に整えて保存する
   def arrange_and_save(user)
-    # 最後のsaveまでエラーが発生しないように各値を整える
+    is_true = true
     month = self.month.to_i
     day = self.day.to_i
     if Date.valid_date?(user.year, month, day)
       self.date = Date.new(user.year, month, day)
     else
-      self.date = ''
+      is_true = false
     end
     if Account.find_by(user_id: user.id, year: user.year, code: debit_code).present?
       self.debit_id = user.code_id(debit_code)
     else
-      self.debit_id = ''
+      is_true = false
     end
     if Account.find_by(user_id: user.id, year: user.year, code: credit_code).present?
       self.credit_id = user.code_id(credit_code)
     else
-      self.credit_id = ''
+      is_true = false
     end
     self.user_id = user.id
-    save
+    is_true &= save
   end
 
   # 入力画面に表示するために受け渡すパラメータを整える
@@ -50,5 +50,44 @@ class Import < ApplicationRecord
     self.credit_code = credit_account.code
     self.debit_name = debit_account.name
     self.credit_name = credit_account.name
+  end
+  
+  # 仕訳の更新を行う
+  def self_update(user, import_params)
+    is_true = true
+    Import.transaction(joinable: false, requires_new: true) do
+      # パラメータの値にて更新
+      is_true &= self.update(import_params)
+      is_true &= self.arrange_and_save(user)
+
+      unless is_true
+        raise ActiveRecord::Rollback
+      end
+    end
+    is_true
+  end
+  
+  # importからjournal作成
+  def create_journal_from_import
+    is_true = true
+    Import.transaction(joinable: false, requires_new: true) do
+      journal = Journal.new
+      journal.user_id = self.user_id
+      journal.debit_id = self.debit_id
+      journal.credit_id = self.credit_id
+      journal.date = self.date
+      journal.amount = self.amount
+      journal.description = self.description
+      is_true &= journal.save
+      # 残高の更新
+      is_true &= journal.update_debit_and_credit_balance
+      # importの削除
+      is_true &= self.destroy
+      
+      unless is_true
+        raise ActiveRecord::Rollback
+      end
+    end
+    is_true
   end
 end
