@@ -66,11 +66,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   protected
-    # update without password
-    def update_resource(resource, params)
-      if resource.update_without_password(params)
-        flash[:success] = 'ユーザ情報を更新しました'
-      end
-    end
 
+  # update without password
+  def update_resource(resource, params)
+    if resource.update_without_password(params)
+      flash[:success] = 'ユーザ情報を更新しました'
+    end
+  end
 end

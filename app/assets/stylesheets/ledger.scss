@@ -1,0 +1,96 @@
+@import "global";
+
+.ledger{
+  @extend %max-width;
+
+  &__index{
+    height: 400px;
+    margin: 10px 0 50px 0;
+    overflow-y: scroll;
+  }
+
+  &__title{
+    margin-top: 20px;
+  }
+
+  &__select-month{
+    width: 700px;
+    display: inline-block;
+  }
+
+  &__index-table{
+    @extend %table;
+
+    table-layout: fixed;
+    width: 1000px;
+  }
+
+  &__index-thead{
+    @extend %thead;
+
+  }
+
+  &__index-tbody{
+    max-height: 400px;
+  }
+
+  &__index-th{
+    @extend %th;
+    background: $gray;
+    border: 1px solid black;
+    position: sticky;
+    top: -1px;
+
+    &--nonself-code,
+    &--amount{
+      @extend .ledger__index-th;
+      width: 100px;
+    }
+
+    &--name{
+      @extend .ledger__index-th;
+      width: 150px;
+    }
+
+    &--date{
+      @extend .ledger__index-th;
+      width: 50px;
+    }
+
+    &--description{
+      @extend .ledger__index-th;
+      width: 200px;
+    }
+  }
+
+  &__index-td{
+    @extend %th;
+    background: white;
+
+    &--nonself-code{
+      @extend .ledger__index-td;
+      width: 100px;
+    }
+
+    &--name{
+      @extend .ledger__index-td;
+      width: 150px;
+    }
+
+    &--date{
+      @extend .ledger__index-td;
+      width: 50px;
+    }
+
+    &--amount{
+      @extend .ledger__index-td;
+      width: 100px;
+      text-align: right;
+    }
+
+    &--description{
+      @extend .ledger__index-td;
+      width: 200px;
+    }
+  }
+}

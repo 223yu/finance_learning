@@ -1,0 +1,117 @@
+<!--　変数定義 -->
+<% asset = [] %> <!-- 資産 -->
+<% current_asset = [] %> <!-- 流動資産-->
+<% liability = [] %> <!-- 負債 -->
+<% current_liability = [] %> <!-- 流動負債 -->
+<% net_asset = [] %> <!-- 純資産  -->
+
+<!-- 現預金 -->
+  <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '現預金' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '現預金', array: total_balance_array %>
+
+  <% current_asset = total_balance_array %>
+<!-- 他流動資産 -->
+  <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '他流動資産' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '他流動資産', array: total_balance_array %>
+
+<!-- 流動資産計 -->
+  <% current_asset = [current_asset, total_balance_array].transpose.map{|n| n.inject(:+)} %>
+  <%= render 'total', total_account: '流動資産', array: current_asset %>
+
+<!-- 固定資産 -->
+ <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '固定資産' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '固定資産', array: total_balance_array %>
+
+<!-- 資産計 -->
+  <% asset = [current_asset, total_balance_array].transpose.map{|n| n.inject(:+)} %>
+  <%= render 'total', total_account: '資産', array: asset %>
+
+<!-- カード -->
+  <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == 'カード' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: 'カード', array: total_balance_array %>
+
+  <% current_liability = total_balance_array %>
+
+<!-- 他流動負債 -->
+  <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '他流動負債' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '他流動負債', array: total_balance_array %>
+
+  <% current_liability = [current_liability, total_balance_array].transpose.map{|n| n.inject(:+)} %>
+  <%= render 'total', total_account: '他流動負債', array: current_liability %>
+
+<!-- 固定負債 -->
+  <% total_balance_array = [0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '固定負債' %>
+      <% balance_array = account.return_balances(start_month, end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array, start_month: start_month, end_month: end_month %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '固定負債', array: total_balance_array %>
+
+<!-- 負債 -->
+  <% liability = [current_liability, total_balance_array].transpose.map{|n| n.inject(:+)} %>
+  <%= render 'total', total_account: '負債', array: liability %>
+
+<!-- 純資産 -->
+  <% net_asset.push(asset[0] - liability[0]) %>
+  <% net_asset.push(asset[1] - asset[2] + liability[1] - liability[2]) %>
+  <% net_asset.push(0) %>
+  <% net_asset.push(asset[3] - liability[3]) %>
+  <tr class='report__total-tr'>
+    <td class='report__total-td--code'></td>
+    <td class='report__total-td--name'>純資産計</td>
+    <td class='report__total-td--opening-balance'><%= net_asset[0].to_s(:delimited) %></td>
+    <td class='report__total-td--debit-balance'><%= ( net_asset[1] - net_asset[2]).to_s(:delimited) %></td>
+    <td class='report__total-td--credit-balance'>0</td>
+    <td class='report__total-td--ending-balance'><%= net_asset[3].to_s(:delimited) %></td>
+    <td class='report__total-td--ledger'></td>
+  </tr>

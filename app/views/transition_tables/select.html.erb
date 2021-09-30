@@ -1,0 +1,58 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>表示する月を選んでください</h4>
+        <p>表示したい期間をドラッグ&ドロップで選択してください。ドラッグした月の色が黄色に変わります。️</p>
+        <p>他の画面と異なり推移表画面では開始月の1月は固定されています。</p>
+        <p>期間を選択したら「表示」ボタンを押してください。</p>
+        <%= image_tag 'transition-table/select-month.png', height: '50px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>損益計算書</h4>
+        <p>損益計算書の発生残高が表示されます。</p>
+        <p>選択した期間以外は全て0が表示されます。また、平均金額は選択した月数で割った金額が表示されます。</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class='trial-balance'>
+  <h4 class='trial-balance__title'>推移表</h4>
+  <!-- 入力月選択フォーム -->
+  <div class='trial-balance__select-month'>
+    <%= render 'layouts/select-month-from1', path: transition_tables_path %>
+  </div>
+
+  <!-- 推移表表示 -->
+  <div class='trial-balance__index'>
+    <table class='report__index-table'>
+      <thead class='report__index-thead'>
+        <tr class='report__index-tr'>
+          <th class='report__index-th--account'>科目名</th>
+          <th class='report__index-th--total-balance'>累計金額</th>
+          <th class='report__index-th--average-balance'>平均金額</th>
+          <th class='report__index-th--month'>1月</th>
+          <th class='report__index-th--month'>2月</th>
+          <th class='report__index-th--month'>3月</th>
+          <th class='report__index-th--month'>4月</th>
+          <th class='report__index-th--month'>5月</th>
+          <th class='report__index-th--month'>6月</th>
+          <th class='report__index-th--month'>7月</th>
+          <th class='report__index-th--month'>8月</th>
+          <th class='report__index-th--month'>9月</th>
+          <th class='report__index-th--month'>10月</th>
+          <th class='report__index-th--month'>11月</th>
+          <th class='report__index-th--month'>12月</th>
+        </tr>
+      </thead>
+      <tbody class='report__index-tbody'>
+        <!-- #indexにて非同期生成 -->
+      </tbody>
+    </table>
+  </div>
+</div>

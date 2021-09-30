@@ -1,0 +1,13 @@
+<% if @activated == 'true' %>
+  $('.cash-entry__new').html('<%= j(render 'new', journal: @journal) %>');
+  $('.search-mode__form-activated').val(false);
+  $('.search-mode__form-btn').css('background', 'rgba(255, 255, 255, 1)');
+<% else %>
+  $('.cash-entry__new').html('<%= j(render 'search') %>');
+  $('.entry__form--start-month').val('<%= @start_month %>');
+  $('.entry__form--end-month').val('<%= @end_month %>');
+  $('.entry__form--self-code').val('<%= @self_code %>');
+  $('.search-mode__form-activated').val(true);
+  $('.entry__index-tr--sinple-entry').css('background', 'rgba(255, 192, 0, 1)');
+  $('.search-mode__form-btn').css('background', 'rgba(255, 192, 0, 1)');
+<% end %>

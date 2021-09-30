@@ -1,0 +1,59 @@
+@import "global";
+
+.modal{
+  &__open-btn,
+  &__close-btn{
+    position: absolute;
+    right: 50px;
+    font-size: 30px;
+    color: $gray;
+    z-index: 100;
+
+    @include mq(xl){
+      right: calc(-50px + (100vw - 1000px)/2);
+    }
+  }
+
+  &__close-btn{
+    color: black;
+    z-index: 200;
+    top: 60px;
+  }
+
+  &__area{
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
+
+  &__background{
+    height: 100vh;
+    width: 100vw;
+    background: $gray;
+    opacity: 0.8;
+    position: absolute;
+  }
+
+  &__content{
+    max-height: 95vh;
+    overflow: scroll;
+    @extend %max-width;
+    background: $silver;
+    padding: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__content-title{
+    margin-top: 10px;
+  }
+
+  &__alert{
+    color: red;
+  }
+}

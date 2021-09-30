@@ -1,0 +1,74 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>CSV新規取込</h4>
+        <p>取込を行うCSVファイルを選択し「インポート」ボタンを押してください。</p>
+        <p>取込可能なCSVファイルは「CSVダウンロード」ボタンよりダウンロードして編集してください。</p>
+        <%= image_tag 'single-entry-import/download.png', height: '30px', width: 'auto' %>
+        <p>正常にインポートしたファイルは取込待ち仕訳一覧に追加されます。※この時点では残高に反映していません。</p>
+        <p>不正なデータがある場合、画面上部にエラーメッセージが表示され取込は行われません。</p>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>取込待ち仕訳一覧</h4>
+        <p>正常にインポートした仕訳が表示されます。</p>
+        <p>一覧に表示されている状態では仮登録となっており、入力画面と同様に右側のアイコンから編集や削除することが可能です。</p>
+        <%= image_tag 'single-entry-import/index.png', height: '120px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>「取込実行」ボタン</h4>
+        <p>取込待ち仕訳一覧のデータを本登録します。実行後、入力画面やレポート画面に反映されます。</p>
+        <%= image_tag 'single-entry-import/create.png', height: '30px', width: 'auto' %>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>「全て削除」ボタン</h4>
+        <p>取込待ち仕訳一覧のデータを全て削除します。</p>
+        <p>インポートが一部うまくいかず、再度インポートを行いたい場合などにご利用ください。</p>
+        <%= image_tag 'single-entry-import/all-destroy.png', height: '30px', width: 'auto' %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class='single-entry-import'>
+  <!-- csv新規取込フォーム -->
+  <h4 class='single-entry-import__new-title'>CSV新規取込</h4>
+  <%= form_with url: single_entry_imports_path, method: :post, class:'single-entry-import__form-group', local:true do |f| %>
+    <%= f.file_field :file, class:'single-entry-import__file-field' %>
+    <%= f.submit 'インポート', class:'single-entry-import__form-btn' %>
+  <% end %>
+
+  <!-- 仕訳表示 -->
+  <h4 class='single-entry-import__index-title'>取込待ち仕訳一覧</h4>
+  <%= button_to 'CSVダウンロード', download_single_entry_imports_path, method: :get, class:'single-entry-import__btn' %>
+  <%= link_to '取込実行', import_single_entry_imports_path, class:'single-entry-import__btn' %>
+  <%= link_to '全て削除', all_destroy_single_entry_imports_path, method: :delete, class:'single-entry-import__btn' %>
+  <div class='single-entry-import__index'>
+    <div class='entry__index-table'>
+      <div class='entry__index-thead'>
+        <div class='entry__index-tr'>
+          <div class='entry__index-th--date'>月</div>
+          <div class='entry__index-th--date'>日</div>
+          <div class='entry__index-th--code'>借方コード</div>
+          <div class='entry__index-th--name'>借方科目名</div>
+          <div class='entry__index-th--code'>貸方コード</div>
+          <div class='entry__index-th--name'>貸方科目名</div>
+          <div class='entry__index-th--amount'>金額</div>
+          <div class='entry__index-th--description'>摘要</div>
+        </div>
+      </div>
+      <div class='entry__index-tbody--import'>
+        <% @imports.each do |import| %>
+          <%= render 'show', import: import %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 科目候補表示 -->
+  <div class='entry__subbox'></div>
+</div>

@@ -1,0 +1,25 @@
+@import "global";
+
+.single-entry-import{
+  @extend %max-width;
+
+  &__new-title{
+    margin-top: 20px;
+  }
+
+  &__form-group{
+    margin-top: 10px;
+  }
+
+  &__index-title{
+    margin: 20px 40px 10px 0;
+    display: inline-block;
+  }
+
+  &__btn{
+    @extend %btn;
+
+    width: 130px;
+    display: inline-block;
+  }
+}

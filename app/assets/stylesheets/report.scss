@@ -1,0 +1,125 @@
+@import "global";
+
+// index
+.report{
+
+  &__index-table{
+    @extend %table;
+    table-layout: fixed;
+    width: 950px;
+    position: relative;
+  }
+
+  &__index-thead{
+    @extend %thead;
+  }
+
+  &__index-th{
+    @extend %th;
+    border: 1px solid black;
+    background: $gray;
+    position: sticky;
+    top: -1px;
+
+    &--code,
+    &--ledger,
+    &--total-balance,
+    &--average-balance,
+    &--month{
+      @extend .report__index-th;
+      width: 100px;
+    }
+
+    &--name,
+    &--account,
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance{
+      @extend .report__index-th;
+      width: 150px;
+    }
+
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      &:first-child{
+        z-index: 2;
+      }
+    }
+  }
+
+  &__index-td{
+    @extend %th;
+    border-top: none;
+    background: white;
+    overflow-y: scroll;
+    white-space: nowrap;
+
+    &--code,
+    &--name,
+    &--account,
+    &--ledger{
+      @extend .report__index-td;
+    }
+
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+    }
+
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance,
+    &--total-balance,
+    &--average-balance,
+    &--month{
+      @extend .report__index-td;
+      text-align: right;
+    }
+  }
+
+  &__index-link{
+    @extend %link;
+    margin: 0 5px;
+  }
+
+  // total
+  &__total-td{
+    @extend %th;
+    background: $yellow;
+    border-top: none;
+    overflow-y: scroll;
+    white-space: nowrap;
+
+    &--code,
+    &--name,
+    &--account,
+    &--ledger{
+      @extend .report__total-td;
+    }
+
+    &--account{
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+    }
+
+    &--opening-balance,
+    &--debit-balance,
+    &--credit-balance,
+    &--ending-balance,
+    &--total-balance,
+    &--average-balance,
+    &--month{
+      @extend .report__total-td;
+      text-align: right;
+    }
+  }
+}

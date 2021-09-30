@@ -1,0 +1,39 @@
+<div class='select-month'>
+  <p class='select-month__title'>表示する月と科目を選んでください</p>
+  <%= form_with url:  path, method: :get, class:'select-month__form-group', remote: true do |f| %>
+    <div class='select-month__boxes'>
+      <% 12.times do |n| %>
+        <div class='select-month__box'>
+          <!-- 試算表→総勘定元帳の場合true -->
+          <% if @get_start_month != nil %>
+            <% if @get_start_month == n + 1 %>
+              <%= f.check_box "mon#{n + 1}", checked: true, class:'select-month__checkbox' %>
+              <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label--second', id:"month#{n + 1}" %>
+
+            <% elsif @get_end_month == n + 1 %>
+              <%= f.check_box "mon#{n + 1}", checked: true,  class:'select-month__checkbox' %>
+              <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label--second', id:"month#{n + 1}" %>
+            <% elsif @get_start_month < n + 1 && n + 1 < @get_end_month %>
+              <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
+              <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label--second', id:"month#{n + 1}" %>
+            <% else %>
+              <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
+              <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label', id:"month#{n + 1}" %>
+            <% end %>
+          <% else %>
+            <%= f.check_box "mon#{n + 1}", class:'select-month__checkbox' %>
+            <%= f.label "mon#{n + 1}", "#{n + 1}月", class:'select-month__label', id:"month#{n + 1}" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div clas='select-month__form-boxes'>
+      <div class='select-month__account'>
+        <%= f.select :self_code, @accounts, { include_blank: '科目選択', selected: @self_code}, {class:'select-month__account-form'} %>
+      </div>
+      <div class='select-month__box-btn'>
+        <%= f.submit '表示', class:'select-month__btn' %>
+      </div>
+    </div>
+  <% end %>
+</div>

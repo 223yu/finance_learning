@@ -8,91 +8,99 @@
 
   &__index-thead{
     @extend %thead;
-
     display: block;
   }
 
   &__index-tbody{
-    height: 400px;
+    max-height: 400px;
     overflow-x: hidden;
     overflow-y: scroll;
+
+    &--import{
+      @extend .entry__index-tbody;
+      margin-bottom: 20px;
+    }
   }
 
   &__index-tr{
     width: 900px;
+
+    &--sinple-entry{
+      width: 800px;
+    }
   }
 
   &__index-th{
-    &--date{
-      @extend %th;
+    @extend %th;
+    background: $gray;
+    border: 1px solid black;
 
-      background: $gray;
+    &--date{
+      @extend .entry__index-th;
       width: 50px;
     }
 
     &--code{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 100px;
     }
 
-    &--name{
-      @extend %th;
+    &--nonself-code{
+      @extend .entry__index-th;
+      width: 150px;
+    }
 
-      background: $gray;
+    &--name{
+      @extend .entry__index-th;
       width: 150px;
     }
 
     &--amount{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 100px;
     }
 
     &--description{
-      @extend %th;
-
-      background: $gray;
+      @extend .entry__index-th;
       width: 200px;
     }
   }
 
   &__index-td{
+    @extend %th;
+    border-top: none;
+    background: white;
+    overflow-x: scroll;
     &--date{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 50px;
-      border-top: none;
+      max-width: 50px;
     }
 
     &--code{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 100px;
-      border-top: none;
+      max-width: 100px;
     }
 
+    &--nonself-code,
     &--name{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 150px;
-      border-top: none;
+      max-width: 150px;
     }
 
     &--amount{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 100px;
-      border-top: none;
+      max-width: 100px;
+      text-align: right;
     }
 
     &--description{
-      @extend %th;
-
+      @extend .entry__index-td;
       width: 200px;
-      border-top: none;
+      max-width: 200px;
     }
 
     &--btn{
@@ -104,7 +112,6 @@
 
   &__index-link{
     @extend %link;
-
     margin: 0 5px;
   }
 
@@ -114,38 +121,38 @@
   }
 
   &__new-td{
+    @extend %th;
+    border-right: none;
     &--date{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 50px;
-      border-right: none;
     }
 
     &--code{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 100px;
-      border-right: none;
+    }
+
+    &--nonself-code{
+      @extend .entry__new-td;
+      width: 150px;
     }
 
     &--name{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 150px;
-      border-right: none;
     }
 
     &--amount{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 100px;
-      border-right: none;
+      text-align: right;
     }
 
     &--description{
-      @extend %th;
-
+      @extend .entry__new-td;
       width: 200px;
+      border-right: 1px solid;
     }
 
     &--btn{
@@ -156,33 +163,33 @@
   &__form{
     &--date{
       @extend %th;
-
       width: 38px;
     }
 
     &--code{
       @extend %th;
-
       width: 88px;
+    }
+
+    &--nonself-code{
+      @extend %th;
+      width: 138px;
     }
 
     &--name{
       @extend %th;
-
       width: 138px;
-      background: $gray;
-      opacity: 0.7;
+      background: $silver;
     }
 
     &--amount{
       @extend %th;
-
       width: 88px;
+      text-align: right;
     }
 
     &--description{
       @extend %th;
-
       width: 188px;
     }
   }
@@ -200,7 +207,7 @@
     height: 200px;
     width: 900px;
     border: 1px solid;
-    background: $blue;
+    background: white;
     opacity: 0.7;
     margin: 10px 0 60px 0;
     display: flex;

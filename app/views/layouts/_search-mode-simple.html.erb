@@ -1,0 +1,9 @@
+<div class='search-mode'>
+  <%= form_with url: path, method: :get, class:'search-mode__form-group', remote: true do |f| %>
+    <%= f.hidden_field :start_month, class:'search-mode__form-start' %>
+    <%= f.hidden_field :end_month, class:'search-mode__form-end' %>
+    <%= f.hidden_field :activated, :value => false, class:'search-mode__form-activated' %>
+    <%= f.hidden_field :self_code, class:'search-mode__form-self-code' %>
+    <%= f.submit '検索モードにする', class:'search-mode__form-btn' %>
+  <% end %>
+</div>

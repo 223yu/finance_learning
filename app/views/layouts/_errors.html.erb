@@ -1,9 +1,9 @@
 <!-- validation errors -->
 <% if obj.errors.any? %>
-  <h4><%= obj.errors.count %>件のエラーが発生しました。</h4>
-  <ul>
+  <h5 class='errors__title'><%= obj.errors.count %>件のエラーが発生しました。</h5>
+  <ul class='errors__list'>
     <% obj.errors.full_messages.each do|message| %>
-      <li><%= message %></li>
+      <li class='errors__list-item'><%= message %></li>
     <% end %>
   </ul>
 <% end %>

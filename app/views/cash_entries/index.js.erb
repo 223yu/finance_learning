@@ -1,0 +1,17 @@
+<!-- 一度初期化してから再度仕訳を表示 -->
+$('.flash').html('<%= j(render 'layouts/flash') %>');
+$('.entry__index-tbody').html('');
+<% @journals.each do |journal| %>
+  $('.entry__index-tbody').prepend('<%= j(render 'show', journal: journal, self_id: @self_id, self_code: @self_code) %>');
+<% end %>
+
+$('.cash-entry__new').html('<%= j(render 'new', journal: @journal) %>');
+$('.cash-entry__search-mode').html('<%= j(render 'layouts/search-mode-simple',path: search_cash_entries_path) %>');
+<!-- self-codeをセット -->
+$('.entry__form--self-code').val(<%= @self_code %>);
+$('.search-mode__form-self-code').val(<%= @self_code %>);
+<!-- search-modeに開始月と終了月をセット -->
+$('.search-mode__form-start').val('<%= @get_start_month %>');
+$('.search-mode__form-end').val('<%= @get_end_month %>');
+<!-- table最下部までスクロール -->
+$('.entry__index-tbody').animate({scrollTop: $('.entry__index-tbody')[0].scrollHeight}, 'fast');

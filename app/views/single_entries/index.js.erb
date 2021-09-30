@@ -1,4 +1,9 @@
-$('.entry__index-tbody').html('<%= j(render 'index', journals: @journals) %>');
+<!-- 一度初期化してから再度仕訳を表示 -->
+$('.flash').html('<%= j(render 'layouts/flash') %>');
+$('.entry__index-tbody').html('');
+<% @journals.each do |journal| %>
+  $('.entry__index-tbody').prepend('<%= j(render 'show', journal: journal) %>');
+<% end %>
 $('.single-entry__new').html('<%= j(render 'new', journal: @journal) %>');
 $('.single-entry__search-mode').html('<%= j(render 'layouts/search-mode',path: search_single_entries_path) %>');
 <!-- search-modeに開始月と終了月をセット -->

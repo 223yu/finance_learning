@@ -1,0 +1,24 @@
+@import "global";
+
+.flash{
+  position: sticky;
+  top: 60px;
+  left: 0;
+  z-index: 10;
+
+  &__danger,
+  &__alert{
+    width: 100%;
+    background: $pink;
+  }
+
+  &__success,
+  &__notice{
+    width: 100%;
+    background: $green;
+  }
+
+  &__message{
+    @extend %max-width;
+  }
+}

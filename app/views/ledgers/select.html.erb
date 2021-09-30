@@ -1,0 +1,47 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>表示する月と科目を選んでください</h4>
+        <p>表示したい期間をドラッグ&ドロップで選択してください。ドラッグした月の色が黄色に変わります。️</p>
+        <p>また「科目選択」から入力を行う勘定科目を選択してください。</p>
+        <p>期間と勘定科目を選択したら「表示」ボタンを押してください。仕訳一覧や入力フォームが表示されます。</p>
+        <%= image_tag 'cash-entry/select-month.png', height: '60px', width: 'auto' %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class='ledger'>
+  <h4 class='ledger__title'>総勘定元帳</h4>
+  <!-- 入力月選択フォーム -->
+  <div class='ledger__select-month'>
+    <%= render 'layouts/select-month-account', path: ledgers_path %>
+  </div>
+
+  <!-- 総勘定元帳表示 -->
+  <div class='ledger__index'>
+    <table class='ledger__index-table'>
+      <thead class='ledger__index-thead'>
+        <tr class='ledger__index-tr'>
+          <th class='ledger__index-th--date'>月</th>
+          <th class='ledger__index-th--date'>日</th>
+          <th class='ledger__index-th--nonself-code'>相手コード</th>
+          <th class='ledger__index-th--name'>相手科目名</th>
+          <th class='ledger__index-th--amount'>借方金額</th>
+          <th class='ledger__index-th--amount'>貸方金額</th>
+          <th class='ledger__index-th--amount'>残高</th>
+          <th class='ledger__index-th--description'>摘要</th>
+        </tr>
+      </thead>
+      <tbody class='ledger__index-tbody'>
+        <!-- #indexにて非同期生成 -->
+      </tbody>
+    </table>
+  </div>
+
+</div>

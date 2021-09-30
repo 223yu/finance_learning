@@ -1,0 +1,103 @@
+<!--　変数定義 -->
+<% gross_profit = [] %> <!-- 売上総利益  -->
+<% operating_income = [] %> <!-- 営業利益  -->
+<% non_operating_income = [] %> <!-- 営業外利益  -->
+<% net_income = [] %> <!-- 当期純利益  -->
+
+<!-- 売上 -->
+  <% total_balance_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '収入' %>
+      <% balance_array = account.return_transition_balances(end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '収入', array: total_balance_array %>
+
+  <% gross_profit = total_balance_array %>
+
+<!-- 原価 -->
+  <% total_balance_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '原価' %>
+      <% balance_array = account.return_transition_balances(end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '原価', array: total_balance_array %>
+
+  <% gross_profit = [gross_profit, total_balance_array].transpose.map{|n| n.inject(:-)} %>
+  <%= render 'total', total_account: '売上総利益', array: gross_profit %>
+
+<!-- 販管費 -->
+  <% total_balance_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '販管費' %>
+      <% balance_array = account.return_transition_balances(end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '販管費', array: total_balance_array %>
+
+  <% operating_income = [gross_profit, total_balance_array].transpose.map{|n| n.inject(:-)} %>
+  <%= render 'total', total_account: '営業利益', array: operating_income %>
+
+<!-- 営業外収入 -->
+  <% total_balance_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '営業外収入' %>
+      <% balance_array = account.return_transition_balances(end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '営業外収入', array: total_balance_array %>
+
+  <% non_operating_income = total_balance_array %>
+
+<!-- 営業外費用 -->
+  <% total_balance_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0] %>
+
+  <% accounts.each do |account| %>
+    <% if account.total_account == '営業外費用' %>
+      <% balance_array = account.return_transition_balances(end_month) %>
+      <% total_balance_array = [total_balance_array, balance_array].transpose.map{|n| n.inject(:+)} %>
+      <%= render 'show', account: account, array: balance_array %>
+    <% end %>
+  <% end %>
+
+  <%= render 'total', total_account: '営業外費用', array: total_balance_array %>
+
+  <% non_operating_income = [non_operating_income, total_balance_array].transpose.map{|n| n.inject(:-)} %>
+  <%= render 'total', total_account: '営業外利益', array: non_operating_income %>
+
+!-- 当期純利益 -->
+  <% net_income = [operating_income, non_operating_income].transpose.map{|n| n.inject(:+)} %>
+  <tr class='report__index-tr'>
+    <th class='report__total-td--account'>当期純利益計</th>
+    <td class='report__total-td--total-balance'><%= net_income[12].to_s(:delimited) %></td>
+    <td class='report__total-td--average-balance'><%= net_income[13].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[0].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[1].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[2].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[3].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[4].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[5].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[6].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[7].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[8].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[9].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[10].to_s(:delimited) %></td>
+    <td class='report__total-td--month'><%= net_income[11].to_s(:delimited) %></td>
+  </tr>

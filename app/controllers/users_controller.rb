@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
 
   def show
+    @cash_array = current_user.return_balance_array('現預金')
+    @profit_array = current_user.return_profit_balance_array
   end
 
   def start
@@ -13,5 +16,4 @@ class UsersController < ApplicationController
       render 'show'
     end
   end
-
 end

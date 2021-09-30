@@ -1,0 +1,18 @@
+<% if flash[:danger] %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.cash-entry__new').html('<%= j(render 'new', journal: @journal) %>');
+  <!-- self-codeをセット -->
+  $('.entry__form--self-code').val(<%= @self_code %>);
+  <!-- create後、autofocusが効かなくなるのでjqueryで対応 -->
+  $('#journal_month').focus();
+<% else %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.entry__index-tbody').append('<%= j(render 'show', journal: @journal, self_id: @self_id, self_code: @self_code) %>');
+  $('.cash-entry__new').html('<%= j(render 'new', journal: @journal_new) %>');
+  <!-- self-codeをセット -->
+  $('.entry__form--self-code').val(<%= @self_code %>);
+  <!-- create後、autofocusが効かなくなるのでjqueryで対応 -->
+  $('#journal_month').focus();
+  <!-- table最下部までスクロール -->
+  $('.entry__index-tbody').animate({scrollTop: $('.entry__index-tbody')[0].scrollHeight}, 'fast');
+<% end %>

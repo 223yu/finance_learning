@@ -1,0 +1,21 @@
+<div class='select-month-from1'>
+  <p class='select-month-from1__title'>表示する月を選んでください</p>
+  <%= form_with url:  path, method: :get, class:'select-month-from1__form-group', remote: true do |f| %>
+    <div class='select-month-from1__boxes'>
+      <!-- 1月はチェックボックスではなくhidden_fieldにする -->
+      <div class='select-month-from1__box'>
+        <%= f.hidden_field :mon1, :value => 1, class:'select-month-from1__hidden' %>
+        <%= f.label 'mon1', '1月', class:'select-month-from1__label--first-only', id:'month1' %>
+      </div>
+      <% 11.times do |n| %>
+        <div class='select-month-from1__box'>
+          <%= f.check_box "mon#{n + 2}", class:'select-month-from1__checkbox' %>
+          <%= f.label "mon#{n + 2}", "#{n + 2}月", class:'select-month-from1__label', id:"month#{n + 2}" %>
+        </div>
+      <% end %>
+    </div>
+    <div class='select-month-from1__box-btn'>
+      <%= f.submit '表示', class:'select-month-from1__btn' %>
+    </div>
+  <% end %>
+</div>

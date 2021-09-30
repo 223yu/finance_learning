@@ -1,12 +1,47 @@
+<!-- 画面説明 -->
+<a href='' class='modal__open-btn'><i class="far fa-question-circle"></i></a>
+<div class='modal__area'>
+  <div class='modal__background'></div>
+  <a href='' class='modal__close-btn'><i class="far fa-times-circle"></i></a>
+  <div class='modal__content'>
+    <ul>
+      <li>
+        <h4 class='modal__content-title'>累計仕訳数</h4>
+        <p>他年度分も含めてこれまでに入力した仕訳数が表示されます。</p>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>年度選択</h4>
+        <p>作業を行う年度の選択と年度データの更新を行うことができます。</p>
+        <p>年度データを作成していない場合には、学習コンテンツ「学習を始めよう！」を確認しながら年度データを作成してください。</p>
+        <p>更新を押した年度の翌年度が存在する場合には翌年度の各科目期首残高を更新し、存在しない場合には翌年度データを新たに作成します。</p>
+        <p class='modal__alert'>年度を変更する場合に、別のタブを開いている時は、先に別のタブを閉じてから行なってください。️</p>
+      </li>
+      <li>
+         <h4 class='modal__content-title'>グラフ</h4>
+         <p>選択している年度について利益と現預金の残高グラフが表示されます。</p>
+         <p>利益については発生残高、現預金については月末残高が表示されます。</p>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>ユーザ情報編集ボタン</h4>
+        <p>ユーザ情報編集画面を開きます。</p>
+        <p>メールアドレスとパスワードで登録している場合には、ユーザ名とメールアドレスを変更することができます。</p>
+        <p>Googleアカウントで登録している場合には、ユーザ名のみ変更することができます。</p>
+        <p>ゲストログインの場合には情報を変更することはできません。</p>
+      </li>
+      <li>
+        <h4 class='modal__content-title'>ログアウトボタン</h4>
+        <p>現在のアカウントからログアウトすることができます。</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class='mypage'>
 
   <div class='mypage__cumurative-journal'>
-    <p class='mypage__cumurative-journal-item'>累計仕訳数</p>
+    <h4 class='mypage__cumurative-journal-title'>累計仕訳数</h4>
     <p class='mypage__cumurative-journal-item'>
       <%= current_user.journals.length %>仕訳
-    </p>
-    <p class='mypage__cumurative-journal-item'>
-      引き続き頑張りましょう！
     </p>
   </div>
 
@@ -18,9 +53,9 @@
           <% current_user.has_years.each do |year| %>
             <tr class='mypage__tr'>
               <td class='mypage__td'><%= year %>年度</td>
-              <td class='mypage__td'><%= year %>年1月1日　〜　<%= year %>年12月31日</td>
+              <td class='mypage__td'><%= year %>年1月1日 〜 <%= year %>年12月31日</td>
               <td class='mypage__td'><%= link_to '年度選択', select_years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
-              <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :post, class:'mypage__td-btn' %> </td>
+              <td class='mypage__td'><%= link_to '年度更新', years_path(year: year), method: :patch, class:'mypage__td-btn' %> </td>
             </tr>
           <% end %>
         </tbody>
@@ -28,11 +63,15 @@
       <div class='mypage__graph-boxes'>
         <div class='mypage__graph-area'>
           <h4 class='mypage__graph-title'>利益のグラフ</h4>
-          <div class='mypage__graph-box'></div>
+          <div class='mypage__graph-box'>
+            <canvas id='mypage__graph--profit'></canvas>
+          </div>
         </div>
         <div class='mypage__graph-area'>
           <h4 class='mypage__graph-title'>現預金残高のグラフ</h4>
-          <div class='mypage__graph-box'></div>
+          <div class='mypage__graph-box'>
+            <canvas id='mypage__graph--cash'></canvas>
+          </div>
         </div>
       </div>
     <% else %>
@@ -53,3 +92,123 @@
     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:'mypage__btn' %>
   </div>
 </div>
+<% if current_user.has_year? %>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
+  <script>
+  // 現預金残高のグラフ
+  let ctx = document.getElementById('mypage__graph--profit')
+  const profit_chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+      datasets: [
+        {
+          label: '利益残高',
+          data: [
+            <%= @profit_array[0] %>,
+            <%= @profit_array[1] %>,
+            <%= @profit_array[2] %>,
+            <%= @profit_array[3] %>,
+            <%= @profit_array[4] %>,
+            <%= @profit_array[5] %>,
+            <%= @profit_array[6] %>,
+            <%= @profit_array[7] %>,
+            <%= @profit_array[8] %>,
+            <%= @profit_array[9] %>,
+            <%= @profit_array[10] %>,
+            <%= @profit_array[11] %>,
+            ],
+          borderColor: 'rgba(255 ,192 , 0, 1)',
+          backgroundColor: 'rgba(0,0,0,0)'
+        }
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '利益残高の推移',
+      },scales: {
+        xAxes: [
+          {
+            ticks: {},
+          }
+        ],
+        yAxes: [
+          {
+            ticks: {
+              callback: function(label, index, labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              }
+            }
+          }
+        ]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data){
+            return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+          }
+        }
+      }
+    }
+  });
+
+  // 現預金残高のグラフ
+  ctx = document.getElementById('mypage__graph--cash')
+  const cash_chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+      datasets: [
+        {
+          label: '現預金残高',
+          data: [
+            <%= @cash_array[0] %>,
+            <%= @cash_array[1] %>,
+            <%= @cash_array[2] %>,
+            <%= @cash_array[3] %>,
+            <%= @cash_array[4] %>,
+            <%= @cash_array[5] %>,
+            <%= @cash_array[6] %>,
+            <%= @cash_array[7] %>,
+            <%= @cash_array[8] %>,
+            <%= @cash_array[9] %>,
+            <%= @cash_array[10] %>,
+            <%= @cash_array[11] %>,
+            ],
+          borderColor: 'rgba(255 ,192 , 0, 1)',
+          backgroundColor: 'rgba(0,0,0,0)'
+        }
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '現預金残高の推移'
+      },scales: {
+        xAxes: [
+          {
+            ticks: {}
+          }
+        ],
+        yAxes: [
+          {
+            ticks: {
+              callback: function(label, index, labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              }
+            }
+          }
+        ]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data){
+            return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+          }
+        }
+      }
+    }
+  });
+  </script>
+<% end %>

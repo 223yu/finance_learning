@@ -1,0 +1,41 @@
+@import "global";
+
+.trial-balance{
+  @extend %max-width;
+
+  margin-bottom: 100px;
+
+  &__index{
+    height: 400px;
+    width: 1000px;
+    margin-top: 10px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+
+    &--profit-loss{
+      @extend .trial-balance__index;
+      display: none;
+    }
+  }
+
+  &__title{
+    margin-top: 20px;
+  }
+
+  &__select-month{
+    width: 700px;
+    display: inline-block;
+  }
+
+  &__search-mode{
+    width: 200px;
+    display: inline-block;
+  }
+
+  &__index-title{
+    margin-top: 20px;
+    display: none;
+  }
+
+}

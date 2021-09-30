@@ -1,0 +1,7 @@
+<% if flash[:danger] %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.entry__index-tr<%= @journal.id %>').html('<%= j(render 'cash_entries/edit',  journal: @journal, self_id: @self_id, self_code: @self_code) %>');
+<% else %>
+  $('.flash').html('<%= j(render 'layouts/flash') %>');
+  $('.entry__index-tr<%= @journal.id %>').html('<%= j(render 'cash_entries/show',  journal: @journal, self_id: @self_id, self_code: @self_code) %>');
+<% end %>

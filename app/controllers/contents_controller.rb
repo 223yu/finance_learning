@@ -1,6 +1,7 @@
 class ContentsController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
 
-  def index
+  def show
     @contents = Content.all
   end
 
@@ -14,5 +15,4 @@ class ContentsController < ApplicationController
     learning.destroy
     @contents = Content.all
   end
-
 end

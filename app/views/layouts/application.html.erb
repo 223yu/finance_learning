@@ -4,6 +4,7 @@
     <title>FinanceLearning</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= favicon_link_tag('favicon.ico') %>
 
     <script src="https://kit.fontawesome.com/efe3d01fd5.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -11,10 +12,15 @@
   </head>
 
   <body>
+    <!-- ローディング -->
+    <div class="loader">Loading...</div>
+    
     <header>
       <ul class='navbar'>
         <li class='navbar__logo'>
-          <%= link_to 'LOGO', root_path, class:'navbar__logo-image' %>
+          <%= link_to root_path, class:'navbar__logo-link' do %>
+            <%= image_tag 'logo.png', class:'navbar__logo-image' %>
+          <% end %>
         </li>
         <% if user_signed_in? %>
           <li class='navbar__item'>
@@ -28,51 +34,64 @@
             </p>
           </li>
           <li class='navbar__item'>
-            <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
+            <%= link_to '学習コンテンツ', contents_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to 'マイページ', users_path, class:'navbar__item-link' %>
+            <%= link_to 'マイページ', users_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__dropdown'>
-            <a href='#' class='navbar__item-link'>入力</a>
+            <a class='navbar__item-link'>入力</a>
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
-                <%= link_to '単一入力', select_single_entries_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to '単一入力', select_single_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to '現金入力', select_cash_entries_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to '現金入力', select_cash_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to 'カード入力', select_card_entries_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to 'カード入力', select_card_entries_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
+              </li>
+              <li class='navbar__dropdown-item'>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to 'CSV取込', single_entry_imports_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
             </ul>
           </li>
           <li class='navbar__dropdown'>
-            <a href='#' class='navbar__item-link'>帳票</a>
+            <a class='navbar__item-link'>レポート</a>
             <ul class='navbar__dropdown-list'>
               <li class='navbar__dropdown-item'>
-                <%= link_to '試算表', select_trial_balances_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to '試算表', select_trial_balances_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to '推移表', select_transition_tables_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to '推移表', select_transition_tables_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
               <li class='navbar__dropdown-item'>
-                <%= link_to '総勘定元帳', select_ledgers_path, class:'navbar__item-link' %>
+                <i class="fas fa-caret-right"></i>
+                <%= link_to '総勘定元帳', select_ledgers_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
               </li>
             </ul>
           </li>
           <li class='navbar__item'>
-            <%= link_to '設定', accounts_path, class:'navbar__item-link' %>
+            <%= link_to '設定', accounts_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
         <% else %>
           <li class='navbar__item'>
-            <%= link_to '学習コンテンツ', contents_path, class:'navbar__item-link' %>
+            <%= link_to '学習コンテンツ', contents_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to '新規登録', new_user_registration_path, class:'navbar__item-link' %>
+            <%= link_to '新規登録', new_user_registration_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
           </li>
           <li class='navbar__item'>
-            <%= link_to 'ログイン', new_user_session_path, class:'navbar__item-link' %>
+            <%= link_to 'ログイン', new_user_session_path, data: { 'turbolinks' => false }, class:'navbar__item-link' %>
+          </li>
+          <li class='navbar__item'>
+            <%= link_to 'ゲストログイン', guest_sign_in_path, method: :post, class:'navbar__item-link' %>
           </li>
         <% end %>
       </ul>

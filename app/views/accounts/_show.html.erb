@@ -8,7 +8,7 @@
   <% end %>
 </div>
 <div class='account__index-td--btn'>
-  <%= link_to account_path(account), method: :delete, class:'account__index-link', remote: true do %>
+  <%= link_to account_path(account), method: :delete, class:'account__index-link', data: { confirm: "本当に削除してよろしいですか？年度中に仕訳がある場合削除はできません。" }, remote: true do %>
     <i class="fas fa-trash-alt"></i>
   <% end %>
 </div>

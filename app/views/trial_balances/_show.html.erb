@@ -1,0 +1,11 @@
+<tr class='report__index-tr'>
+  <td class='report__index-td--code'><%= account.code %></td>
+  <td class='report__index-td--name'><%= account.name %></td>
+  <td class='report__index-td--opening-balance'><%= array[0].to_s(:delimited) %></td>
+  <td class='report__index-td--debit-balance'><%= array[1].to_s(:delimited) %></td>
+  <td class='report__index-td--credit-balance'><%= array[2].to_s(:delimited) %></td>
+  <td class='report__index-td--ending-balance'><%= array[3].to_s(:delimited) %></td>
+  <td class='report__index-td--ledger'>
+    <%= link_to '表示', ledgers_path(self_code: account.code, start_month: start_month, end_month: end_month), class:'report__index-link' %>
+  </td>
+</tr>

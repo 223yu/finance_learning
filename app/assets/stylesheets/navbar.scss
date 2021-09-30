@@ -4,16 +4,15 @@
   @extend %max-width;
 
   position: relative;
-  height: 50px;
+  height: 60px;
   list-style: none;
   display: flex;
   z-index: 10;
 
   %__list{
-    width: 150px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
+    width: 130px;
+    height: 60px;
+    line-height: 60px;
   }
 
   &__logo{
@@ -21,33 +20,46 @@
    margin-right: auto;
   }
 
-  &__logo-image{
+  &__logo-link{
     @extend %link;
+  }
+
+  &__logo-image{
+    height: 45px;
+    width: 45px;
+    position: relative;
+    top: 7.5px;
   }
 
   &__item{
     @extend %__list;
+    text-align: center;
   }
 
   &__item-link{
     @extend %link;
+    color: white;
   }
 
   &__user-name{
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
   }
 
   &__user-year{
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
   }
 
   &__dropdown{
     @extend %__list;
+    text-align: center;
 
     &:hover &-item{
       height: 40px;
+      text-align: left;
+      line-height: 40px;
+      padding-left: 15px;
     }
   }
 
@@ -56,6 +68,8 @@
     padding: 0;
     text-align: center;
     z-index: 100;
+    position: relative;
+    left: 30px;
   }
 
   &__dropdown-item{
