@@ -257,5 +257,26 @@ RSpec.describe '仕訳取込モデルに関するテスト', type: :model do
         end
       end
     end
+
+    describe 'all_destroy' do
+      before do
+        @user = create(:user, year: 2021)
+        other_user = create(:user)
+        account = create(:account, user: @user)
+        other_account = create(:account, user: @user, code: 101, name: 'test')
+        create(:import, user: @user, debit: account, credit: other_account)
+        create(:import, user: @user, debit: account, credit: other_account)
+        create(:import, user: other_user, debit: account, credit: other_account)
+      end
+
+      it '削除前のレコード数は正しい' do
+        expect(Import.all.length).to eq 3
+      end
+
+      it '削除後のレコード数は正しい' do
+        Import.all_destroy(@user)
+        expect(Import.all.length).to eq 1
+      end
+    end
   end
 end
