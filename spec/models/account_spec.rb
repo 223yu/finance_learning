@@ -126,7 +126,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         @other_account = create(:account, user: user, code: 101, total_account: 'カード')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -150,13 +150,13 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
           expect(@other_account.opening_balance_1).to eq 20000
           expect(@other_account.opening_balance_2).to eq 20000
           expect(@other_account.debit_balance_1).to eq 3000
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
         end
         it '貸方残高は変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
           end
@@ -166,7 +166,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
           expect(@other_account.debit_balance_2).to eq 3500
         end
         it '指定月より後の期首残高が変わっている' do
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 10500
             expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
           end
@@ -185,13 +185,13 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
           expect(@other_account.opening_balance_1).to eq 20000
           expect(@other_account.opening_balance_2).to eq 20000
           expect(@other_account.credit_balance_1).to eq 4000
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
           end
         end
         it '借方残高は変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
@@ -201,7 +201,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
           expect(@other_account.credit_balance_2).to eq 4500
         end
         it '指定月より後の期首残高が変わっている' do
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 9500
             expect(@other_account.send("opening_balance_#{mon}")).to eq 20500
           end
@@ -214,7 +214,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
         hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["opening_balance_#{mon}"] = mon*100
         end
         account.update(hash)
@@ -222,7 +222,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         account.update(opening_balance_1: 101)
         account.update_opening_balance(prev_balance)
 
-        (2..12).to_a.each do |mon|
+        (2..12).each do |mon|
           expect(account.send("opening_balance_#{mon}")).to eq (mon * 100 + 1)
         end
       end
@@ -235,7 +235,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
           hash["debit_balance_#{mon}"] = mon * 200
           hash["credit_balance_#{mon}"] = mon * 100
@@ -258,7 +258,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
           hash["debit_balance_#{mon}"] = mon * 200
           hash["credit_balance_#{mon}"] = mon * 100
@@ -281,7 +281,7 @@ RSpec.describe '勘定科目モデルに関するテスト', type: :model do
         other_account = create(:account, user: user, code: 101, total_account: 'カード')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["opening_balance_#{mon}"] = 50 * (mon * mon - mon + 2)
           hash["debit_balance_#{mon}"] = mon * 200
           hash["credit_balance_#{mon}"] = mon * 100

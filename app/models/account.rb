@@ -103,7 +103,7 @@ class Account < ApplicationRecord
     end
 
     # monthより後の期首残高を更新
-    ("#{month + 1}".to_i..12).to_a.each do |mon|
+    ("#{month + 1}".to_i..12).each do |mon|
       update_opening_balance = send("opening_balance_#{mon}")
       update_opening_balance += update_balance
       hash["opening_balance_#{mon}"] = update_opening_balance
@@ -115,7 +115,7 @@ class Account < ApplicationRecord
   def update_opening_balance(prev_balance)
     update_balance = opening_balance_1 - prev_balance
     hash = {}
-    (2..12).to_a.each do |mon|
+    (2..12).each do |mon|
       update_opening_balance = send("opening_balance_#{mon}")
       update_opening_balance += update_balance
       hash["opening_balance_#{mon}"] = update_opening_balance
@@ -128,7 +128,7 @@ class Account < ApplicationRecord
     debit_balance = 0
     credit_balance = 0
     opening_balance = send("opening_balance_#{start_month}")
-    (start_month..end_month).to_a.each do |mon|
+    (start_month..end_month).each do |mon|
       debit_balance += send("debit_balance_#{mon}")
       credit_balance += send("credit_balance_#{mon}")
     end
@@ -144,7 +144,7 @@ class Account < ApplicationRecord
   def return_transition_balances(end_month)
     array = []
     # 1月から終了月
-    (1..end_month).to_a.each do |mon|
+    (1..end_month).each do |mon|
       if DEBIT_ACCOUNTS.include?(total_account)
         array.push(send("debit_balance_#{mon}") - send("credit_balance_#{mon}"))
       else
@@ -152,7 +152,7 @@ class Account < ApplicationRecord
       end
     end
     # 終了月から12月
-    ((end_month + 1)..12).to_a.each do |mon|
+    ((end_month + 1)..12).each do |mon|
       array.push(0)
     end
     # 累計残高
@@ -165,7 +165,7 @@ class Account < ApplicationRecord
   def balance_array_from_1_to_12
     array = []
     # 1月から11月の期末残高（2月から12月の期首残高）
-    (2..12).to_a.each do |mon|
+    (2..12).each do |mon|
       array.push(send("opening_balance_#{mon}"))
     end
     # 12月の期末残高

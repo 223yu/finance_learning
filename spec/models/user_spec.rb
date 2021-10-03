@@ -256,7 +256,7 @@ RSpec.describe 'ユーザモデルに関するテスト', type: :model do
         user = create(:user, year: 2021)
         account = create(:account, user: user)
         other_account = create(:account, user: user, code: 101)
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           account.update("opening_balance_#{mon}".to_sym => (mon - 1))
           other_account.update("opening_balance_#{mon}".to_sym => (mon - 1))
         end
@@ -274,7 +274,7 @@ RSpec.describe 'ユーザモデルに関するテスト', type: :model do
         other_profit_account = create(:account, user: user, code: 102, total_account: '収入')
         # 検証用に貸借の科目も一つ作成
         balance_account = create(:account, user: user)
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           profit_account.update("credit_balance_#{mon}".to_sym => (mon * 3))
           profit_account.update("debit_balance_#{mon}".to_sym => mon)
           other_profit_account.update("credit_balance_#{mon}".to_sym => (mon * 3))
