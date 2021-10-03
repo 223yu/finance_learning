@@ -241,7 +241,7 @@ class User < ApplicationRecord
     accounts.each do |account|
       if Account::PROFIT_AND_LOSS_STATEMENT.include?(account.total_account)
         array = []
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           array.push(account.send("credit_balance_#{mon}") - account.send("debit_balance_#{mon}"))
         end
         profit_array = [profit_array, array].transpose.map { |n| n.inject(:+) }

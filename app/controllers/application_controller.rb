@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     @get_start_month = 0
     @get_end_month = 0
 
-    (1..12).to_a.each do |m|
+    (1..12).each do |m|
       get_month = params["mon#{m}".to_sym].to_i
       if @get_start_month == 0 && get_month == 1
         @get_start_month = m
