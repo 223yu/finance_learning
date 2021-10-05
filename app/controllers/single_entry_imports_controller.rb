@@ -8,60 +8,9 @@ class SingleEntryImportsController < ApplicationController
   def create
     # csvファイルが読み込まれた場合のみ処理を行う
     if params[:file] && File.extname(params[:file].original_filename) == '.csv'
-      # 変数定義
-      n = 2 # 取込行
-      success_count = 0 # 成功数
-      error_count = 0 # 失敗数
-      error_present = false
-      flash[:danger] = ''
-      # csv取込実行
-      CSV.foreach(params[:file].path, headers: true) do |row|
-        import = Import.new
-        import.user_id = current_user.id
-        if Date.valid_date?(row[0].to_i, row[1].to_i, row[2].to_i)
-          if current_user.year == row[0].to_i
-            import.date = Date.new(row[0].to_i, row[1].to_i, row[2].to_i)
-          else
-            error_present = true
-          end
-        else
-          error_present = true
-        end
-        if Account.find_by(user_id: current_user.id, year: current_user.year, code: row[3].to_i).present?
-          import.debit_id = current_user.code_id(row[3].to_i)
-        else
-          error_present = true
-        end
-        if Account.find_by(user_id: current_user.id, year: current_user.year, code: row[4].to_i).present?
-          import.credit_id = current_user.code_id(row[4].to_i)
-        else
-          error_present = true
-        end
-        if row[5].to_i > 0
-          import.amount = row[5].to_i
-        else
-          error_present = true
-        end
-        if row[6].nil?
-          import.description = ''
-        else
-          import.description = row[6]
-        end
-        if error_present == true
-          error_count += 1
-          flash[:danger] << " #{n}行."
-        elsif error_present == false
-          if import.save
-            success_count += 1
-          end
-        end
-        n += 1
-        error_present = false
-      end
-      flash[:success] = "#{success_count}件の仕訳を取り込みました。"
-      if error_count > 0
-        flash[:danger] << "以上、#{error_count}件のエラーが発生しました。"
-      end
+      result_hash = Import.create_import_from_csv(current_user, params[:file])
+      flash[:success] = "#{result_hash[:success_count]}件の仕訳を取り込みました。"
+      flash[:danger] = "#{result_hash[:error_rows]}、#{result_hash[:error_count]}件のエラーが発生しました。" if result_hash[:error_count] > 0
     else
       flash[:danger] = 'ファイルを読み込むことができませんでした。'
     end
@@ -99,10 +48,7 @@ class SingleEntryImportsController < ApplicationController
   end
 
   def all_destroy
-    imports = Import.where(user_id: current_user.id)
-    imports.each do |import|
-      import.destroy
-    end
+    Import.all_destroy(current_user)
     flash[:success] = '取込待ち仕訳一覧の仕訳を全て削除しました。'
     redirect_to single_entry_imports_path
   end

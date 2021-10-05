@@ -100,10 +100,6 @@ class SingleEntriesController < ApplicationController
       journal.arrange_for_display
     end
 
-    respond_to do |format|
-      format.html
-      format.json
-    end
   end
 
   private

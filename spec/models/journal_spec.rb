@@ -282,7 +282,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -304,7 +304,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           end
 
           it '借方コードの貸方残高、貸方コードの借方残高は更新されていない' do
-            (1..12).to_a.each do |mon|
+            (1..12).each do |mon|
               expect(@account.send("credit_balance_#{mon}")).to eq 2000
               expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
             end
@@ -312,7 +312,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           it '借方コードの2月以外借方残高、貸方コードの2月以外貸方残高は更新されていない' do
             expect(@account.debit_balance_1).to eq 1000
             expect(@other_account.credit_balance_1).to eq 4000
-            (3..12).to_a.each do |mon|
+            (3..12).each do |mon|
               expect(@account.send("debit_balance_#{mon}")).to eq 1000
               expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
             end
@@ -322,13 +322,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
             expect(@other_account.credit_balance_2).to eq 4500
           end
           it '1,2月の期首残高は変わっていない' do
-            (1..2).to_a.each do |mon|
+            (1..2).each do |mon|
               expect(@account.send("opening_balance_#{mon}")).to eq 10000
               expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
             end
           end
           it '3月以降の期首残高は正しく更新されている' do
-            (3..12).to_a.each do |mon|
+            (3..12).each do |mon|
               expect(@account.send("opening_balance_#{mon}")).to eq 10500
               expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
             end
@@ -343,7 +343,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           end
 
           it '借方コードの貸方残高、貸方コードの借方残高は更新されていない' do
-            (1..12).to_a.each do |mon|
+            (1..12).each do |mon|
               expect(@account.send("credit_balance_#{mon}")).to eq 2000
               expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
             end
@@ -351,7 +351,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           it '借方コードの2月以外借方残高、貸方コードの2月以外貸方残高は更新されていない' do
             expect(@account.debit_balance_1).to eq 1000
             expect(@other_account.credit_balance_1).to eq 4000
-            (3..12).to_a.each do |mon|
+            (3..12).each do |mon|
               expect(@account.send("debit_balance_#{mon}")).to eq 1000
               expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
             end
@@ -361,13 +361,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
             expect(@other_account.credit_balance_2).to eq 3500
           end
           it '1,2月の期首残高は変わっていない' do
-            (1..2).to_a.each do |mon|
+            (1..2).each do |mon|
               expect(@account.send("opening_balance_#{mon}")).to eq 10000
               expect(@other_account.send("opening_balance_#{mon}")).to eq 20000
             end
           end
           it '3月以降の期首残高は正しく更新されている' do
-            (3..12).to_a.each do |mon|
+            (3..12).each do |mon|
               expect(@account.send("opening_balance_#{mon}")).to eq 9500
               expect(@other_account.send("opening_balance_#{mon}")).to eq 20500
             end
@@ -383,7 +383,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
 
         it '全ての残高が変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@account.send("opening_balance_#{mon}")).to eq 10000
@@ -402,7 +402,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -427,12 +427,12 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 1
         end
         it '借方科目の貸方残高は変わっていない' do
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           expect(@account.send("credit_balance_#{mon}")).to eq 2000
         end
         end
         it '貸方科目の借方残高は変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
         end
@@ -448,13 +448,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
         it '借方科目の仕訳作成月の借方残高、仕訳作成月より後の期首残高は変わっている' do
           expect(@account.debit_balance_2).to eq 1500
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 10500
           end
         end
         it '貸方科目の仕訳作成月の貸方残高、仕訳作成月より後の期首残高は変わっている' do
           expect(@other_account.credit_balance_2).to eq 4500
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
           end
         end
@@ -472,7 +472,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 0
         end
         it '勘定科目の残高が変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@account.send("opening_balance_#{mon}")).to eq 10000
@@ -491,7 +491,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -517,12 +517,12 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 1
         end
         it '借方科目の貸方残高は変わっていない' do
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           expect(@account.send("credit_balance_#{mon}")).to eq 2000
         end
         end
         it '貸方科目の借方残高は変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
         end
@@ -538,13 +538,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
         it '借方科目の仕訳作成月の借方残高、仕訳作成月より後の期首残高は変わっている' do
           expect(@account.debit_balance_2).to eq 1500
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 10500
           end
         end
         it '貸方科目の仕訳作成月の貸方残高、仕訳作成月より後の期首残高は変わっている' do
           expect(@other_account.credit_balance_2).to eq 4500
-          (3..12).to_a.each do |mon|
+          (3..12).each do |mon|
             expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
           end
         end
@@ -562,7 +562,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 0
         end
         it '勘定科目の残高が変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@account.send("opening_balance_#{mon}")).to eq 10000
@@ -581,7 +581,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -607,7 +607,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
         it '以下の残高は変わっていない' do
           # 自身科目の貸方残高、相手科目の借方残高
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
@@ -620,7 +620,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(@account.debit_balance_1).to eq 1000
           expect(@other_account.credit_balance_1).to eq 4000
           # 自身科目の4月以降借方残高、相手科目の4月以降貸方残高
-          (4..12).to_a.each do |mon|
+          (4..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
           end
@@ -636,7 +636,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(@account.opening_balance_3).to eq 9500
           expect(@other_account.opening_balance_3).to eq 20500
           # 自身科目の4月以降期首残高、相手科目の4月以降期首残高
-          (4..12).to_a.each do |mon|
+          (4..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 10500
             expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
           end
@@ -655,7 +655,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 1
         end
         it '勘定科目の残高が変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@account.send("opening_balance_#{mon}")).to eq 10000
@@ -674,7 +674,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -700,7 +700,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         end
         it '以下の残高は変わっていない' do
           # 自身科目の貸方残高、相手科目の借方残高
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
           end
@@ -713,7 +713,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(@account.debit_balance_1).to eq 1000
           expect(@other_account.credit_balance_1).to eq 4000
           # 自身科目の4月以降借方残高、相手科目の4月以降貸方残高
-          (4..12).to_a.each do |mon|
+          (4..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@other_account.send("credit_balance_#{mon}")).to eq 4000
           end
@@ -729,7 +729,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(@account.opening_balance_3).to eq 9500
           expect(@other_account.opening_balance_3).to eq 20500
           # 自身科目の4月以降期首残高、相手科目の4月以降期首残高
-          (4..12).to_a.each do |mon|
+          (4..12).each do |mon|
             expect(@account.send("opening_balance_#{mon}")).to eq 10500
             expect(@other_account.send("opening_balance_#{mon}")).to eq 19500
           end
@@ -748,7 +748,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
           expect(Journal.all.length).to eq 1
         end
         it '勘定科目の残高が変わっていない' do
-          (1..12).to_a.each do |mon|
+          (1..12).each do |mon|
             expect(@account.send("debit_balance_#{mon}")).to eq 1000
             expect(@account.send("credit_balance_#{mon}")).to eq 2000
             expect(@account.send("opening_balance_#{mon}")).to eq 10000
@@ -767,7 +767,7 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
         other_account = create(:account, user: @user, code: 101, name: 'test')
         hash = {}
         other_hash = {}
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           hash["debit_balance_#{mon}"] = 1000
           hash["credit_balance_#{mon}"] = 2000
           hash["opening_balance_#{mon}"] = 10000
@@ -784,12 +784,12 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
       end
 
       it '借方科目の貸方残高は変わっていない' do
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           expect(@account.send("credit_balance_#{mon}")).to eq 2000
         end
       end
       it '貸方科目の借方残高は変わっていない' do
-        (1..12).to_a.each do |mon|
+        (1..12).each do |mon|
           expect(@other_account.send("debit_balance_#{mon}")).to eq 3000
         end
       end
@@ -805,13 +805,13 @@ RSpec.describe '仕訳モデルに関するテスト', type: :model do
       end
       it '借方科目の削除仕訳月の借方残高、削除仕訳月より後の期首残高は変わっている' do
         expect(@account.debit_balance_2).to eq 500
-        (3..12).to_a.each do |mon|
+        (3..12).each do |mon|
           expect(@account.send("opening_balance_#{mon}")).to eq 9500
         end
       end
       it '貸方科目の削除仕訳月の貸方残高、削除仕訳月より後の期首残高は変わっている' do
         expect(@other_account.credit_balance_2).to eq 3500
-        (3..12).to_a.each do |mon|
+        (3..12).each do |mon|
           expect(@other_account.send("opening_balance_#{mon}")).to eq 20500
         end
       end
