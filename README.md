@@ -54,7 +54,10 @@
 
 ## 設計書
 - ER図
-<img src='app/assets/images/readme/erd.png'>
+<img src='app/assets/images/readme/erd.png' width='600px'>
+
+- インフラ構成図
+<img src='app/assets/images/readme/Infrastructure_configuration_diagram.png' width='600px'>
 
 - [機能一覧](https://docs.google.com/document/d/1_c5HmQF25Q6d3DatxCLNRaJy-4wkwoj4tmX-aX1MWzg/edit?usp=sharing)
 - [画面遷移図](https://drive.google.com/file/d/1cpIB_k5r8FZJ6cOOY_hBE229Z8o5E3Q6/view?usp=sharing)
@@ -66,7 +69,10 @@
 <https://docs.google.com/spreadsheets/d/1iD_-zJCk5ygOXnGm0qlLjmEY3U2gBJBzGJTeGrbtFL0/edit?usp=sharing>
 
 ## 静的コード解析ツール
- - Rubocop
+- Rubocop
+
+## テスティングフレームワーク
+- RSpec
 
 ## 開発環境
 - OS：Linux(CentOS)
@@ -77,8 +83,8 @@
 
 
 ## 本番環境
- - AWS (EC2、RDS)
- - Nginx、 Puma
+ - AWS (EC2, RDS)
+ - Nginx, Puma, Redis, Sidekiq
 
 ## 使用素材
  - [linustock](https://www.linustock.com/)
